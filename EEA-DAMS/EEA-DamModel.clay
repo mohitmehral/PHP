@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<clay-model clay-version="1.2.0">
+<database-model name="EEA-DamModel" alias="" remarks="" author="IOW - FXP" version="1.0" sql-dialect-id="jp.azzurri.clay.model.physical.dialect.Postgre_7_3_Dialect" begin-script="" end-script="">
+<database-model-description/>
+<schema-list>
+<schema name="public" alias="" remarks="">
+<schema-description/>
+<domain-list/>
+<table-list>
+<table name="country" alias="" remarks="EU25 countries">
+<table-description/>
+<table-figure-bounds x="10" y="10" width="-1" height="-1"/>
+<column-list>
+<column name="code" alias="" remarks="ISO 2 digits code" mandatory="true" column-size="2" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="type" alias="" remarks="MS : Member States" mandatory="false" column-size="3" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="lang" alias="" remarks="" mandatory="false" column-size="120" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PK_COUNTRY" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="code"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list>
+<index name="PK_COUNTRY" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="code" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="dams" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="142" y="8" width="-1" height="-1"/>
+<column-list>
+<column name="noeea" alias="" remarks="Code" mandatory="true" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="Name of the dam" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="x_icold" alias="" remarks="Longitude in decimal degrees from ICOLD" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="y_icold" alias="" remarks="Latitude in decimal degrees from ICOLD" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="score" alias="" remarks="" mandatory="false" column-size="2" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT2" jdbc-type="5" selected-variant-pattern="INT2" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="INT2"/>
+</data-type>
+</column>
+<column name="x_prop" alias="" remarks="Longitude in decimal degrees proposed" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="y_prop" alias="" remarks="Latitude in decimal degrees proposed" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="x_val" alias="" remarks="Longitude in decimal degrees validated by users" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="y_val" alias="" remarks="Latitude in decimal degrees validated by users" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="area" alias="" remarks="" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="cap_total" alias="" remarks="" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="city" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="country" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="lake_name" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="hydro_code" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="hydro_name" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="year_opp" alias="" remarks="" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DOUBLE PRECISION" jdbc-type="8" selected-variant-pattern="DOUBLE PRECISION">
+<variant type-name-pattern="DOUBLE PRECISION"/>
+</data-type>
+</column>
+<column name="year_dead" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="comments" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="valid" alias="" remarks="" mandatory="false" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="BOOLEAN" jdbc-type="16" selected-variant-pattern="BOOLEAN">
+<variant type-name-pattern="BOOLEAN"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PK_DAMS" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="noeea"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list>
+<index name="PK_DAMS" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="noeea" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="i18n" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="372" y="8" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="page_id" alias="" remarks="" mandatory="false" column-size="100" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="en" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="fr" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="it" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="at" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="dk" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="cz" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="de" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="pl" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="sp" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="se" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="ne" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PK_I18N" alias="" remarks="">
+<primary-key-description/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list/>
+</table>
+<table name="langs_avail" alias="" remarks="">
+<table-description/>
+<table-figure-bounds x="521" y="54" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="10" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="name" alias="" remarks="" mandatory="false" column-size="200" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="meta" alias="" remarks="" mandatory="false" column-size="-1" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="TEXT" jdbc-type="-1" selected-variant-pattern="TEXT" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="TEXT"/>
+</data-type>
+</column>
+<column name="error_text" alias="" remarks="" mandatory="false" column-size="250" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="encoding" alias="" remarks="" mandatory="true" column-size="16" decimal-digits="0" default-value="'iso-8859-1'::character varying" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="langs_avail_pk" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list>
+<index name="langs_avail_pk" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+</index-list>
+</table>
+<table name="log" alias="" remarks="Application Log">
+<table-description/>
+<table-figure-bounds x="483" y="351" width="-1" height="-1"/>
+<column-list>
+<column name="user_id" alias="" remarks="" mandatory="true" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT8" jdbc-type="-5" selected-variant-pattern="INT8">
+<variant type-name-pattern="INT8"/>
+</data-type>
+</column>
+<column name="dam_id" alias="" remarks="" mandatory="true" column-size="0" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="log_type" alias="" remarks="Type of log action define in logtype table" mandatory="true" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT8" jdbc-type="-5" selected-variant-pattern="INT8">
+<variant type-name-pattern="INT8"/>
+</data-type>
+</column>
+<column name="date" alias="" remarks="" mandatory="true" column-size="4" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="DATE" jdbc-type="91" selected-variant-pattern="DATE">
+<variant type-name-pattern="DATE"/>
+</data-type>
+</column>
+<column name="comment" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PK_LOG" alias="" remarks="">
+<primary-key-description/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="log_dam_fk" alias="" remarks="" referenced-table-schema="public" referenced-table="dams" referenced-key="PK_DAMS" on-update="NO ACTION" on-delete="NO ACTION" source-multiplicity="0..*" target-multiplicity="1" source-entity-role="" target-entity-role="" source-relationship-type="" target-relationship-type="">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="dam_id" referenced-key-column-name="noeea"/>
+</foreign-key>
+<foreign-key name="log_user_fk" alias="" remarks="" referenced-table-schema="public" referenced-table="users" referenced-key="PK_USERS" on-update="NO ACTION" on-delete="NO ACTION" source-multiplicity="0..*" target-multiplicity="1" source-entity-role="" target-entity-role="" source-relationship-type="" target-relationship-type="">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="user_id" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table name="user_dams" alias="" remarks="List all dams link to a user">
+<table-description/>
+<table-figure-bounds x="10" y="308" width="-1" height="-1"/>
+<column-list>
+<column name="cd_user" alias="" remarks="" mandatory="true" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT8" jdbc-type="-5" selected-variant-pattern="INT8">
+<variant type-name-pattern="INT8"/>
+</data-type>
+</column>
+<column name="cd_dam" alias="" remarks="" mandatory="false" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PK_USER_DAMS" alias="" remarks="">
+<primary-key-description/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list>
+<foreign-key name="FK_DAM" alias="" remarks="" referenced-table-schema="public" referenced-table="dams" referenced-key="PK_DAMS" on-update="RESTRICT" on-delete="RESTRICT" source-multiplicity="0..*" target-multiplicity="1" source-entity-role="" target-entity-role="" source-relationship-type="" target-relationship-type="">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="cd_dam" referenced-key-column-name="noeea"/>
+</foreign-key>
+<foreign-key name="FR_USER" alias="" remarks="" referenced-table-schema="public" referenced-table="users" referenced-key="PK_USERS" on-update="RESTRICT" on-delete="RESTRICT" source-multiplicity="0..*" target-multiplicity="1" source-entity-role="" target-entity-role="" source-relationship-type="" target-relationship-type="">
+<foreign-key-description/>
+<foreign-key-figure>
+<fk-fig-bendpoint-list/>
+</foreign-key-figure>
+<foreign-key-column column-name="cd_user" referenced-key-column-name="id"/>
+</foreign-key>
+</foreign-key-list>
+<index-list/>
+</table>
+<table name="users" alias="" remarks="Users of the application">
+<table-description/>
+<table-figure-bounds x="220" y="345" width="-1" height="-1"/>
+<column-list>
+<column name="id" alias="" remarks="" mandatory="true" column-size="8" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="INT8" jdbc-type="-5" selected-variant-pattern="INT8">
+<variant type-name-pattern="INT8"/>
+</data-type>
+</column>
+<column name="firstname" alias="" remarks="" mandatory="false" column-size="120" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="surname" alias="" remarks="" mandatory="false" column-size="120" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="login" alias="" remarks="" mandatory="true" column-size="20" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="password" alias="" remarks="" mandatory="true" column-size="120" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="email" alias="" remarks="" mandatory="false" column-size="254" decimal-digits="0" default-value="" auto-increment="false">
+<column-description/>
+<data-type name="VARCHAR" jdbc-type="12" selected-variant-pattern="VARCHAR(%n)" literal-prefix="'" literal-suffix="'">
+<variant type-name-pattern="VARCHAR(%n)" precision-variable="%n" precision-min="1" precision-max="2147483647"/>
+</data-type>
+</column>
+<column name="roleadm" alias="" remarks="" mandatory="false" column-size="1" decimal-digits="0" default-value="false" auto-increment="false">
+<column-description/>
+<data-type name="BOOL" jdbc-type="16" selected-variant-pattern="BOOL">
+<variant type-name-pattern="BOOL"/>
+</data-type>
+</column>
+<column name="rolelang" alias="" remarks="" mandatory="false" column-size="1" decimal-digits="0" default-value="true" auto-increment="false">
+<column-description/>
+<data-type name="BOOL" jdbc-type="16" selected-variant-pattern="BOOL">
+<variant type-name-pattern="BOOL"/>
+</data-type>
+</column>
+<column name="roledam" alias="" remarks="" mandatory="false" column-size="1" decimal-digits="0" default-value="false" auto-increment="false">
+<column-description/>
+<data-type name="BOOL" jdbc-type="16" selected-variant-pattern="BOOL">
+<variant type-name-pattern="BOOL"/>
+</data-type>
+</column>
+</column-list>
+<primary-key name="PK_USERS" alias="" remarks="">
+<primary-key-description/>
+<primary-key-column name="id"/>
+</primary-key>
+<unique-key-list/>
+<foreign-key-list/>
+<index-list>
+<index name="PK_USERS" alias="" remarks="" unique="true">
+<index-description/>
+<index-column name="id" sort="ASC"/>
+</index>
+</index-list>
+</table>
+</table-list>
+</schema>
+</schema-list>
+</database-model>
+</clay-model>

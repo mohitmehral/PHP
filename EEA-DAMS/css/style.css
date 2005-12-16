@@ -1,0 +1,2330 @@
+/**
+ * EEA-DAMS 
+ *
+ * @abstract	 CSS style from EEA web site.
+ * @author       François-Xavier Prunayre <fx.prunayre@oieau.fr>
+ * @copyright    2005
+ * @version    	 1.0
+ *
+ */
+
+/* 
+EEA Style Sheet - ReDesign 2002, and for Multilingual site 2003 */
+/* ver. 1.8, 2005/08/30 14:48:11.512 GMT+2 */
+
+BODY { 
+        background-color : #CCCCCC;
+	margin-width     : 0pt;
+	margin-weight    : 0pt;
+	margin-left      : 0pt;
+	margin-right     : 0pt;
+	margin-top       : 0pt;
+} 
+
+/* Standard paragraph */
+P,p {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+text-decoration: none; }
+
+
+/* Dark blue section line */
+hr, HR, Hr {
+color: #003366; text-decoration: underline; 
+}
+
+/* line marker for homepage */
+hr.home, HR.home, Hr.home {
+color: #FFFFFF; border-top: 1px dashed #CCCCCC;
+}
+
+/* Use this for justified paragraphs */
+.justified {
+	font-size: 10pt;
+    font-style: normal; 
+    line-height: normal;
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	text-align: justify
+}
+
+.Mainfont, .MainFont, .mainfont,.mainFont {
+        font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+}
+
+/* glossary text or for tooltip-windows in general, for dark bg*/
+.tooltipw, .Tooltipw, .ToolTipw,.ToolTipW {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+        font-size: 8pt;
+        color: #FFFFFF;
+}
+
+/* glossary text or for tooltip-windows in general */
+.tooltip, .Tooltip, .ToolTip,.ToolTip {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+        font-size: 8pt;
+}
+
+/* Mainfont for dark backgrounds */
+.Mainfontw, .MainFontw, .mainfontw,.mainFontw {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+        color: #FFFFFF;
+}
+
+.MainContent,.maincontent,.Maincontent,.mainContent {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+        margin-left: 4pt;
+}
+
+/* Submit Button Box, used in forms */
+.SubmitButton {
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size:10px; 
+	font-weight:bold; 
+	background-color:#cccccc; 
+	border:1px white solid; 
+	cursor:hand;
+}
+
+.barfont, .Barfont, A.barfont, A.Barfont {  
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold;
+text-decoration: none; }
+
+.webmaster, .Webmaster, A.webmaster, A.Webmaster {  
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+text-decoration: none; }
+
+.tickerstyle {font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif; font-size:10pt; color:#FFFFFF;}
+
+.breadcrumb, .Breadcrumb { 
+background-color : #FFFFFF; 
+color : #000000;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+text-decoration: none;
+ }
+
+.title1, .Title1 { font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none; 
+page-break-after:avoid;
+color: #000000; } 
+
+.title2, .Title2 { 
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none;
+page-break-after:avoid; 
+color: #000000; } 
+
+.head0, .Head0 {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none;
+color: #000000;}
+
+/* smaller text with bold */
+.head0small, .Head0small {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #000000;}
+
+/* general small text */
+.small, .Small {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal;  
+color: #000000;}
+
+.quicklink, .QuickLink {  
+font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+text-decoration: none;
+color             : #000000;
+font-style: normal; 
+line-height: normal; 
+font-size         : 8pt; 
+font-weight       : bold; 
+}
+
+/* Head0 for dark backgrounds */
+.head0w, .Head0w {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #FFFFFF;
+text-decoration: none; }
+
+/* Head0 for dark backgrounds and underlined */
+.head0wa, .Head0wa {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #FFFFFF;
+text-decoration: underline; }
+
+
+.head1,.Head1 {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none; }
+
+/* Head1 for dark backgrounds */
+.head1w, .Head1w, h1.head1w {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #FFFFFF;
+page-break-after:avoid;
+
+text-decoration: none; }
+
+/* Used for title in column boxes, usually on blue/dark bgcolor or image */
+.boxtitle {  
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-align:center;
+color: #FFFFFF;
+height: 22;
+background-color : #003366;
+text-decoration: none; 
+vertical-align : middle;}
+
+.head2,.Head2 { font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal; 
+text-decoration: none;
+page-break-after:avoid;
+color: #006666;}
+
+/* Head2 for dark backgrounds */
+.head2w,.Head2w, h2.head2w { font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+color: #FFFFFF; 
+page-break-after:avoid;
+text-decoration: none }
+
+/* Used this for standard links */
+A:link { color: #003399; text-decoration: underline; onFocus:"blur()" }
+A:visited { color: #990000; text-decoration: underline; onFocus:"blur()" }
+A:active { color: #006666; text-decoration: underline; onFocus:"blur()"  } 
+A:hover {color: #000000; text-decoration: underline; onFocus:"blur()" } 
+
+
+/* Used this for links on dark backgrounds*/
+A.fordark:link { color: #FFFFFF; text-decoration: underline; onFocus:"blur()" }
+A.fordarkbanner:link { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+A.fordark:visited { color: #FFFFFF; text-decoration: underline; onFocus:"blur()" }
+A.fordarkbanner:visited { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+A.fordark:active { color: #FFFFFF; text-decoration: underline; onFocus:"blur()"  }
+A.fordarkbanner:active { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+A.fordark:hover {color: #FFFFFF; text-decoration: underline; onFocus:"blur()" } 
+A.fordarkbanner:hover { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+
+/* Used this for links for local left navigation */
+A.localnav:link { color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()" }
+A.localnav:visited { color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()" }
+A.localnav:active { color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()"  }
+A.localnav:hover {color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()" } 
+
+
+/* For Microsoft generated HTML-code */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{
+	margin:0pt;
+	margin-bottom:0pt;
+	font-size:9.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;}
+	
+h1,H1
+	{
+	margin-top:1.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+        font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none;
+page-break-after:avoid;
+
+        color: #006666;
+	}
+
+h2,H2 { 
+margin-top:1.0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:14pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: normal;
+color: #006666;
+
+}
+
+h3,H3 { 
+margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:12pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold; }
+
+h4,H4 { 
+margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:10pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold;}
+
+h5,H5 { 
+margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:10pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold; }
+
+
+
+/* For Microsoft generated HTML-code */
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{margin:2pt;
+	margin-bottom:0pt;
+	font-size:10.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	}
+
+p.MainFont, p.mainfont, p.Mainfont, li.MainFont, li.mainfont, li.Mainfont, div.MainFont,div.mainfont, div.Mainfont,
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0.5pt;
+	font-size:10.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	 }
+
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul li {
+	list-style-position: outside;
+	margin-left:-20px;
+	margin-bottom:3px;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	/*list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);*/
+	vertical-align : bottom;
+	font-size : 10pt;
+}
+
+ol li {
+	list-style-position: outside;
+	margin-bottom:3px;
+	margin-left:-12px;
+	font-size : 10pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+}
+
+
+li.positive {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        /* list-style-image : url(http://themes.eea.eu.int/images/good); */
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+li.neutral {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        /* list-style-image : url(http://themes.eea.eu.int/images/neutral); */
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+li.negative {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        /* list-style-image : url(http://themes.eea.eu.int/images/poor); */
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+li.nodata {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+
+ul.LogoBulletList {
+   margin           : 0px 0px 0px 0px;
+}
+
+li.LogoBulletList {
+   margin           : 0px 0px 0px 15px;
+   /*list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);*/
+}
+
+
+p.head0, li.head0, div.head0
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:9.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:bold;}
+
+p.head1, li.head1, div.head1
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:12.0pt;
+	font-family:Verdana;
+	font-weight:bold;}
+
+p.head1w, li.head1w, div.head1w
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:12.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	color:white;
+	font-weight:bold;}
+
+p.head2, p.Head2, li.head2, li.Head2, div.head2, div.Head2
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:16.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:normal;}
+
+p.head2w, li.head2w, div.head2w
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:16.0pt;
+        color:white;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:normal;
+	}
+
+p.Subscript, li.Subscript, div.Subscript, span.Subscript, p.subscript, li.subscript, div.subscript,
+span.subscript
+	{
+	margin:0pt;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	}
+
+/* Use this for images that needs to floar right or left (avoiding tables) */
+.cover_image 
+        {
+        float: right;
+        border: 0; 
+        }
+
+.cover_image_left
+        {
+        float: left;
+        border: 0; 
+        }
+
+td { 
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+text-decoration: none;
+}
+
+th {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10pt; 
+	font-style: normal; 
+	color: #FFFFFF;
+	line-height: normal; 
+	text-decoration: none;
+	background-color: #003366;
+	font-weight : bold;
+	border-color : #003366;	
+	border-width:0px;
+}
+
+th.highlight {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10pt; 
+	font-style: normal; 
+	color: #000000;
+	line-height: normal; 
+	text-decoration: none;
+	background-color: #FFCA95;
+	font-weight : bold;
+	border-color : #FF9900;	
+	border-width:0px;
+}
+
+th A:link { color: #FFFFFF; text-decoration: underline; }
+th A:visited { color: #CCCCCC; text-decoration: underline; }
+th A:active { color: #FFFFFF; text-decoration: underline; } 
+
+th a:hover { 
+COLOR:  #FFFFFF;
+TEXT-DECORATION: underline; 
+font-weight: normal; 
+onFocus:"blur()"; 
+background-color: #003366;}
+
+/* Skin Classes */
+.TopBanner {
+	border-bottom    : 1px solid Black;
+}
+
+.TopBannerMain {
+	height           : 63;
+}
+
+.TopBannerLeft {
+	background-color : #8CBEBD;
+	height           : 63;
+}
+
+.TopBannerRight {
+	background-color : #003063;
+	color            : #FFFFFF;
+	font-family      : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size        : 7pt; 
+      
+}
+
+.Menu {
+background-color : #CCCCCC;
+	
+}
+
+.MenuMain {
+	background-color : #003366;
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+	
+}
+
+.MenuLeft {
+	background-color : #CCCCCC;
+}
+
+.MenuRight {
+	background-color : #CCCCCC;
+}
+
+.BodyColumn {
+}
+
+.BodyColumnMain {
+	background-color : #FFFFFF;
+}
+
+.BodyColumnMainBorder {
+	background-color : #FFFFFF;
+        border-right  : 1px solid #000000;
+        border-left      : 1px solid #000000;
+	border-top     : 1px solid #000000;
+	border-bottom    : 1px solid #000000;
+}
+
+
+.BodyColumnMainBanner {
+	background-color : #003366;
+	color            : #FFFFFF;
+	font-family      : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size        : 10pt; 
+	font-weight      : bold; 
+	text-decoration  : none; 
+	text-align       : center;
+	vertical-align   : middle;
+	height           : 22;
+	margin-top       : 0pt;
+	margin-right     : 0pt;
+	margin-bottom    : 0pt;
+	margin-left      : 0pt;
+}
+
+.BodyColumnMainContent {
+	background-color : #FFFFFF;
+}
+
+.BodyColumnMainContentTitle {
+	background-color : #CCCCCC;
+	color            : #003366;
+	font-family      : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size        : 10pt; 
+	font-weight      : bold; 
+        border-bottom : 1px solid #000000; 
+        border-top  : 1px solid #000000;
+        border-left  : 1px solid #000000;
+        border-right  : 1px solid #000000;
+}
+
+.BodyColumnLeft {
+        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+}
+
+.BodyColumnLeftContent {
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        margin-left       : 2pt;
+        background-color : #FFFFFF;
+}
+
+
+.BodyColumnRight {
+        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+}
+
+.BodyColumnRightContent {
+	background-color : #FFCA95;
+}
+
+/* For highlighted info like news, highlights etc.. */
+.BodyColumnRightHighlight {
+	background-color : #FF9900;
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        font-size         : 8pt; 
+        font-weight       : bold;
+}
+
+/* For highlighted info like news, highlights etc.. */
+.BodyColumnRightContentHighlight {
+	background-color : #FFCA95;
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        font-size         : 8pt; 
+        font-weight       : bold;
+}
+.LeftBoxTable {
+   background-color : #FFFFFF;
+   border-top  : 1px solid #000000;
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+}
+
+
+
+
+.BodyColumnBetween {
+	background-color : #CCCCCC;
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        font-size         : 8pt; 
+        font-weight       : bold;
+}
+
+.BottomBannerQuickLinks {
+   background-color : #FFFFFF;
+   border-top  : 1px solid #000000;
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+}
+
+.BottomBannerCopyright {
+   font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+}
+
+
+
+/* TO BE DEPRECATED */
+.DocTopBanner {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	background-color: #003366;
+	font-size: 10pt; 
+	font-style: normal; 
+	line-height: normal; 
+	font-weight: bold; 
+	text-decoration: none; 
+	color: #FFFFFF;
+	height: 22;
+	margin-top:0.0pt;
+	margin-right:0.0pt;
+	margin-bottom:0.0pt;
+	margin-left:0.0pt;
+	text-align: center;
+}
+
+.CopyrightMessage {
+   font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+   font-size: 8pt; 
+   font-weight: normal; 
+   color: #FFFFFF;
+}
+
+A.CopyrightMessage {
+   font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+   font-size: 8pt; 
+   font-weight: normal; 
+   color: #FFFFFF;
+}
+
+
+/* DEPRECATED */
+.ImgEurope {
+   background-image: url("bgImgEurope")
+}
+.DarkBottom { 
+   border-bottom : 1 solid #000000; 
+}
+
+/* dtml-min_doc_height; */
+.OuterLeftColumn { 
+   height : 500px;
+}
+
+/* dtml-min_doc_height; */
+.OuterRightColumn { 
+   height : 500px;
+}
+.SubMenuBoxTable { 
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+}
+.SubMenuBoxLeft {
+   border-left   : 1px solid #000000;
+}
+.SubMenuBoxRight {
+   border-right  : 1px solid #000000;
+}
+.BorderEverywhere { 
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+   border-top  : 1px solid #000000;
+}
+
+
+
+/* Central Page Content */
+.DocumentBox { 
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+   border-top  : 1px solid #000000;
+   height : 500px;
+}
+.BorderLeft {
+   border-left   : 1px solid #000000;
+}
+.BorderRight {
+   border-right  : 1px solid #000000;
+}
+.BorderLeftRight {
+   border-right  : 1px solid #000000;
+   border-left   : 1px solid #000000;
+   
+}
+.BorderLeftRightBottom {
+   border-right  : 1px solid #000000;
+   border-left   : 1px solid #000000;
+   border-bottom : 1px solid #000000; 
+}
+.noPrint
+{
+}
+
+/* Lines */
+.LineEven, .lineEven, .lineeven {
+        background-color: #ECECEC; 
+}
+.LineOdd, .lineOdd, .lineodd {
+        background-color: #FFFFFF; 
+}
+.SubHeader, .subHeader, .subheader {
+        background-color: #CCCCCC; 
+}
+
+.SearchBox, .searchBox, .searchbox {
+        background-color: #ECECEC;
+        /* border: 1px solid #003366; */
+        margin-left: 2px;
+        margin-right: 2px;
+}
+.SearchBoxFieldSet, .searchboxFieldset, .searchboxfieldset, fieldset {
+        border: 1px solid #003366;
+}
+.SearchButton, .searchButton, .searchbutton {
+        font-family: verdana; 
+        font-size: 10px; 
+        font-weight: bold; 
+        color: black;
+        background-color: #cccccc; 
+        border: 1px white solid; 
+        cursor: hand;
+}
+
+
+.TeaserBox, .teaserBox, .teaserbox {
+        background-color: #ECECEC;
+        border: 1px solid #006666;
+/*      margin-bottom: 2px;  */
+/*      margin-left: 2px; */
+/*      margin-right: 2px; */
+        font-size: 8pt; 
+}
+
+.TeaserBoxHeader, .teaserboxHeader, .teaserboxheader {
+        background-color: #006666;
+}
+
+
+
+.orgchart, .Orgchart { 
+color : #000000;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+text-decoration: none;
+ }
+
+.keymessage {
+background-color: #C2E4E1;
+border:2px dotted #669999;
+padding:10px;
+}
+
+http://template.eea.eu.int/eea_print.css
+
+@import url(eea.css);
+
+.noPrint,
+.BodyColumnLeft,
+.TopBanner,
+.MenuMain,
+.MenuLeft,
+.MenuRight 
+{
+    DISPLAY: none;
+    VISIBILITY: hidden
+}
+
+body {
+background-color:white;
+}
+
+http://template.eea.eu.int/eea.css
+
+/* EEA Style Sheet - ReDesign 2002, and for Multilingual site 2003 */
+/* ver. 1.8, 2005/08/30 14:48:11.512 GMT+2 */
+
+BODY { 
+        background-color : #CCCCCC;
+	margin-width     : 0pt;
+	margin-weight    : 0pt;
+	margin-left      : 0pt;
+	margin-right     : 0pt;
+	margin-top       : 0pt;
+} 
+
+/* Standard paragraph */
+P,p {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+text-decoration: none; }
+
+
+/* Dark blue section line */
+hr, HR, Hr {
+color: #003366; text-decoration: underline; 
+}
+
+/* line marker for homepage */
+hr.home, HR.home, Hr.home {
+color: #FFFFFF; border-top: 1px dashed #CCCCCC;
+}
+
+/* Use this for justified paragraphs */
+.justified {
+	font-size: 10pt;
+        font-style: normal; 
+        line-height: normal;
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	text-align: justify
+}
+
+.Mainfont, .MainFont, .mainfont,.mainFont {
+        font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+}
+
+/* glossary text or for tooltip-windows in general, for dark bg*/
+.tooltipw, .Tooltipw, .ToolTipw,.ToolTipW {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+        font-size: 8pt;
+        color: #FFFFFF;
+}
+
+/* glossary text or for tooltip-windows in general */
+.tooltip, .Tooltip, .ToolTip,.ToolTip {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+        font-size: 8pt;
+}
+
+/* Mainfont for dark backgrounds */
+.Mainfontw, .MainFontw, .mainfontw,.mainFontw {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-style: normal;
+	line-height: normal;
+	text-decoration: none;
+        color: #FFFFFF;
+}
+
+.MainContent,.maincontent,.Maincontent,.mainContent {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+        margin-left: 4pt;
+}
+
+/* Submit Button Box, used in forms */
+.SubmitButton {
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size:10px; 
+	font-weight:bold; 
+	background-color:#cccccc; 
+	border:1px white solid; 
+	cursor:hand;
+}
+
+.barfont, .Barfont, A.barfont, A.Barfont {  
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold;
+text-decoration: none; }
+
+.webmaster, .Webmaster, A.webmaster, A.Webmaster {  
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+text-decoration: none; }
+
+.tickerstyle {font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif; font-size:10pt; color:#FFFFFF;}
+
+.breadcrumb, .Breadcrumb { 
+background-color : #FFFFFF; 
+color : #000000;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+text-decoration: none;
+ }
+
+.title1, .Title1 { font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none; 
+page-break-after:avoid;
+color: #000000; } 
+
+.title2, .Title2 { 
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none;
+page-break-after:avoid; 
+color: #000000; } 
+
+.head0, .Head0 {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none;
+color: #000000;}
+
+/* smaller text with bold */
+.head0small, .Head0small {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #000000;}
+
+/* general small text */
+.small, .Small {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal;  
+color: #000000;}
+
+.quicklink, .QuickLink {  
+font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+text-decoration: none;
+color             : #000000;
+font-style: normal; 
+line-height: normal; 
+font-size         : 8pt; 
+font-weight       : bold; 
+}
+
+/* Head0 for dark backgrounds */
+.head0w, .Head0w {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #FFFFFF;
+text-decoration: none; }
+
+/* Head0 for dark backgrounds and underlined */
+.head0wa, .Head0wa {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #FFFFFF;
+text-decoration: underline; }
+
+
+.head1,.Head1 {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none; }
+
+/* Head1 for dark backgrounds */
+.head1w, .Head1w, h1.head1w {  font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 12pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+color: #FFFFFF;
+page-break-after:avoid;
+
+text-decoration: none; }
+
+/* Used for title in column boxes, usually on blue/dark bgcolor or image */
+.boxtitle {  
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-align:center;
+color: #FFFFFF;
+height: 22;
+background-color : #003366;
+text-decoration: none; 
+vertical-align : middle;}
+
+.head2,.Head2 { font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal; 
+text-decoration: none;
+page-break-after:avoid;
+color: #006666;}
+
+/* Head2 for dark backgrounds */
+.head2w,.Head2w, h2.head2w { font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+color: #FFFFFF; 
+page-break-after:avoid;
+text-decoration: none }
+
+/* Used this for standard links */
+A:link { color: #003399; text-decoration: underline; onFocus:"blur()" }
+A:visited { color: #990000; text-decoration: underline; onFocus:"blur()" }
+A:active { color: #006666; text-decoration: underline; onFocus:"blur()"  } 
+A:hover {color: #000000; text-decoration: underline; onFocus:"blur()" } 
+
+
+/* Used this for links on dark backgrounds*/
+A.fordark:link { color: #FFFFFF; text-decoration: underline; onFocus:"blur()" }
+A.fordarkbanner:link { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+A.fordark:visited { color: #FFFFFF; text-decoration: underline; onFocus:"blur()" }
+A.fordarkbanner:visited { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+A.fordark:active { color: #FFFFFF; text-decoration: underline; onFocus:"blur()"  }
+A.fordarkbanner:active { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+A.fordark:hover {color: #FFFFFF; text-decoration: underline; onFocus:"blur()" } 
+A.fordarkbanner:hover { color: #FFFFFF; font-size: 8pt; font-weight: bold; text-decoration: none; onFocus:"blur()" }
+
+/* Used this for links for local left navigation */
+A.localnav:link { color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()" }
+A.localnav:visited { color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()" }
+A.localnav:active { color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()"  }
+A.localnav:hover {color: #000000; text-decoration: none; font-weight: bold; onFocus:"blur()" } 
+
+
+/* For Microsoft generated HTML-code */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{
+	margin:0pt;
+	margin-bottom:0pt;
+	font-size:9.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;}
+	
+h1,H1
+	{
+	margin-top:1.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+        font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 16pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: bold; 
+text-decoration: none;
+page-break-after:avoid;
+
+        color: #006666;
+	}
+
+h2,H2 { 
+margin-top:1.0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:14pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: normal;
+color: #006666;
+
+}
+
+h3,H3 { 
+margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:12pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold; }
+
+h4,H4 { 
+margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:10pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold;}
+
+h5,H5 { 
+margin-top:0pt;
+	margin-right:0pt;
+	margin-bottom:2.0pt;
+	margin-left:0pt;
+	page-break-after:avoid;
+	font-size:10pt;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-weight: bold; }
+
+
+
+/* For Microsoft generated HTML-code */
+p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
+	{margin:2pt;
+	margin-bottom:0pt;
+	font-size:10.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	}
+
+p.MainFont, p.mainfont, p.Mainfont, li.MainFont, li.mainfont, li.Mainfont, div.MainFont,div.mainfont, div.Mainfont,
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0.5pt;
+	font-size:10.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	 }
+
+
+ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ ol {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul li {
+	list-style-position: outside;
+	margin-left:-20px;
+	margin-bottom:3px;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	/*list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);*/
+	vertical-align : bottom;
+	font-size : 10pt;
+}
+
+ol li {
+	list-style-position: outside;
+	margin-bottom:3px;
+	margin-left:-12px;
+	font-size : 10pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+}
+
+
+li.positive {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        /* list-style-image : url(http://themes.eea.eu.int/images/good); */
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+li.neutral {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        /* list-style-image : url(http://themes.eea.eu.int/images/neutral); */
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+li.negative {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        /* list-style-image : url(http://themes.eea.eu.int/images/poor); */
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+li.nodata {
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:3.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        list-style-image : none;
+        list-style-type: none;
+        list-style-position: inside;
+	}
+
+ul.LogoBulletList {
+   margin           : 0px 0px 0px 0px;
+}
+
+li.LogoBulletList {
+   margin           : 0px 0px 0px 15px;
+   list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);
+}
+
+
+p.head0, li.head0, div.head0
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:9.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:bold;}
+
+p.head1, li.head1, div.head1
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:12.0pt;
+	font-family:Verdana;
+	font-weight:bold;}
+
+p.head1w, li.head1w, div.head1w
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:12.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	color:white;
+	font-weight:bold;}
+
+p.head2, p.Head2, li.head2, li.Head2, div.head2, div.Head2
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:16.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:normal;}
+
+p.head2w, li.head2w, div.head2w
+	{
+	margin-top:3.0pt;
+	margin-right:0pt;
+	margin-bottom:3.0pt;
+	margin-left:0pt;
+	font-size:16.0pt;
+        color:white;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-weight:normal;
+	}
+
+p.Subscript, li.Subscript, div.Subscript, span.Subscript, p.subscript, li.subscript, div.subscript,
+span.subscript
+	{
+	margin:0pt;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	}
+
+/* Use this for images that needs to floar right or left (avoiding tables) */
+.cover_image 
+        {
+        float: right;
+        border: 0; 
+        }
+
+.cover_image_left
+        {
+        float: left;
+        border: 0; 
+        }
+
+td { 
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 10pt; 
+font-style: normal; 
+line-height: normal; 
+text-decoration: none;
+}
+
+th {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10pt; 
+	font-style: normal; 
+	color: #FFFFFF;
+	line-height: normal; 
+	text-decoration: none;
+	background-color: #003366;
+	font-weight : bold;
+	border-color : #003366;	
+	border-width:0px;
+}
+
+th.highlight {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10pt; 
+	font-style: normal; 
+	color: #000000;
+	line-height: normal; 
+	text-decoration: none;
+	background-color: #FFCA95;
+	font-weight : bold;
+	border-color : #FF9900;	
+	border-width:0px;
+}
+
+th A:link { color: #FFFFFF; text-decoration: underline; }
+th A:visited { color: #CCCCCC; text-decoration: underline; }
+th A:active { color: #FFFFFF; text-decoration: underline; } 
+
+th a:hover { 
+COLOR:  #FFFFFF;
+TEXT-DECORATION: underline; 
+font-weight: normal; 
+onFocus:"blur()"; 
+background-color: #003366;}
+
+/* Skin Classes */
+.TopBanner {
+	border-bottom    : 1px solid Black;
+}
+
+.TopBannerMain {
+	height           : 63;
+}
+
+.TopBannerLeft {
+	background-color : #8CBEBD;
+	height           : 63;
+}
+
+.TopBannerRight {
+	background-color : #003063;
+	color            : #FFFFFF;
+	font-family      : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size        : 7pt; 
+      
+}
+
+.Menu {
+background-color : #CCCCCC;
+	
+}
+
+.MenuMain {
+	background-color : #003366;
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+	
+}
+
+.MenuLeft {
+	background-color : #CCCCCC;
+}
+
+.MenuRight {
+	background-color : #CCCCCC;
+}
+
+.BodyColumn {
+}
+
+.BodyColumnMain {
+	background-color : #FFFFFF;
+}
+
+.BodyColumnMainBorder {
+	background-color : #FFFFFF;
+        border-right  : 1px solid #000000;
+        border-left      : 1px solid #000000;
+	border-top     : 1px solid #000000;
+	border-bottom    : 1px solid #000000;
+}
+
+
+.BodyColumnMainBanner {
+	background-color : #003366;
+	color            : #FFFFFF;
+	font-family      : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size        : 10pt; 
+	font-weight      : bold; 
+	text-decoration  : none; 
+	text-align       : center;
+	vertical-align   : middle;
+	height           : 22;
+	margin-top       : 0pt;
+	margin-right     : 0pt;
+	margin-bottom    : 0pt;
+	margin-left      : 0pt;
+}
+
+.BodyColumnMainContent {
+	background-color : #FFFFFF;
+}
+
+.BodyColumnMainContentTitle {
+	background-color : #CCCCCC;
+	color            : #003366;
+	font-family      : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	font-size        : 10pt; 
+	font-weight      : bold; 
+        border-bottom : 1px solid #000000; 
+        border-top  : 1px solid #000000;
+        border-left  : 1px solid #000000;
+        border-right  : 1px solid #000000;
+}
+
+.BodyColumnLeft {
+        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+}
+
+.BodyColumnLeftContent {
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        margin-left       : 2pt;
+        background-color : #FFFFFF;
+}
+
+
+.BodyColumnRight {
+        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+}
+
+.BodyColumnRightContent {
+	background-color : #FFCA95;
+}
+
+/* For highlighted info like news, highlights etc.. */
+.BodyColumnRightHighlight {
+	background-color : #FF9900;
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        font-size         : 8pt; 
+        font-weight       : bold;
+}
+
+/* For highlighted info like news, highlights etc.. */
+.BodyColumnRightContentHighlight {
+	background-color : #FFCA95;
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        font-size         : 8pt; 
+        font-weight       : bold;
+}
+.LeftBoxTable {
+   background-color : #FFFFFF;
+   border-top  : 1px solid #000000;
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+}
+
+
+
+
+.BodyColumnBetween {
+	background-color : #CCCCCC;
+        font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+        font-size         : 8pt; 
+        font-weight       : bold;
+}
+
+.BottomBannerQuickLinks {
+   background-color : #FFFFFF;
+   border-top  : 1px solid #000000;
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+}
+
+.BottomBannerCopyright {
+   font-family       : Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+}
+
+
+
+/* TO BE DEPRECATED */
+.DocTopBanner {
+	font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+	background-color: #003366;
+	font-size: 10pt; 
+	font-style: normal; 
+	line-height: normal; 
+	font-weight: bold; 
+	text-decoration: none; 
+	color: #FFFFFF;
+	height: 22;
+	margin-top:0.0pt;
+	margin-right:0.0pt;
+	margin-bottom:0.0pt;
+	margin-left:0.0pt;
+	text-align: center;
+}
+
+.CopyrightMessage {
+   font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+   font-size: 8pt; 
+   font-weight: normal; 
+   color: #FFFFFF;
+}
+
+A.CopyrightMessage {
+   font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+   font-size: 8pt; 
+   font-weight: normal; 
+   color: #FFFFFF;
+}
+
+
+/* DEPRECATED */
+.ImgEurope {
+   background-image: url("bgImgEurope")
+}
+.DarkBottom { 
+   border-bottom : 1 solid #000000; 
+}
+
+/* dtml-min_doc_height; */
+.OuterLeftColumn { 
+   height : 500px;
+}
+
+/* dtml-min_doc_height; */
+.OuterRightColumn { 
+   height : 500px;
+}
+.SubMenuBoxTable { 
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+}
+.SubMenuBoxLeft {
+   border-left   : 1px solid #000000;
+}
+.SubMenuBoxRight {
+   border-right  : 1px solid #000000;
+}
+.BorderEverywhere { 
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+   border-top  : 1px solid #000000;
+}
+
+
+
+/* Central Page Content */
+.DocumentBox { 
+   border-bottom : 1px solid #000000; 
+   border-left   : 1px solid #000000; 
+   border-right  : 1px solid #000000;
+   border-top  : 1px solid #000000;
+   height : 500px;
+}
+.BorderLeft {
+   border-left   : 1px solid #000000;
+}
+.BorderRight {
+   border-right  : 1px solid #000000;
+}
+.BorderLeftRight {
+   border-right  : 1px solid #000000;
+   border-left   : 1px solid #000000;
+   
+}
+.BorderLeftRightBottom {
+   border-right  : 1px solid #000000;
+   border-left   : 1px solid #000000;
+   border-bottom : 1px solid #000000; 
+}
+.noPrint
+{
+}
+
+/* Lines */
+.LineEven, .lineEven, .lineeven {
+        background-color: #ECECEC; 
+}
+.LineOdd, .lineOdd, .lineodd {
+        background-color: #FFFFFF; 
+}
+.SubHeader, .subHeader, .subheader {
+        background-color: #CCCCCC; 
+}
+
+.SearchBox, .searchBox, .searchbox {
+        background-color: #ECECEC;
+        /* border: 1px solid #003366; */
+        margin-left: 2px;
+        margin-right: 2px;
+}
+.SearchBoxFieldSet, .searchboxFieldset, .searchboxfieldset, fieldset {
+        border: 1px solid #003366;
+}
+.SearchButton, .searchButton, .searchbutton {
+        font-family: verdana; 
+        font-size: 10px; 
+        font-weight: bold; 
+        color: black;
+        background-color: #cccccc; 
+        border: 1px white solid; 
+        cursor: hand;
+}
+
+
+.TeaserBox, .teaserBox, .teaserbox {
+        background-color: #ECECEC;
+        border: 1px solid #006666;
+/*      margin-bottom: 2px;  */
+/*      margin-left: 2px; */
+/*      margin-right: 2px; */
+        font-size: 8pt; 
+}
+
+.TeaserBoxHeader, .teaserboxHeader, .teaserboxheader {
+        background-color: #006666;
+}
+
+
+
+.orgchart, .Orgchart { 
+color : #000000;
+font-family: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+font-size: 8pt; 
+font-style: normal; 
+line-height: normal; 
+font-weight: normal;
+text-decoration: none;
+ }
+
+.keymessage {
+background-color: #C2E4E1;
+border:2px dotted #669999;
+padding:10px;
+}
+ 
+ 
+.HeadCell1
+
+{
+
+    FONT-SIZE: 12pt;
+
+    COLOR: white;
+
+    BACKGROUND-COLOR: #003366
+
+}
+
+.HeadCell2
+
+{
+
+    FONT-WEIGHT: bolder;
+
+    FONT-SIZE: 10pt;
+
+    BACKGROUND-COLOR: #cccccc
+
+}
+
+.DescCell
+
+{
+
+    COLOR: black;
+
+    BACKGROUND-COLOR: #ececec
+
+}
+
+.ContentCell
+
+{
+
+    COLOR: black;
+
+    BACKGROUND-COLOR: #ececec
+
+}
+
+.axisXCell
+
+{
+
+    FONT-WEIGHT: 600;
+
+    FONT-SIZE: 10pt;
+
+    CURSOR: hand;
+
+    COLOR: #ffffff;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #003366;
+
+    TEXT-ALIGN: center
+
+}
+
+.axisYCell
+
+{
+
+    PADDING-RIGHT: 5px;
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 10pt;
+
+    CURSOR: default;
+
+    COLOR: #ffffff;
+
+    TEXT-INDENT: 2pt;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #003366;
+
+    TEXT-ALIGN: left
+
+}
+
+.dataCell
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #ffffff;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #b2b2b2;
+
+    TEXT-ALIGN: right
+
+}
+
+.dataCell0
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #ffffff;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #06888e;
+
+    TEXT-ALIGN: right
+
+}
+
+.dataCell1
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 8pt;
+
+    COLOR: #000000;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #09bcc6;
+
+    TEXT-ALIGN: right
+
+}
+
+
+
+.dataCellRight
+
+{
+
+    FONT-SIZE: 8pt;
+
+    COLOR: #000000;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #badcdc;
+
+    TEXT-ALIGN: right;
+
+    TEXT-VERTICAL-ALIGN: top;
+
+}
+
+
+
+.dataCell2
+
+{
+
+    FONT-SIZE: 8pt;
+
+    COLOR: #000000;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #badcdc;
+
+    TEXT-ALIGN: right
+
+}
+
+.dataCell3
+
+{
+
+    FONT-SIZE: 8pt;
+
+    COLOR: black;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #dfeeee;
+
+    TEXT-ALIGN: right
+
+}
+
+
+
+.dataCellLeft
+
+{
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #000000;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #badcdc;
+
+    TEXT-ALIGN: left;
+
+    TEXT-VALIGN: top
+
+}
+
+
+
+
+
+.dataCell4
+
+{
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #000000;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #badcdc;
+
+    TEXT-ALIGN: left
+
+}
+
+.dataCell5
+
+{
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #000000;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #dfeeee;
+
+    TEXT-ALIGN: left
+
+}
+
+.Meta
+
+{
+
+    FONT-WEIGHT: 600;
+
+    FONT-SIZE: 9pt;
+
+    CURSOR: hand;
+
+    COLOR: #000000;
+
+    TEXT-INDENT: 2pt;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #badcdc;
+
+    TEXT-ALIGN: left
+
+}
+
+.Subscript
+
+{
+
+    FONT-SIZE: 8pt;
+
+    MARGIN: 0pt;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif
+
+}
+
+
+
+.DSH1
+
+{
+
+     FONT-WEIGHT: bold;
+
+    FONT-SIZE: 16pt;
+
+    COLOR: #006666;
+
+    LINE-HEIGHT: normal;
+
+    FONT-STYLE: normal;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+
+    TEXT-DECORATION: none
+
+}
+
+
+
+H1
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 16pt;
+
+    COLOR: #006666;
+
+    LINE-HEIGHT: normal;
+
+    FONT-STYLE: normal;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+
+    TEXT-DECORATION: none
+
+}
+
+H2
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 12pt;
+
+    MARGIN: 3pt 0pt;
+
+    FONT-FAMILY: Verdana
+
+}
+
+H3
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #000000;
+
+    LINE-HEIGHT: normal;
+
+    FONT-STYLE: normal;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+
+    TEXT-DECORATION: none
+
+}
+
+H4
+
+{
+
+    FONT-WEIGHT: lighter;
+
+    FONT-SIZE: 10pt;
+
+    MARGIN: 0pt 0pt 2pt;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif
+
+}
+
+H5
+
+{
+
+    FONT-WEIGHT: lighter;
+
+    FONT-SIZE: 10pt;
+
+    MARGIN: 0pt 0pt 2pt;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif
+
+}
+
+.noBorder
+
+{
+
+    BORDER-RIGHT: medium none;
+
+    BORDER-TOP: medium none;
+
+    BORDER-LEFT: medium none;
+
+    BORDER-BOTTOM: medium none
+
+}
+
+.TinyTableHeadRows
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 8pt;
+
+    COLOR: white;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #336699;
+
+    TEXT-ALIGN: left
+
+}
+
+.TinyTableRowSelect
+
+{
+
+    FONT-WEIGHT: normal;
+
+    FONT-SIZE: 8pt;
+
+    CURSOR: hand;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #99bbdd;
+
+    TEXT-ALIGN: center;
+
+    TEXT-DECORATION: none
+
+}
+
+.TinyTableRowUnselect
+
+{
+
+    FONT-WEIGHT: normal;
+
+    FONT-SIZE: 8pt;
+
+    BACKGROUND-COLOR: #ccddee;
+
+    TEXT-ALIGN: center
+
+}
+
+.TinyTableRowActive
+
+{
+
+    FONT-WEIGHT: normal;
+
+    FONT-SIZE: 8pt;
+
+    BACKGROUND-COLOR: #ffb951;
+
+    TEXT-ALIGN: center
+
+}
+
+.TinyTableHeadCols
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 8pt;
+
+    COLOR: white;
+
+    FONT-FAMILY: Arial;
+
+    BACKGROUND-COLOR: #336699;
+
+    TEXT-ALIGN: center
+
+}
+
+.BodyColumnMainContentTitleNoBox
+
+{
+
+    FONT-WEIGHT: bold;
+
+    FONT-SIZE: 10pt;
+
+    COLOR: #003366;
+
+    FONT-FAMILY: Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
+
+    BACKGROUND-COLOR: transparent
+
+}
+
+.smalldownloads
+
+{
+
+    FONT-SIZE: 8pt;
+
+    FONT-FAMILY: 'Arial Narrow', Arial;
+
+    TEXT-DECORATION: none
+
+}
+
+.a_emulate
+
+{
+
+    CURSOR: hand;
+
+    COLOR: #003399;
+
+    TEXT-DECORATION: underline;
+
+    onFocus: "blur()"
+
+}
+
+.dottedtable
+
+{
+
+    BORDER-RIGHT: 1px dashed;
+
+    BORDER-TOP: 1px dashed;
+
+    BORDER-LEFT: 1px dashed;
+
+    BORDER-BOTTOM: 1px dashed;
+
+    bordercolor: #C0C0C0;
+
+    scrollbar-track-color:#badcdc;
+
+}

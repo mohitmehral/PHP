@@ -1,0 +1,35 @@
+
+1.Postgres install
+
+./configure
+gmake
+su
+gmake install
+adduser postgres
+mkdir /home/pgsql/data
+chown postgres /home/pgsql/data
+su - postgres
+/usr/local/pgsql/bin/initdb -D /home/pgsql/data
+/usr/local/pgsql/bin/postmaster -D /home/pgsql/data >logfile 2>&1 &
+/usr/local/pgsql/bin/createdb EEADAMS
+/usr/local/pgsql/bin/psql EEADAMS
+
+2.Install DB Data
+
+3.Install Web server
+
+4.Install PHP
+
+5.Install PEAR
+
+6.Install Smarty
+
+7.Copy eeadams directory to your webserver
+
+8.Set permissions
+
+9.Edit commons/inc-config.conf
+
+10.check filename for *.ini in DataObjects according to DB name
+
+
