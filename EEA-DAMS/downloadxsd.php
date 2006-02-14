@@ -91,7 +91,7 @@ if ($a->getAuth()) {
                         echo "od:jetType=\"integer\" od:sqlSType=\"smallint\" type=\"xsd:short\"";
                         break;
                     case "int4":
-                        echo "od:jetType=\"integer\" od:sqlSType=\"smallint\" type=\"xsd:short\"";
+                        echo "od:jetType=\"longinteger\" od:sqlSType=\"int\" type=\"xsd:int\"";
                         break;
                     case "bool":
                         echo "od:jetType=\"yesno\" od:sqlSType=\"bit\" type=\"xsd:boolean\"";
