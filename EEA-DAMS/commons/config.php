@@ -343,4 +343,3 @@ function googleMarker ($x, $y, $id, $name = "", $iconurl = ICOLDICON){
 
 
 ?>
-

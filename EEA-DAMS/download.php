@@ -36,12 +36,15 @@ require_once ('commons/config.php');
 require_once 'DataObjects/Public_dams.php';
 require_once 'DataObjects/Public_user_dams.php';
 
+$noquote = array("int4", "int2", "float8");
+
 if ($a->getAuth()) {
-	Define(CSV,',');
+	Define(CSV,"\t");
 
 	$file->log('Download: '.$_SESSION["ID"]);
 
 	if ($_SESSION["ADM"] == 't'){
+
 		$db =& DB::connect(DB);
 		if (PEAR::isError($db)) {
   			  die($db->getMessage());
@@ -51,54 +54,49 @@ if ($a->getAuth()) {
 		
 		if ($_REQUEST["act"]=='dam')
 	 	{	$res =& $db->query('SELECT * FROM DAMS order by NOEEA');
-			$file = 'tmp/dam.txt';
-		}elseif ($_REQUEST["act"]=='use')                {       
+			$file = 'dam.txt';
+		}elseif ($_REQUEST["act"]=='use')                {
 			$res =& $db->query('SELECT * FROM USERS');
-                        $file = 'tmp/users.txt';
+                        $file = 'users.txt';
                 }else{
 			$res =& $db->query('SELECT * FROM USER_DAMS');
-			$file = 'tmp/damsusers.txt';
+			$file = 'damsusers.txt';
 		}
+		header('Content-type: text/plain;charset=UTF-8');
+		header('Content-Disposition: attachment; filename="'.$file.'"');
 		// Always check that result is not an error
 		if (PEAR::isError($res)) {
    			 die($res->getMessage());
 		}
 		
-		if (!$handle = fopen($file, 'w')) {
-		         echo "Error opening ($file)";
-         		exit;
-   		}
+   		$types = $db->tableInfo($res);
 		
 		// there are no more rows
 		$i = 0;
 		while ($res->fetchInto($row, DB_FETCHMODE_ASSOC)) {
     			$head = '';
 			$line = '';
-			// Assuming DB's default fetchmode is DB_FETCHMODE_ORDERED
-	   		 foreach ($row as $k => $v) {
-                         	if ($i==0){
-					$head .= $k.CSV;
+			if ($i==0) {
+				foreach ($row as $k => $v) {
+					echo $k.CSV;
 				}
-				$line .= '"'.$v.'"'.CSV;
-                        }
-			if ($i==0){
-				if (fwrite($handle,  $head."\n") === FALSE) {
-				        echo "Error writing in ($file)";
-       					exit;
-   				}
+				echo "\r\n";
 			}
-			if (fwrite($handle, $line."\n") === FALSE) {
-                               echo "Error writing in ($file)";
-                               exit;
+			$col = 0;
+			// Assuming DB's default fetchmode is DB_FETCHMODE_ORDERED
+	   		foreach ($row as $k => $v) {
+				if (in_array($types[$col]['type'],$noquote) || $v =='')
+					echo $v.CSV;
+				else
+					echo '"' . str_replace('"', '\"', $v) . '"'.CSV;
+				$col++;
                         }
-
-			$i ++;
+			echo "\r\n";
+			$i++;
 		}
-		echo '<script language="javascript">location.replace("'.$file.'")</script>';
+//		echo '<script language="javascript">location.replace("'.$file.'")</script>';
 		
 	}	
 }
-
-
 
 ?>

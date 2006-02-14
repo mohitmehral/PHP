@@ -2328,3 +2328,16 @@ H5
     scrollbar-track-color:#badcdc;
 
 }
+
+#countries li {
+	display: block;
+	float:left;
+	width: 5em;
+	border: 1px solid black;
+	padding: 0.3em;
+	background-color: #bbf;
+	color: #000;
+	font-weight: bold;
+	margin: 0.1em 0.3em;
+	text-align: center;
+}

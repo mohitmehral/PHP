@@ -18,12 +18,12 @@
 		<br/>
 		<b>{$damMap}</b>
 		<br/>
-		<ul>
+		<ul id="countries">
 		{foreach name=outer item=val from=$damCountryFilter}
 			<li><a href="mapit.php?country={$val}">{$val}</a></li>
 		{/foreach}
 		</ul>
-	<br/><p>Download : <ul><li><a href='download.php?act=dam'>dams</a></li>
+	<p style="clear:left">Download : <ul><li><a href='download.php?act=dam'>dams</a></li>
 		<li><a href='download.php?act=use'>users</a></li>
 		<li><a href='download.php?act=udl'>users dams link</a></li></ul>
 	 </p>
