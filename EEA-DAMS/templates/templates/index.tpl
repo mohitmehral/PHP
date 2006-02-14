@@ -23,10 +23,12 @@
 			<li><a href="mapit.php?country={$val}">{$val}</a></li>
 		{/foreach}
 		</ul>
-	<p style="clear:left">Download : <ul><li><a href='download.php?act=dam'>dams</a></li>
-		<li><a href='download.php?act=use'>users</a></li>
-		<li><a href='download.php?act=udl'>users dams link</a></li></ul>
-	 </p>
+	<p style="clear:left">Download :</p>
+		<ul>
+		<li><a href='download.php?act=dam'>dams as CSV</a> <a href='downloadxml.php?act=dam'>/as XML</a></li>
+		<li><a href='download.php?act=use'>users as CSV</a> <a href='downloadxml.php?act=use'>/as XML</a></li>
+		<li><a href='download.php?act=udl'>users dams link as CSV</a> <a href='downloadxml.php?act=udl'>/as XML</a></li>
+		</ul>
 	{/if}
 	</div>
 	<div align="center">
