@@ -1,16 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "DTD/xhtml1-Transitional.dtd">
 <!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">-->
-<html lang="{$langId}">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{$langId}">
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<meta name="Title"      		content="The European Environment Agency"/>
 	<meta name="Publisher"  		content="EEA, The European Environment Agency"/>
 	<meta name="Rights"     		content="Copyright EEA Copenhagen 1993-2004"/>
 	<meta name="Keywords"   		content="Environment, Europe, European Environment Agency, Environmental information, Environmental portal,	European Environmental reference centre"/>
-	<meta name="description" 		content="The  European Environment Agency and its partners in EIONET provide access to information through environmental themes and various services to quickly locate relevant  reports, data and links."/>
 	<link rel="stylesheet" 		type="text/css" href="css/style.css"/>
 	<link rel="stylesheet" 		type="text/css" href="css/damstyle.css"/>
 	<link rel="stylesheet" 		type="text/css" href="css/folders.css"/>
