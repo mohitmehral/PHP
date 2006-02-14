@@ -23,7 +23,7 @@
  * 
  *
  * @abstract	 install.
- * @author       François-Xavier Prunayre <fx.prunayre@oieau.fr>
+ * @author       FranÃ§ois-Xavier Prunayre <fx.prunayre@oieau.fr>
  * @copyright    2005
  * @version    	 1.0
  *

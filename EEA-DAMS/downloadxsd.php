@@ -36,10 +36,8 @@ require_once ('commons/config.php');
 require_once 'DataObjects/Public_dams.php';
 require_once 'DataObjects/Public_user_dams.php';
 
-$noquote = array("int4", "int2", "float8");
-
 if ($a->getAuth()) {
-	$file->log('Download-xml: '.$_SESSION["ID"]);
+	$file->log('Download-xsd: '.$_SESSION["ID"]);
 
 	if ($_SESSION["ADM"] == 't'){
 
@@ -51,21 +49,31 @@ if ($a->getAuth()) {
 		// Proceed with a query...
 		
 		if ($_REQUEST["act"]=='dam')
-	 	{	$res =& $db->query('SELECT * FROM DAMS order by NOEEA');
+	 	{	$res =& $db->query('SELECT * FROM DAMS order by NOEEA LIMIT 0');
 			$file = 'dam';
 		}elseif ($_REQUEST["act"]=='use')                {
-			$res =& $db->query('SELECT * FROM USERS');
+			$res =& $db->query('SELECT * FROM USERS LIMIT 0');
                         $file = 'users';
                 }else{
-			$res =& $db->query('SELECT * FROM USER_DAMS');
+			$res =& $db->query('SELECT * FROM USER_DAMS LIMIT 0');
 			$file = 'damsusers';
 		}
 		header('Content-type: text/xml;charset=UTF-8');
-		header('Content-Disposition: attachment; filename="'.$file.'.xml"');
-		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
-                echo "<dataroot xmlns:od=\"urn:schemas-microsoft-com:officedata\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">
+		header('Content-Disposition: attachment; filename="'.$file.'.xsd"');
+		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+                echo "<xsd:schema xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:od=\"urn:schemas-microsoft-com:officedata\">
+<xsd:element name=\"dataroot\">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref=\"$file\" minOccurs=\"0\" maxOccurs=\"unbounded\"/>
+</xsd:sequence>
+<xsd:attribute name=\"generated\" type=\"xsd:dateTime\"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name=\"$file\">
+<xsd:complexType>
+<xsd:sequence>
 ";
-//xsi:noNamespaceSchemaLocation=\"$file.xsd\"
 		// Always check that result is not an error
 		if (PEAR::isError($res)) {
    			 die($res->getMessage());
@@ -73,22 +81,35 @@ if ($a->getAuth()) {
 		
    		$types = $db->tableInfo($res);
 		
-		// there are no more rows
-		$i = 0;
-		while ($res->fetchInto($row, DB_FETCHMODE_ASSOC)) {
-			echo "<$file>\r\n";
-			$col = 0;
-			// Assuming DB's default fetchmode is DB_FETCHMODE_ORDERED
-	   		foreach ($row as $k => $v) {
-				echo "<$k>" . htmlspecialchars($v,ENT_NOQUOTES,'UTF-8') . "</$k>\r\n";
-				$col++;
-                        }
-			$i++;
-			echo "</$file>\r\n";
-		}
-		
+                foreach ($types as $k => $v) {
+                    echo "<xsd:element name=\"$v[name]\" minOccurs=\"1\" maxOccurs=\"1\"";
+                    switch($v[type]) {
+                    case "float8":
+                        echo "od:jetType=\"double\" od:sqlSType=\"float\" type=\"xsd:double\"";
+                        break;
+                    case "int2":
+                        echo "od:jetType=\"integer\" od:sqlSType=\"smallint\" type=\"xsd:short\"";
+                        break;
+                    case "int4":
+                        echo "od:jetType=\"integer\" od:sqlSType=\"smallint\" type=\"xsd:short\"";
+                        break;
+                    case "bool":
+                        echo "od:jetType=\"yesno\" od:sqlSType=\"bit\" type=\"xsd:boolean\"";
+                        break;
+                    case "varchar":
+                        echo "od:jetType=\"text\" od:sqlSType=\"nvarchar\" type=\"xsd:string\"";
+                        break;
+                    default:
+                        echo "od:jetType=\"text\" od:sqlSType=\"nvarchar\" type=\"xsd:string\"";
+                        break;
+                    }
+                    echo "/>\n";
+                }
 	}	
 }
 
 ?>
-</dataroot>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:schema>
