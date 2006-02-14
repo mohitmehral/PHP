@@ -82,7 +82,7 @@ if ($a->getAuth()) {
    		$types = $db->tableInfo($res);
 		
                 foreach ($types as $k => $v) {
-                    echo "<xsd:element name=\"$v[name]\" minOccurs=\"1\" maxOccurs=\"1\"";
+                    echo "<xsd:element name=\"$v[name]\" minOccurs=\"1\" maxOccurs=\"1\" ";
                     switch($v[type]) {
                     case "float8":
                         echo "od:jetType=\"double\" od:sqlSType=\"float\" type=\"xsd:double\"";
