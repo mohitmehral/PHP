@@ -49,6 +49,17 @@ if ($a->getAuth()) {
 		else
 			$dam->valid = 0;
 
+		if ($_REQUEST["is_oncanal"] != null)
+			$dam->is_oncanal = 1;
+		else 
+			$dam->is_oncanal = 0;
+
+		if ($_REQUEST["is_dyke"] != null)
+			$dam->is_dyke = 1;
+		else 
+			$dam->is_dyke = 0;
+		
+
 
 		$dam->update(DB_DATAOBJECT_WHEREADD_ONLY);
 		$dam->free();	
