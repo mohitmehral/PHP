@@ -63,6 +63,8 @@
 				<textarea rows="6" cols="30" id="comment" name="comment">
 					{$dam->comments}
 				</textarea>
+				<input type="checkbox" id="is_oncanal" name="is_oncanal" {if $dam->is_oncanal eq 't'}checked="checked"{/if}/>{$is_oncanal} <br/>
+				<input type="checkbox" id="is_dyke" name="is_dyke" {if $dam->is_dyke eq 't'}checked="checked"{/if}/>{$is_dyke} <br/>
 				<input class="SearchButton" type="submit" value="{$updatecomments}"/>
 			
 		</td><td>
