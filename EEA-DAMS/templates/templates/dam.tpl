@@ -153,6 +153,7 @@
 			<ul>	
 				<li>{$purpose}: {$dam->ic_purpose}</li>
 				<li>{$owner}: {$dam->ic_owner}</li>
+				<li>{$yearic}: {$dam->ic_year}</li>
 				<li>{$yearopp}: {$dam->year_opp}</li>
 				<li>{$yeardead}: {$dam->year_dead}</li>
 				<li>{$note}: {$dam->ic_note}</li>
