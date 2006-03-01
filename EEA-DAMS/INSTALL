@@ -1,18 +1,18 @@
 
 1.Postgres install
 
-./configure
-gmake
-su
-gmake install
-adduser postgres
-mkdir /home/pgsql/data
-chown postgres /home/pgsql/data
-su - postgres
-/usr/local/pgsql/bin/initdb -D /home/pgsql/data
-/usr/local/pgsql/bin/postmaster -D /home/pgsql/data >logfile 2>&1 &
-/usr/local/pgsql/bin/createdb EEADAMS
-/usr/local/pgsql/bin/psql EEADAMS
+    ./configure
+    gmake
+    su
+    gmake install
+    adduser postgres
+    mkdir /home/pgsql/data
+    chown postgres /home/pgsql/data
+    su - postgres
+    /usr/local/pgsql/bin/initdb -D /home/pgsql/data
+    /usr/local/pgsql/bin/postmaster -D /home/pgsql/data >logfile 2>&1 &
+    /usr/local/pgsql/bin/createdb EEADAMS
+    /usr/local/pgsql/bin/psql EEADAMS
 
 2.Install DB Data
 
@@ -28,8 +28,10 @@ su - postgres
 
 8.Set permissions
 
+    These directories under eeadams must be owned by apache and writable by the http server:
+    tmp and templates/templates_c
+
 9.Edit commons/inc-config.conf
 
 10.check filename for *.ini in DataObjects according to DB name
-
 
