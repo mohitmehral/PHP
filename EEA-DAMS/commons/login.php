@@ -32,7 +32,7 @@
  
 require_once "Auth.php";
 require_once 'DataObjects/Public_users.php';
-
+require_once 'DataObjects/Public_metadata.php';
 
 /**
  * 
@@ -52,26 +52,37 @@ if ($a->getAuth()) {
 	  if($_GET["act"] == 'logout') {
 	    $a->logout();										// Log user out
 	  } 
-  }else {
-  	$do = new DataObjects_Public_Users();					// Get user info
-	$do->whereAdd("LOGIN = '".$a->getUsername()."'");
-	$do->find(true);
-  	
-  	$smarty->assign("useracc",		$do->firstname." ".$do->surname);	// Template ini for user
-    $smarty->assign("roleAdm",		$do->roleadm);			// General ADM role for current user
-   
-	// Settings sessions variables 
-	$_SESSION["ADM"] = $do->roleadm;
-  	$_SESSION["ID"] = $do->id;
-  	$_SESSION["LOGIN"] = $do->login;
-  	
-    $DAMnumber = $do->getDamNumber ();						// User statistics
-    $smarty->assign("userDamNumber", $DAMnumber);
-  
-    $smarty->assign("mnuUserId", 	$do->id);
-    $smarty->assign("loginfailed",  false);
-    $do->free();
-  }
+  }else {  	
+  	// Check lock on db is on / off
+  	$doc = new DataObjects_Public_metadata();					// Get user info
+	$doc->whereAdd("CODE = 'lock'");
+	$doc->find(true);
+  	if ($doc->value=='on')
+  	{	$smarty->assign("loginfailed", "EEA-DAMS database is in maintenance. Try to connect later. Thanks for your comprehension.");
+	    	$a->logout();
+	}else{
+		$do = new DataObjects_Public_Users();					// Get user info
+		$do->whereAdd("LOGIN = '".$a->getUsername()."'");
+		$do->find(true);
+	  	
+	  	$smarty->assign("useracc",		$do->firstname." ".$do->surname);	// Template ini for user
+	    $smarty->assign("roleAdm",		$do->roleadm);			// General ADM role for current user
+	   
+		// Settings sessions variables 
+		$_SESSION["ADM"] = $do->roleadm;
+	  	$_SESSION["ID"] = $do->id;
+	  	$_SESSION["LOGIN"] = $do->login;
+	  	
+	    $DAMnumber = $do->getDamNumber ();						// User statistics
+	    $smarty->assign("userDamNumber", $DAMnumber);
+	  
+	    $smarty->assign("mnuUserId", 	$do->id);
+	    $smarty->assign("loginfailed",  false);
+	    $do->free();
+	    
+     }
+     $doc->free();
+   }
 } else {
 	// not authenticated - move to home page
     $smarty->assign("loginfailed", $i18n->get('notauthenticated', 'all'));        
