@@ -187,47 +187,60 @@ function createMarker(point, id, iconimg) {
 ';
 
 
-    if ($this->x_icold==null || $this->y_icold==null || 
-    	$this->x_icold=='' || $this->y_icold=='' || 
-    	$this->x_icold==0 || $this->y_icold==0 ||		
-    	$this->x_icold==$this->outOfRange || $this->y_icold==$this->outOfRange ){  
-		$gMap.= 'map.centerAndZoom(new GPoint('.
+// Zoom to where ? VALID -> EEA -> ICOLD -> COUNTRY
+if ($this->x_val!=null && $this->y_val!=null && 
+		$this->y_val!='' &&	$this->x_val!='' && 
+		$this->x_val!=0 && $this->y_val!=0 && 
+		$this->x_val!=$this->outOfRange && $this->y_val!=$this->outOfRange)
+		$gMap.= 'map.centerAndZoom(new GPoint('.$this->x_val.', '.$this->y_val.'), 4); // Val';	// Zoom to validated position
+elseif ($this->x_prop!=null && $this->y_prop!=null && 
+		$this->x_prop!='' && $this->y_prop!='' && 
+		$this->x_prop!=0 && $this->y_prop!=0 &&		
+		$this->x_prop != $this->outOfRange && $this->y_prop != $this->outOfRange)   
+		$gMap.= 'map.centerAndZoom(new GPoint('.$this->x_prop.', '.$this->y_prop.'), 4); // EEA';	// Zoom to EEA position
+elseif ($this->x_icold!=null && $this->y_icold!=null && 
+    	$this->x_icold!='' && $this->y_icold!='' && 
+    	$this->x_icold!=0 && $this->y_icold!=0 &&		
+    	$this->x_icold!=$this->outOfRange && $this->y_icold!=$this->outOfRange)
+ 		$gMap.= 'map.centerAndZoom(new GPoint('.$this->x_icold.', '.$this->y_icold.'), 4); // ICOLD';	// ICOLD or Country center
+else
+    	$gMap.= 'map.centerAndZoom(new GPoint('.
 					$this->countryCoord[$this->country]["X"].', '.
 					$this->countryCoord[$this->country]["Y"].'), '.
 					$this->countryCoord[$this->country]["Z"].');';	// ICOLD or Country center
-	
-	}else{
-		$gMap.= 'map.centerAndZoom(new GPoint('.$this->x_icold.', '.$this->y_icold.'), 4);';	// ICOLD or Country center
 
+		
+
+		
+// What to display ? 
+if ($this->x_icold!=null && $this->y_icold!=null && 
+    	$this->x_icold!='' && $this->y_icold!='' && 
+    	$this->x_icold!=0 && $this->y_icold!=0 &&		
+    	$this->x_icold!=$this->outOfRange && $this->y_icold!=$this->outOfRange)
 		$gMap.= '
 		var pointICOLD = new GPoint('.$this->x_icold.', '.$this->y_icold.');
       	  	var markerICOLD = createMarker(pointICOLD, "ICOLD position", "'.ICOLDICON.'");
        	map.addOverlay(markerICOLD);';
 	
-	}
 	
-	
-	if ($this->x_val==null || $this->y_val==null || 
-		$this->y_val=='' ||	$this->x_val=='' || 
-		$this->x_val==0 || $this->y_val==0 || 
-		$this->x_val==$this->outOfRange || $this->y_val==$this->outOfRange)
-	{}
-	else {  
+if ($this->x_val!=null && $this->y_val!=null && 
+		$this->y_val!='' &&	$this->x_val!='' && 
+		$this->x_val!=0 && $this->y_val!=0 && 
+		$this->x_val!=$this->outOfRange && $this->y_val!=$this->outOfRange)
 		$gMap.= '
 		 var pointVAL = new GPoint('.$this->x_val.', '.$this->y_val.');
        	 var markerVAL = createMarker(pointVAL, "Validated position", "'.VALIDICON.'");
 	        map.addOverlay(markerVAL);';
-	}
-	if (($this->x_prop!=null && $this->y_prop!=null) || 
-	($this->x_prop!='' && $this->y_prop!='') || 
-	($this->x_prop!=0 && $this->y_prop!=0) ||		
-	($this->x_prop!=$this->outOfRange && $this->y_prop!=$this->outOfRange ) ){  
+	
+if ($this->x_prop!=null && $this->y_prop!=null && 
+		$this->x_prop!='' && $this->y_prop!='' && 
+		$this->x_prop!=0 && $this->y_prop!=0 &&		
+		$this->x_prop != $this->outOfRange && $this->y_prop != $this->outOfRange) 
 	$gMap.= '
 		 var pointEEA = new GPoint('.$this->x_prop.', '.$this->y_prop.');
        	 var markerEEA = createMarker(pointEEA, "Proposed position", "'.EEAICON.'");
 	        map.addOverlay(markerEEA);';
-	}
-	
+		
 	$gMap .='
 		
 	   /* } else {
