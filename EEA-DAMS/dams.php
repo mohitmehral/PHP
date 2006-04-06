@@ -121,7 +121,7 @@ if ($a->getAuth()) {
 			$whereAdd .= " and COUNTRY like '%".$_REQUEST["srcCountry"]."%'";	
 			$urlFilter .= '&amp;srcCountry='.$_REQUEST["srcCountry"];
 		}
-	$orderBy = " order by SCORE, COUNTRY, NAME";
+	$orderBy = " order by VALID desc, COUNTRY, NAME asc";
 
 	
 
