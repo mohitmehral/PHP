@@ -1,31 +1,42 @@
-/**
- * EEA-DAMS 
- *
- * Dam exact position (expressed as geographical coordinates) is generally unavailable. 
- * A special process has been developed by the EEA (AIR3) to locate as 
- * accurately as possible the dams listed in the Icold register on large 
- * dams. This pre-location task is carried out by ETC/TE. The current 
- * number of large dams is ~6000 in the EEA area.
- * Following agreement with Icold, the national focal points of Icold 
- * will be requested to accept / correct the proposed location. These 
- * organisations are based in countries and know accurately where dams are, 
- * even though they do not systematically have the coordinates at their 
- * disposal. To check / correct the position, it has been considered that 
- * an Internet tool, providing an image of the most likely position 
- * and a facility to fix a new position by drag-and-drop a marker on the 
- * image would be the best solution from the point of view of minimizing 
- * the burden, avoiding copyright issues nevertheless ensuring security in 
- * transactions.
- * This arrangement follows the methodology of pre-positioning and 
- * positioning dams developed by AIR3 and delivered to the ETC/TE that 
- * has to carry out this work.
- * 
- *
- * @abstract	 
- * @author       François-Xavier Prunayre <fx.prunayre@oieau.fr>
- * @copyright    2005
- * @version    	 1.0
- *
- * 
- */
+                            EEA-DAMS 
+
+Dam exact position (expressed as geographical coordinates) is generally
+unavailable.  A special process has been developed by the EEA (AIR3) to
+locate as accurately as possible the dams listed in the Icold register on
+large dams. This pre-location task is carried out by ETC/TE. The current
+number of large dams is ~6000 in the EEA area.  Following agreement
+with Icold, the national focal points of Icold will be requested to
+accept / correct the proposed location. These organisations are based
+in countries and know accurately where dams are, even though they do
+not systematically have the coordinates at their disposal. To check /
+correct the position, it has been considered that an Internet tool,
+providing an image of the most likely position and a facility to fix a
+new position by drag-and-drop a marker on the image would be the best
+solution from the point of view of minimizing the burden, avoiding
+copyright issues nevertheless ensuring security in transactions.
+
+This arrangement follows the methodology of pre-positioning and
+positioning dams developed by AIR3 and delivered to the ETC/TE that has
+to carry out this work.
+
+                          LICENSE
+
+The contents of this package are subject to the Mozilla Public License
+Version 1.1 (the "License"); you may not use this file except in
+compliance with the License. You may obtain a copy of the License at
+http://www.mozilla.org/MPL/
+
+Software distributed under the License is distributed on an "AS IS"
+basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+License for the specific language governing rights and limitations under
+the License.
+
+The Original Code is "EEA-DAMS version 1.0"
+
+The Initial Owner of the Original Code is European Environment Agency
+(EEA).  Portions created by I.O.Water are Copyright (C) 2005 by European
+Environment Agency.  All Rights Reserved.
+
+Contributor(s):
+  Original Code: François-Xavier Prunayre, I.O.Water <fx.prunayre@oieau.fr>
 
