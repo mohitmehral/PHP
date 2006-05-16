@@ -9,7 +9,7 @@
 <div id="options">
 <table class="LeftBoxTable" width="150" cellspacing="0" cellpadding="0" border="0">
 <tbody><tr>
-      <td class="boxtitle" background="http://template.eea.eu.int/images/boxtitlebg"><b>Filter lang</b></td>
+      <td class="boxtitle" background="/css/boxtitlebg"><b>Filter lang</b></td>
    </tr>
    <tr>
       <td>

@@ -2,7 +2,7 @@
  * EEA-DAMS 
  *
  * @abstract	 CSS style from EEA web site.
- * @author       François-Xavier Prunayre <fx.prunayre@oieau.fr>
+ * @author       FranÃ§ois-Xavier Prunayre <fx.prunayre@oieau.fr>
  * @copyright    2005
  * @version    	 1.0
  *
@@ -12,7 +12,7 @@
 EEA Style Sheet - ReDesign 2002, and for Multilingual site 2003 */
 /* ver. 1.8, 2005/08/30 14:48:11.512 GMT+2 */
 
-BODY { 
+body { 
         background-color : #CCCCCC;
 	margin-width     : 0pt;
 	margin-weight    : 0pt;
@@ -36,7 +36,8 @@ color: #003366; text-decoration: underline;
 
 /* line marker for homepage */
 hr.home, HR.home, Hr.home {
-color: #FFFFFF; border-top: 1px dashed #CCCCCC;
+        color: #FFFFFF;
+        border-top: 1px dashed #CCCCCC;
 }
 
 /* Use this for justified paragraphs */
@@ -378,7 +379,6 @@ ul li {
 	margin-left:-20px;
 	margin-bottom:3px;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-	/*list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);*/
 	vertical-align : bottom;
 	font-size : 10pt;
 }
@@ -398,7 +398,6 @@ li.positive {
 	margin-bottom:3.0pt;
 	margin-left:3.0pt;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-        /* list-style-image : url(http://themes.eea.eu.int/images/good); */
         list-style-image : none;
         list-style-type: none;
         list-style-position: inside;
@@ -409,7 +408,6 @@ li.neutral {
 	margin-bottom:3.0pt;
 	margin-left:3.0pt;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-        /* list-style-image : url(http://themes.eea.eu.int/images/neutral); */
         list-style-image : none;
         list-style-type: none;
         list-style-position: inside;
@@ -420,7 +418,6 @@ li.negative {
 	margin-bottom:3.0pt;
 	margin-left:3.0pt;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-        /* list-style-image : url(http://themes.eea.eu.int/images/poor); */
         list-style-image : none;
         list-style-type: none;
         list-style-position: inside;
@@ -442,7 +439,6 @@ ul.LogoBulletList {
 
 li.LogoBulletList {
    margin           : 0px 0px 0px 15px;
-   /*list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);*/
 }
 
 
@@ -658,7 +654,7 @@ background-color : #CCCCCC;
 }
 
 .BodyColumnLeft {
-        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+        background-image : url(bgr_grey_stripe_columns_left_right_filling.jpg);
 }
 
 .BodyColumnLeftContent {
@@ -669,7 +665,7 @@ background-color : #CCCCCC;
 
 
 .BodyColumnRight {
-        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+        background-image : url(bgr_grey_stripe_columns_left_right_filling.jpg);
 }
 
 .BodyColumnRightContent {
@@ -1273,7 +1269,6 @@ ul li {
 	margin-left:-20px;
 	margin-bottom:3px;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-	/*list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);*/
 	vertical-align : bottom;
 	font-size : 10pt;
 }
@@ -1293,7 +1288,6 @@ li.positive {
 	margin-bottom:3.0pt;
 	margin-left:3.0pt;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-        /* list-style-image : url(http://themes.eea.eu.int/images/good); */
         list-style-image : none;
         list-style-type: none;
         list-style-position: inside;
@@ -1304,7 +1298,6 @@ li.neutral {
 	margin-bottom:3.0pt;
 	margin-left:3.0pt;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-        /* list-style-image : url(http://themes.eea.eu.int/images/neutral); */
         list-style-image : none;
         list-style-type: none;
         list-style-position: inside;
@@ -1315,7 +1308,6 @@ li.negative {
 	margin-bottom:3.0pt;
 	margin-left:3.0pt;
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
-        /* list-style-image : url(http://themes.eea.eu.int/images/poor); */
         list-style-image : none;
         list-style-type: none;
         list-style-position: inside;
@@ -1337,7 +1329,7 @@ ul.LogoBulletList {
 
 li.LogoBulletList {
    margin           : 0px 0px 0px 15px;
-   list-style-image : url(http://template.eea.eu.int/images/eea_all_bullet_eea_icon.gif);
+   list-style-image : url(eea_all_bullet_eea_icon.gif);
 }
 
 
@@ -1553,7 +1545,7 @@ background-color : #CCCCCC;
 }
 
 .BodyColumnLeft {
-        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+        background-image : url(bgr_grey_stripe_columns_left_right_filling.jpg);
 }
 
 .BodyColumnLeftContent {
@@ -1564,7 +1556,7 @@ background-color : #CCCCCC;
 
 
 .BodyColumnRight {
-        background-image : url(http://template.eea.eu.int/images/bgr_grey_stripe_columns_left_right_filling.jpg);
+        background-image : url(bgr_grey_stripe_columns_left_right_filling.jpg);
 }
 
 .BodyColumnRightContent {

@@ -261,8 +261,8 @@ function createMarker(point, id, iconimg) {
 
 //if (GBrowserIsCompatible()) {
  	//var WMS_URL_EEA="http://dev.sandre.eaufrance.fr/eeadamsgeo?";
-	var WMS_URL_EEA="http://dampos-demo.eea.eu.int/cgi-bin/wseea?";
-	var WMS_URL_EEAGEONODE="http://geonode.eea.eu.int/wmsconnector/com.esri.wms.Esrimap?" 
+	var WMS_URL_EEA="http://dampos-demo.eea.europa.eu/cgi-bin/wseea?";
+	var WMS_URL_EEAGEONODE="http://geonode.eea.europa.eu/wmsconnector/com.esri.wms.Esrimap?" 
 	var WMS_URL_JRC="http://wise.jrc.it/cgi-bin/mapserv?map=/home/www/utils-cgi-bin/map/wms.map&";
 	var WMS_URL_I2K="http://mapserver.jrc.it/wmsconnector/com.esri.wms.Esrimap/image2000_pan?";
 	

@@ -8,7 +8,6 @@
 	<meta name="Title"      		content="The European Environment Agency"/>
 	<meta name="Publisher"  		content="EEA, The European Environment Agency"/>
 	<meta name="Rights"     		content="Copyright EEA Copenhagen 1993-2004"/>
-	<meta name="Keywords"   		content="Environment, Europe, European Environment Agency, Environmental information, Environmental portal,	European Environmental reference centre"/>
 	<link rel="stylesheet" 		type="text/css" href="css/style.css"/>
 	<link rel="stylesheet" 		type="text/css" href="css/damstyle.css"/>
 	<link rel="stylesheet" 		type="text/css" href="css/folders.css"/>
@@ -41,9 +40,9 @@
          <table width="770" cellspacing="0" cellpadding="0" border="0" class="TopBannerMain">
 
             <tr>
-               <td align="right" valign="top" class="TopBannerMain"  width="70"   ><a href="http://www.eea.eu.int/main_html"><img src="http://template.eea.eu.int/TopMenu/logoimgInternet" alt="EEA Home" title="EEA Home" height="63" width="70" border="0" /></a></td>
+               <td align="right" valign="top" class="TopBannerMain"  width="70"   ><a href="/"><img src="css/logo.jpg" alt="Home" title="Home" height="63" width="70" border="0" /></a></td>
                
-               <td width="470" valign="top" align="left" class="TopBannerMain"    ><a href="http://www.eea.eu.int/main_html"><img src="http://template.eea.eu.int/TopMenu/bannerimgInternet" alt="EEA Home" title="EEA Home" height="63" width="470" border="0" /></a></td>
+               <td width="470" valign="top" align="left" class="TopBannerMain"    ><a href="/"><img src="css/banner.gif" alt="Home" title="Home" height="63" width="470" border="0" /></a></td>
                <!-- search box -->
               
                <td class="TopBannerRight" align="right" valign="bottom" width="230" height="63"> 
