@@ -1,0 +1,26 @@
+
+[SETTINGS]
+TITLE=EEA - Data service - DAMS
+
+[PATH]
+BASEDIR=D:/WORKSPACE/EEA-DAMS/
+WWWDIR=/eeadams/
+TPLDIR=templates/
+SCHEMADIR=D:/WORKSPACE/EEA-DAMS/DataObjects/
+
+[DB]
+DB_TYPE=pgsql
+DB_USER=postgres
+DB_PASS=postgres
+DB_NAME=EEADAMS
+DB_SERVER=localhost
+
+[MAP]
+TOPOPATH=img/topo/
+SPUDPATH=img/spud/
+SPANPATH=img/span/
+GOOGLEKEY=ABQIAAAAOiv5YlmaLzgjKukiZ3CcWhQSLWdk4ZF39yGhlmkL3uwf2PqFQhTBAVuc7Yrz14WR5V-sOv1sRv1Qbg
+ICOLDICON=http://dev.sandre.eaufrance.fr/eeadams/img/icon/red.png
+VALIDICON=http://dev.sandre.eaufrance.fr/eeadams/img/icon/green.png
+EEAICON=http://dev.sandre.eaufrance.fr/eeadams/img/icon/blue.png
+
