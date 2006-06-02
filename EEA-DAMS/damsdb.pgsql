@@ -1484,7 +1484,7 @@ INSERT INTO user_dams (cd_user, cd_dam) VALUES (1, 'DFR00259');
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO users (id, firstname, surname, login, "password", email, roleadm, rolelang, roledam, address, phone) VALUES (1, 'Validator', 'Dams', 'dams', '4ee2cf2c13ce32ff35a20010fbba866e', 'dams@nowhere.eu', false, true, true, '', '');
+INSERT INTO users (id, firstname, surname, login, "password", email, roleadm, rolelang, roledam, address, phone) VALUES (1, 'Dams', 'Administrator', 'dams', '4ee2cf2c13ce32ff35a20010fbba866e', 'dams@nowhere.eu', true, true, true, 'No address', '555-1212');
 
 
 --

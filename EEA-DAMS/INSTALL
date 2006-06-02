@@ -1,37 +1,94 @@
+                              INSTALL
+ 
+These instructions are for the purpose of getting quickly launched. For more
+detailed instructions see docs/Users-guide.doc
 
-1.Postgres install
+----------------
+1. Postgres install
 
-    ./configure
-    gmake
-    su
-    gmake install
-    adduser postgres
-    mkdir /home/pgsql/data
-    chown postgres /home/pgsql/data
-    su - postgres
-    /usr/local/pgsql/bin/initdb -D /home/pgsql/data
-    /usr/local/pgsql/bin/postmaster -D /home/pgsql/data >logfile 2>&1 &
-    /usr/local/pgsql/bin/createdb EEADAMS
-    /usr/local/pgsql/bin/psql EEADAMS
+    You can either install the RPM called postgresql-server or from source:
 
-2.Install DB Data
+      ./configure
+      gmake
+      su
+      gmake install
+      adduser postgres
+      mkdir /home/pgsql/data
+      chown postgres /home/pgsql/data
+      su - postgres
+      initdb -D /home/pgsql/data
 
-3.Install Web server
+2. Start the database server
 
-4.Install PHP
+    If you have built from source:
 
-5.Install PEAR
+      su - postgres
+      postmaster -D /home/pgsql/data >logfile 2>&1 &
 
-6.Install Smarty
+    If you have installed from RPM:
 
-7.Copy eeadams directory to your webserver
+      su - root
+      /sbin/chkconfig postgresql on
+      /sbin/service postgresql start
 
-8.Set permissions
+2. Install DB Data
 
-    These directories under eeadams must be owned by apache and writable by the http server:
+      su - postgres
+
+   Ensure psql is in your path. If postgresql is installed from source do:
+
+      PATH=$PATH:/usr/local/pgsql/bin; export PATH
+
+   We have prepared a dump file with the 
+
+    createdb EEADAMS
+    pg_restore --dbname=EEADAMS damsdb.pgsql
+
+3. Install Apache Web server
+
+4. Install PHP
+
+   Version 4.x or 5.x is required
+
+5. Install PEAR
+
+  This normally comes as an RPM-package called php-pear on Redhat, but you'll
+  need some more packages that you install with "pear install packageName":
+  You need Auth, Config, DB, DB_DataObject, Date, Log, PEAR, Translation2
+
+6. Install Smarty
+
+   On Redhat the package is called php-Smarty
+
+7. Copy website directory to your webserver
+
+   Set up a virtual host on apache:
+
+    NameVirtualHost *:80
+    <VirtualHost *:80>
+     ServerName dampos.eea.europa.eu
+     ServerAlias dampos
+     php_value memory_limit 33554432
+     CustomLog /var/local/logs/dampos/access combined
+     DocumentRoot /var/local/dampos/website
+    </VirtualHost>
+
+
+8. Set permissions
+
+    These directories under website must be owned by apache and writable by the http server:
     tmp and templates/templates_c
 
-9.Edit commons/inc-config.conf
+9. Edit commons/inc-config.conf
 
-10.check filename for *.ini in DataObjects according to DB name
+10. Check filename for *.ini in DataObjects according to DB name
 
+11. Log in for the first time.
+
+  If you use the packaged database there is an account with the name 'dams' and
+  the password 'dams'. As soon as you have launched you should change the
+  password. You could do that even before you import the data. The password
+  in the database is the md5 sum of the password, and you can generate a new
+  one like this:
+    php -r 'echo md5("newpw");'
+  and change it in damsdb.pgsql
