@@ -13,7 +13,7 @@ EEA Style Sheet - ReDesign 2002, and for Multilingual site 2003 */
 /* ver. 1.8, 2005/08/30 14:48:11.512 GMT+2 */
 
 body { 
-        background-color : white;
+        background-color : #CCCCCC;
 	margin-width     : 0pt;
 	margin-weight    : 0pt;
 	margin-left      : 0pt;
@@ -227,7 +227,7 @@ line-height: normal;
 font-weight: bold; 
 text-align:center;
 color: #FFFFFF;
-height: 22px;
+height: 22;
 background-color : #003366;
 text-decoration: none; 
 vertical-align : middle;}
@@ -353,7 +353,7 @@ p.MsoCommentText, li.MsoCommentText, div.MsoCommentText
 	font-family:Verdana, Tahoma, Geneva, Arial, Helvetica, sans-serif;
 	}
 
-p.MainFont, p.mainfont, p.Mainfont, li.MainFont, li.mainfont, li.Mainfont, div.MainFont,div.mainfont, div.Mainfont
+p.MainFont, p.mainfont, p.Mainfont, li.MainFont, li.mainfont, li.Mainfont, div.MainFont,div.mainfont, div.Mainfont,
 	{
 	margin-top:3.0pt;
 	margin-right:0pt;
@@ -568,12 +568,12 @@ background-color: #003366;}
 }
 
 .TopBannerMain {
-	height           : 63px;
+	height           : 63;
 }
 
 .TopBannerLeft {
 	background-color : #8CBEBD;
-	height           : 63px;
+	height           : 63;
 }
 
 .TopBannerRight {
@@ -630,7 +630,7 @@ background-color : #CCCCCC;
 	text-decoration  : none; 
 	text-align       : center;
 	vertical-align   : middle;
-	height           : 22px;
+	height           : 22;
 	margin-top       : 0pt;
 	margin-right     : 0pt;
 	margin-bottom    : 0pt;
@@ -729,7 +729,7 @@ background-color : #CCCCCC;
 	font-weight: bold; 
 	text-decoration: none; 
 	color: #FFFFFF;
-	height: 22px;
+	height: 22;
 	margin-top:0.0pt;
 	margin-right:0.0pt;
 	margin-bottom:0.0pt;
@@ -757,7 +757,7 @@ A.CopyrightMessage {
    background-image: url("bgImgEurope")
 }
 .DarkBottom { 
-   border-bottom : 1px solid #000000; 
+   border-bottom : 1 solid #000000; 
 }
 
 /* dtml-min_doc_height; */
@@ -879,7 +879,7 @@ border:2px dotted #669999;
 padding:10px;
 }
 
-/* http://template.eea.eu.int/eea_print.css */
+http://template.eea.eu.int/eea_print.css
 
 @import url(eea.css);
 
@@ -898,13 +898,13 @@ body {
 background-color:white;
 }
 
-/* http://template.eea.eu.int/eea.css */
+http://template.eea.eu.int/eea.css
 
 /* EEA Style Sheet - ReDesign 2002, and for Multilingual site 2003 */
 /* ver. 1.8, 2005/08/30 14:48:11.512 GMT+2 */
 
 BODY { 
-        background-color : white;
+        background-color : #CCCCCC;
 	margin-width     : 0pt;
 	margin-weight    : 0pt;
 	margin-left      : 0pt;
@@ -1117,7 +1117,7 @@ line-height: normal;
 font-weight: bold; 
 text-align:center;
 color: #FFFFFF;
-height: 22px;
+height: 22;
 background-color : #003366;
 text-decoration: none; 
 vertical-align : middle;}
@@ -1459,12 +1459,12 @@ background-color: #003366;}
 }
 
 .TopBannerMain {
-	height           : 63px;
+	height           : 63;
 }
 
 .TopBannerLeft {
 	background-color : #8CBEBD;
-	height           : 63px;
+	height           : 63;
 }
 
 .TopBannerRight {
@@ -1521,7 +1521,7 @@ background-color : #CCCCCC;
 	text-decoration  : none; 
 	text-align       : center;
 	vertical-align   : middle;
-	height           : 22px;
+	height           : 22;
 	margin-top       : 0pt;
 	margin-right     : 0pt;
 	margin-bottom    : 0pt;
@@ -1620,7 +1620,7 @@ background-color : #CCCCCC;
 	font-weight: bold; 
 	text-decoration: none; 
 	color: #FFFFFF;
-	height: 22px;
+	height: 22;
 	margin-top:0.0pt;
 	margin-right:0.0pt;
 	margin-bottom:0.0pt;
