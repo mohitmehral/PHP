@@ -20,7 +20,7 @@
 	<script src="http://maps.google.com/maps?file=api&amp;v=1&amp;key={$GOOGLEMAPKEY}" type="text/javascript"></script>
 	<title>{$Name}</title>
 </head>
-<body>
+<body onunload="GUnload()">
 <div id="title">
 <!-- Source : EEA website / Start -->
 <!-- Sitebanner, including Search  -->
