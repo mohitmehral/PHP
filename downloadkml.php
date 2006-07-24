@@ -73,20 +73,56 @@ echo "<kml xmlns=\"http://earth.google.com/kml/2.0\">\n";
 echo "<Document>\n";
 if ($country == '') {
 	echo"      <name>Dams in Europe using ".$coordinates." coordinates</name>\n";
-	echo"      <description>Dams in Europe. Arguments can be country=&lt;countrycode&gt; and coordinates=&lt;val|prop|icold&gt;</description>\n";
+	echo"      <description><![CDATA[Dams in Europe. Arguments can be country=&lt;countrycode&gt; and coordinates=&lt;val|prop|icold&gt;]]></description>\n";
 } else {
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 	$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 	echo"      <name>Dams in ".$line['cname']." using ".$coordinates."</name>\n";
-        echo"      <description>Dams in ".$line['cname']."</description>\n";
+        echo"      <description><![CDATA[Dams in ".$line['cname'].". Additional argument can be coordinates=&lt;val|prop|icold&gt;]]></description>\n";
 	pg_free_result($result);
 }
-#while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-#   foreach ($line as $col_value) {
-#       echo "$col_value,";
-#   }
-#}
+?>
+<Style id="icold">
+  <IconStyle>
+    <Icon>
+      <href>root://icons/palette-4.png</href>
+      <x>32</x>
+      <y>128</y>
+      <w>32</w>
+      <h>32</h>
+    </Icon>
+  </IconStyle>
+  <LabelStyle>
+  </LabelStyle>
+</Style>
+<Style id="prop">
+  <IconStyle>
+    <Icon>
+      <href>root://icons/palette-3.png</href>
+      <x>128</x>
+      <w>32</w>
+      <h>32</h>
+    </Icon>
+  </IconStyle>
+  <LabelStyle>
+  </LabelStyle>
+</Style>
+<Style id="val">
+  <IconStyle>
+    <Icon>
+      <href>root://icons/palette-3.png</href>
+      <x>128</x>
+      <y>32</y>
+      <w>32</w>
+      <h>32</h>
+    </Icon>
+  </IconStyle>
+  <LabelStyle>
+  </LabelStyle>
+</Style>
+<?php
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+
 while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "<Placemark>\n";
     echo "<name>".htmlspecialchars($line['name'])."</name>\n";
@@ -100,6 +136,9 @@ while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo htmlspecialchars("Engineer: ".$line['engineer']."<br>\n");
     echo htmlspecialchars("Contractor: ".$line['contractor']."<br>\n");
     echo "</description>\n";
+    echo "<open>0</open>\n";
+    echo "<styleUrl>#$coordinates</styleUrl>\n";
+
     echo "<Point>\n";
     echo "<coordinates>".$line["x_$coordinates"].','.$line["y_$coordinates"].',0</coordinates>'."\n";
     echo "</Point>\n";
