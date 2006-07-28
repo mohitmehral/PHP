@@ -22,7 +22,7 @@ Shows the 20 largest in view at any time.]]></description>
       <name>Validated dams</name>
       <description><![CDATA[Reading from DAMPOS service]]></description>
       <Url>
-        <href>http://dampos.eea.europa.eu/showkml.php?coordinates=val</href>
+        <href>http://dampos.eea.europa.eu/downloadkml.php?coordinates=val</href>
         <viewRefreshMode>onStop</viewRefreshMode>
         <viewRefreshTime>3</viewRefreshTime>
       </Url>
@@ -31,7 +31,7 @@ Shows the 20 largest in view at any time.]]></description>
       <name>Proposed dams</name>
       <description><![CDATA[Reading from DAMPOS service]]></description>
       <Url>
-        <href>http://dampos.eea.europa.eu/showkml.php?coordinates=prop</href>
+        <href>http://dampos.eea.europa.eu/downloadkml.php?coordinates=prop</href>
         <viewRefreshMode>onStop</viewRefreshMode>
         <viewRefreshTime>3</viewRefreshTime>
       </Url>
@@ -40,7 +40,7 @@ Shows the 20 largest in view at any time.]]></description>
       <name>iCold dams</name>
       <description><![CDATA[ICOLD: International commission on large dams<br>http://www.icold-cigb.org]]></description>
       <Url>
-        <href>http://dampos.eea.europa.eu/showkml.php?coordinates=icold</href>
+        <href>http://dampos.eea.europa.eu/downloadkml.php?coordinates=icold</href>
         <viewRefreshMode>onStop</viewRefreshMode>
         <viewRefreshTime>3</viewRefreshTime>
       </Url>
