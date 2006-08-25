@@ -223,15 +223,6 @@ if ($this->x_icold!=null && $this->y_icold!=null &&
        	map.addOverlay(markerICOLD);';
 	
 	
-if ($this->x_val!=null && $this->y_val!=null && 
-		$this->y_val!='' &&	$this->x_val!='' && 
-		$this->x_val!=0 && $this->y_val!=0 && 
-		$this->x_val!=$this->outOfRange && $this->y_val!=$this->outOfRange)
-		$gMap.= '
-		 var pointVAL = new GPoint('.$this->x_val.', '.$this->y_val.');
-       	 var markerVAL = createMarker(pointVAL, "Validated position", "'.VALIDICON.'");
-	        map.addOverlay(markerVAL);';
-	
 if ($this->x_prop!=null && $this->y_prop!=null && 
 		$this->x_prop!='' && $this->y_prop!='' && 
 		$this->x_prop!=0 && $this->y_prop!=0 &&		
@@ -240,7 +231,16 @@ if ($this->x_prop!=null && $this->y_prop!=null &&
 		 var pointEEA = new GPoint('.$this->x_prop.', '.$this->y_prop.');
        	 var markerEEA = createMarker(pointEEA, "Proposed position", "'.EEAICON.'");
 	        map.addOverlay(markerEEA);';
-		
+
+if ($this->x_val!=null && $this->y_val!=null && 
+		$this->y_val!='' &&	$this->x_val!='' && 
+		$this->x_val!=0 && $this->y_val!=0 && 
+		$this->x_val!=$this->outOfRange && $this->y_val!=$this->outOfRange)
+		$gMap.= '
+		 var pointVAL = new GPoint('.$this->x_val.', '.$this->y_val.');
+       	 var markerVAL = createMarker(pointVAL, "Validated position", "'.VALIDICON.'");
+	        map.addOverlay(markerVAL);';
+			
 	$gMap .='
 		
 	   /* } else {
