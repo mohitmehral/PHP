@@ -177,8 +177,13 @@ function createMarker(point, id, iconimg) {
 	
   	var map = new GMap(document.getElementById("map"), mapSpecs);
 	GEvent.addListener(map, "click", function(overlay, point) {
-		document.carto_form.x.value = point.x;
-		document.carto_form.y.value = point.y;
+		if (document.carto_form.setWhichPoint.checked == true){ 
+			document.carto_form.x.value = point.x;
+			document.carto_form.y.value = point.y;
+		}else{
+			document.carto_form.xini.value = point.x;
+			document.carto_form.yini.value = point.y;				
+				}
 	});
   	 		
 	map.addControl(new GMapTypeControl());
