@@ -45,7 +45,9 @@
 		<h2>{$coordinates}</h2>
 			<ul>
 				<li>{$icoldposition}
-				<ul><li>x: {$dam->x_icold}</li><li>y: {$dam->y_icold} </li></ul>
+				<ul><li>x: <input size="10" type="text" id="xini" name="xini" value="{$dam->x_icold}"/></li>
+					<li>y: <input size="10" type="text" id="yini" name="yini" value="{$dam->y_icold}"/> </li>
+				</ul>
 				<input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_icold};this.form.y.value={$dam->y_icold};" value="{$icoldistrue}"/>
 				</li>
 				<li>{$eeaposition}
@@ -68,6 +70,7 @@
 		</td><td>
 			{$clickinfo}<br/>
 			<div id="map" style="width: 400px; height: 400px; "></div>
+			<input type="checkbox" checked="checked" id="setWhichPoint" name="setWhichPoint"/>{$setWhichPoint}
 		</td>
 	</tr></table>
 

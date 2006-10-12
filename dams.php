@@ -43,7 +43,10 @@ if ($a->getAuth()) {
 		$dam->find(true);
 		$dam->x_val = $_REQUEST["x"];
 		$dam->y_val = $_REQUEST["y"];
+		$dam->x_icold = $_REQUEST["xini"];
+		$dam->y_icold = $_REQUEST["yini"];
 		$dam->comments = $_REQUEST["comment"];
+		
 		if ($_REQUEST["x"] != null)					// Unvalid if null
 			$dam->valid = 1;
 		else
