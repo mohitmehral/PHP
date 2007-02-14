@@ -15,7 +15,7 @@
 	<script type="text/javascript" 	src="js/script.js"></script>
 	<script type="text/javascript" src="js/ajax.js"></script>
 	<!--<script type="text/javascript" src="js/GMaps_WMSSpec_0.4.js"></script>-->
-	<script type="text/javascript" 	src="js/gmap-wms.js"></script>
+	<!--<script type="text/javascript" 	src="js/gmap-wms.js"></script>-->
 	<!-- TODO : Set Google on --> 
 	<script src="http://maps.google.com/maps?file=api&amp;v=1&amp;key={$GOOGLEMAPKEY}" type="text/javascript"></script>
 	<title>{$Name}</title>
