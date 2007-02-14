@@ -257,7 +257,7 @@ function createMarker(point, id, iconimg) {
 
 //if (GBrowserIsCompatible()) {
  	//var WMS_URL_EEA="http://dev.sandre.eaufrance.fr/eeadamsgeo?";
-	var WMS_URL_EEA="http://dampos-demo.eea.europa.eu/cgi-bin/wseea?";
+	/*var WMS_URL_EEA="http://dampos-demo.eea.europa.eu/cgi-bin/wseea?";
 	var WMS_URL_EEAGEONODE="http://geonode.eea.europa.eu/wmsconnector/com.esri.wms.Esrimap?" 
 	var WMS_URL_JRC="http://wise.jrc.it/cgi-bin/mapserv?map=/home/www/utils-cgi-bin/map/wms.map&";
 	var WMS_URL_I2K="http://mapserver.jrc.it/wmsconnector/com.esri.wms.Esrimap/image2000_pan?";
@@ -274,14 +274,14 @@ function createMarker(point, id, iconimg) {
     	var G_MAP_EEA_OVER_SAT = createWMSOverlaySpec(G_SATELLITE_TYPE, G_MAP_EEA, "Admin", "Admin");
     	var G_MAP_JRC_OVER_SAT = createWMSOverlaySpec(G_SATELLITE_TYPE, G_MAP_JRC, "CCM", "CCM");
         var G_MAP_EEA_OVER_I2K = createWMSOverlaySpec(G_MAP_JRC_I2K, G_MAP_EEA, "I2K", "I2K");
-	
+	*/
 	var mapSpecs = [];
-	//mapSpecs.push(G_MAP_TYPE);
+	mapSpecs.push(G_MAP_TYPE);
     	mapSpecs.push(G_SATELLITE_TYPE);
-    	mapSpecs.push(G_MAP_EEA_OVER_SAT);
-    	mapSpecs.push(G_MAP_JRC_OVER_SAT);
-    	mapSpecs.push(G_MAP_EEA_OVER_I2K);
-	mapSpecs.push(G_MAP_EEA_GEONODE);
+    //	mapSpecs.push(G_MAP_EEA_OVER_SAT);
+    //	mapSpecs.push(G_MAP_JRC_OVER_SAT);
+    //	mapSpecs.push(G_MAP_EEA_OVER_I2K);
+	//mapSpecs.push(G_MAP_EEA_GEONODE);
     	
 	// Setup the map
     	var map = new GMap(document.getElementById("map"), mapSpecs);
@@ -294,7 +294,7 @@ function createMarker(point, id, iconimg) {
 
 	 map.addControl(new GMapTypeControl());
   	 map.addControl(new GSmallMapControl());
-	 map.setMapType(G_MAP_EEA_OVER_SAT) 
+	 map.setMapType(G_SATELLITE_TYPE) 
 	 map.centerAndZoom(new GPoint('.$x.', '.$y.'), '.$z.');
     ';}
     
