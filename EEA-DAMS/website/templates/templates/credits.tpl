@@ -5,8 +5,8 @@
 
 
 
-<div id="contents">
-<h2>Acknowledgements</h2>
+<div id="workarea">
+<h1>Acknowledgements</h1>
 <p>
 The maps and satellite images used on this website have been prepared with 
 the collaboration of the following data providers:</p>

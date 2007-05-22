@@ -1,14 +1,10 @@
 {include file="header.tpl"}
 {include file="login.tpl"}
 
-<div id="menu">
-
-</div>
-
 <!-- OnChange JS activate update your profil -->
 
-<div id="contents">
-<h2>{$list}</h2>
+<div id="workarea">
+<h1>{$list}</h1>
 <table>
 <tr>
 	<td>{$firstname}</td>

@@ -3,16 +3,9 @@
 
 
 {include file="login.tpl"}
-{if $login eq true}
-	{include file="options.tpl"}
-	{include file="legend.tpl"}
-{/if}
-<div id="menu">
 
-</div>
-
-<div id="contents">      
-	<div align="left"><p>{$desc}</p>
+<div id="workarea">      
+	<p>{$desc}</p>
 	<br/>
 	{if $roleAdm eq 't'}
 		<br/>
@@ -30,7 +23,6 @@
 		<li><a href='download.php?act=udl'>users dams link as CSV</a> <a href='downloadxml.php?act=udl'>/as XML</a></li>
 		</ul>
 	{/if}
-	</div>
 	<div align="center">
 		<div id="map" style="width: 400px; height: 400px; "></div>
 	</div>

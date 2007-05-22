@@ -1,15 +1,10 @@
-{include file="header.tpl"}
+{include file="header.tpl" bodyclass="threecolumns"}
 {include file="login.tpl"}
 
-<div id="menu">
-
-</div>
-
-
-<div id="options">
-<table class="LeftBoxTable" width="150" cellspacing="0" cellpadding="0" border="0">
+<div id="rightcolumn">
+<table  width="150" cellspacing="0" cellpadding="0" border="0">
 <tbody><tr>
-      <td class="boxtitle" background="/css/boxtitlebg.jpg"><b>Filter lang</b></td>
+      <td><b>Filter lang</b></td>
    </tr>
    <tr>
       <td>
@@ -28,10 +23,10 @@
 </div>
 
 
-<div id="contents">
-<div id='div1' style='width: 590; height: 470px; z-index: 1; overflow: auto;' class="scroll">
-		
-<table>
+<div id="workarea">
+<div id='div1' style='width: 99%; height: 470px; z-index: 1; overflow: scroll;' class="scroll">
+
+<table style="margin:0;">
 {assign var="i" value=0}
 <tr>
 {foreach name=outer item=term from=$selectedLang}
@@ -100,6 +95,6 @@
 </table>
 </p>
 </div>
-
 </div>
+
 {include file="footer.tpl"}
