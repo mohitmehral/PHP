@@ -1,21 +1,17 @@
 {include file="header.tpl"}
 {include file="login.tpl"}
 
-<div id="menu">
-
-</div>
-
 <!-- OnChange JS activate update your profil -->
-<SCRIPT LANGUAGE=javascript SRC="js/script.js"></SCRIPT>
+<script type="text/javascript" src="js/script.js"></script>
 
-<div id="contents">
+<div id="workarea">
 
 {if $action eq 'upd' or $action eq 'new'}
 	{if $action eq 'upd'}<form method="post" action="user.php" name="user" id="user"><input type="hidden" name="action" value="sav"/><input type="hidden" name="id" value="{$user->id}"/>{/if}
 	{if $action eq 'new'}<form method="post" action="user.php" name="user" id="user"><input type="hidden" name="action" value="cre"/>{/if}
 	<input type="hidden" name="lang" value="{$langId}">
 			
-	<h2>{$profile}</h2>
+	<h1>{$profile}</h1>
 	<ul>
 		<!-- user profile -->
 		<li><b>{$username}: </b><input type="text" id="userlogin" name="userlogin" value="{$user->login}"/></li>

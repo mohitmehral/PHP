@@ -1,17 +1,43 @@
-
 {include file="header.tpl"}
 
 {include file="login.tpl"}
 
-{include file="legend.tpl"}
+<div id="workarea">
+	<h1>{$dam->name} ({$dam->noeea}) {if $dam->valid eq 't'} <img src="{$VALIDICON}" alt="valid" width="15px"/>{else}{/if}</h1>
+	<script language="javascript" type="text/javascript">
+	EventManager.Add(window, 'load', setupFolders, false);
+	</script>
+	<form method="post" name="carto_form" id="carto_form" action="">
+	<input type="hidden" id="damId" name="cd" value="{$dam->noeea}"/>
+	<input type="hidden" id="action" name="action" value="validate"/>
+	
+	<table><tr><td width="320px">
+		<h2>{$coordinates}</h2>
+			<ul>
+				<li>{$icoldposition}<br/>
+				<label for="xini">x:</label> <input size="10" type="text" id="xini" name="xini" value="{$dam->x_icold}"/>
+				<label for="yini">y:</label> <input size="10" type="text" id="yini" name="yini" value="{$dam->y_icold}"/>
+				<input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_icold};this.form.y.value={$dam->y_icold};" value="{$icoldistrue}"/>
+				</li>
+				<li>{$eeaposition}<br/>
+				x: {$dam->x_prop} y: {$dam->y_prop}
+				<input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_prop};this.form.y.value={$dam->y_prop};" value="{$eeaistrue}"/>
+				</li>
+				<li>{$valposition}<br/>
+				<label for="x">x:</label> <input size="10" type="text" id="x" name="x" value="{$x_val}"/>
+				<label for="y">y:</label> <input size="10" type="text" id="y" name="y" value="{$y_val}"/>
+				</li>
+			</ul>
+			<input class="SearchButton" type="submit" value="{$saveandvalid}"/>
 
-<div id="menu">
-
-</div>
-
-<div id="contents">
-	<h2>{$dam->name} ({$dam->noeea}) {if $dam->valid eq 't'} <img src="{$VALIDICON}" alt="valid" width="15px"/>{else}{/if}
-		</h2><p> {$score} : 
+		<h2>{$comments}</h2>
+				<textarea rows="6" cols="30" id="comment" name="comment">{$dam->comments}</textarea>
+				<input type="checkbox" id="is_oncanal" name="is_oncanal" {if $dam->is_oncanal eq 't'}checked="checked"{/if}/>{$is_oncanal} <br/>
+				<input type="checkbox" id="is_dyke" name="is_dyke" {if $dam->is_dyke eq 't'}checked="checked"{/if}/>{$is_dyke} <br/>
+				<input class="SearchButton" type="submit" value="{$updatecomments}"/>
+			
+		</td><td>
+		<p> {$score} : 
 		{if $dam->score eq  0} {$s0} 
 		{elseif $dam->score eq  1} {$s1} 
 		{elseif $dam->score eq  2} {$s2} 
@@ -34,40 +60,6 @@
 		<input onclick="location.replace('dams.php?lang={$langId}&amp;cd={$last}');" type="button" value="&gt;&gt;" class="SearchButton" />
 		{/if}
 		</p>
-	<script language="javascript" type="text/javascript">
-	EventManager.Add(window, 'load', setupFolders, false);
-	</script>
-	<form method="post" name="carto_form" id="carto_form" action="">
-	<input type="hidden" id="damId" name="cd" value="{$dam->noeea}"/>
-	<input type="hidden" id="action" name="action" value="validate"/>
-	
-	<table><tr><td width="300px">
-		<h2>{$coordinates}</h2>
-			<ul>
-				<li>{$icoldposition}
-				<ul><li>x: <input size="10" type="text" id="xini" name="xini" value="{$dam->x_icold}"/></li>
-					<li>y: <input size="10" type="text" id="yini" name="yini" value="{$dam->y_icold}"/> </li>
-				</ul>
-				<input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_icold};this.form.y.value={$dam->y_icold};" value="{$icoldistrue}"/>
-				</li>
-				<li>{$eeaposition}
-				<ul><li>x: {$dam->x_prop}</li><li>y: {$dam->y_prop}</li></ul>
-				<input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_prop};this.form.y.value={$dam->y_prop};" value="{$eeaistrue}"/>
-				</li>
-				<li>{$valposition}
-				<ul><li><input size="10" type="text" id="x" name="x" value="{$x_val}"/></li>
-					<li><input size="10" type="text" id="y" name="y" value="{$y_val}"/></li></ul>
-				</li>
-			</ul>
-			<input class="SearchButton" type="submit" value="{$saveandvalid}"/>
-
-		<h2>{$comments}</h2>
-				<textarea rows="6" cols="30" id="comment" name="comment">{$dam->comments}</textarea>
-				<input type="checkbox" id="is_oncanal" name="is_oncanal" {if $dam->is_oncanal eq 't'}checked="checked"{/if}/>{$is_oncanal} <br/>
-				<input type="checkbox" id="is_dyke" name="is_dyke" {if $dam->is_dyke eq 't'}checked="checked"{/if}/>{$is_dyke} <br/>
-				<input class="SearchButton" type="submit" value="{$updatecomments}"/>
-			
-		</td><td>
 			{$clickinfo}<br/>
 			<div id="map" style="width: 400px; height: 400px; "></div>
 			<input type="checkbox" checked="checked" id="setWhichPoint" name="setWhichPoint"/>{$setWhichPoint}

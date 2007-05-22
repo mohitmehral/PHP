@@ -2,6 +2,7 @@
 ul#tabnav1 {
     font: bold 11px verdana, arial, sans-serif;
     list-style-type: none;
+    list-style-image: none;
     border-width: 0; 
     border-bottom: 1px solid #000;
     margin: 0;
@@ -45,6 +46,7 @@ ul#tabnav1 li.active a {
 ul#tabnav2 {
     font: bold 11px verdana, arial, sans-serif;
     list-style-type: none;
+    list-style-image: none;
     margin: 0;
     padding: 0 0 18px 8px;
     z-index: 2;
