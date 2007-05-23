@@ -15,7 +15,10 @@ tr {
 #login {
 	margin: 0.3em;
 }
-
+#langForm {
+	text-align: center;
+	padding: 0.5em;
+}
 #legend {
 	background-color: #eee;
 	margin: 0.3em;
@@ -25,11 +28,28 @@ tr {
 	margin: 0.3em;
 }
 
+#options ul {
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0 0 0 0.3em;
+}
+#options label {
+	width: 6em;
+}
+#legend h2, #options h2 {
+	text-align: center;
+	font-size: 100%;
+        font-weight: bold;
+	
+}
+
 #contents {
 	margin: 0.3em;
 	z-index:4;
 	
 }
+
 #countries li {
         display: block;
         float:left;

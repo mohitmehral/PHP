@@ -1,22 +1,19 @@
 {config_load file=test.conf section="setup"}
-{include file="header.tpl"}
+{include file="header.tpl" pagetitle=""}
 
 
 {include file="login.tpl"}
 
 <div id="workarea">      
 	<p>{$desc}</p>
-	<br/>
 	{if $roleAdm eq 't'}
-		<br/>
-		<b>{$damMap}</b>
-		<br/>
+		<h2>{$damMap}</h2>
 		<ul id="countries">
 		{foreach name=outer item=val from=$damCountryFilter}
 			<li><a href="mapit.php?country={$val}">{$val}</a></li>
 		{/foreach}
 		</ul>
-	<p style="clear:left">Download :</p>
+	<h2 style="clear:left">Download</h2>
 		<ul>
 		<li><a href='download.php?act=dam'>dams as CSV</a> <a href='downloadxml.php?act=dam'>/as XML</a></li>
 		<li><a href='download.php?act=use'>users as CSV</a> <a href='downloadxml.php?act=use'>/as XML</a></li>

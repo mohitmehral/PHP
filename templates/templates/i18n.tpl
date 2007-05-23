@@ -1,4 +1,4 @@
-{include file="header.tpl" bodyclass="threecolumns"}
+{include file="header.tpl" bodyclass="threecolumns" pagetitle=$translationManage}
 {include file="login.tpl"}
 
 <div id="rightcolumn">
@@ -8,14 +8,14 @@
    </tr>
    <tr>
       <td>
-		<div class="BodyColumnLeftContent">
 			<form method="post" action="">
+		<div>
 			<select name="listselect[]" multiple="multiple" size="16">
 			{html_options values=$langIds selected=$selectedLang output=$langNames}
 			</select><br/>
 			<input type="submit" class="SearchButton" value="{$applyfilter}"/>
-			</form>
 		</div>
+			</form>
     </td> 
  </tr>
 </tbody>

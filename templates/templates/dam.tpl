@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{include file="header.tpl" pagetitle=$dam->name}
 
 {include file="login.tpl"}
 
