@@ -1,22 +1,22 @@
-{include file="header.tpl"}
+{include file="header.tpl" pagetitle=$userAdm}
 {include file="login.tpl"}
 
 <!-- OnChange JS activate update your profil -->
 
 <div id="workarea">
 <h1>{$list}</h1>
-<table>
+<table class="datatable">
 <tr>
-	<td>{$firstname}</td>
-	<td>{$surname}</td>
-	<td>{$login}</td>
-	<td>{$mail}</td>
-	<td>{$roleadm}</td>
-	<td></td>
-	<td>{$roledam}</td>
-<!--	<td>{$address}</td>
-	<td>{$phone}</td>-->
-	<td colspan="2">{$action}</td>
+	<th>{$firstname}</th>
+	<th>{$surname}</th>
+	<th>{$login}</th>
+	<th>{$mail}</th>
+	<th>{$roleadm}</th>
+	<th></th>
+	<th>{$roledam}</th>
+<!--	<th>{$address}</th>
+	<th>{$phone}</th>-->
+	<th colspan="2">{$action}</th>
 </tr>
 {foreach name=outer item=contact from=$users}
   <tr>
@@ -42,7 +42,7 @@
   			<input type="hidden" value="{$myid}" name="id"/>
   			<input type="hidden" value="upd" name="action"/>
   			<input type="submit" value="{$update}" class="SearchButton"/>
-  	    </form><td/><td> 
+  	    </form></td><td> 
   	    <form action="user.php" method="post" name="user_del{$myid}" id="user_del{$myid}">
   			<input type="hidden" value="{$langId}" name="lang"/>
   			<input type="hidden" value="{$myid}" name="id"/>

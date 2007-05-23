@@ -1,4 +1,4 @@
-{include file="header.tpl"}
+{include file="header.tpl" pagetitle=$profile}
 {include file="login.tpl"}
 
 <!-- OnChange JS activate update your profil -->

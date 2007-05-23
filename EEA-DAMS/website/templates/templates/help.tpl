@@ -1,5 +1,5 @@
 {config_load file=test.conf section="setup"}
-{include file="header.tpl"}
+{include file="header.tpl" pagetitle=$help}
 
 
 {include file="login.tpl"}

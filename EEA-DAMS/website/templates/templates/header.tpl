@@ -29,7 +29,7 @@
         </div>
         <div id="righttools">
           {if $login eq false}<a id="loginlink" href="loginpage.php?lang={$langId}"><span>{$loginin}</span></a>
-          {elseif $login eq true}<a id="logoutlink" href="index.php?act=logout&amp;lang={$langId}">{$logout} ({$useracc})</span></a>
+          {elseif $login eq true}<a id="logoutlink" href="index.php?act=logout&amp;lang={$langId}"><span>{$logout} ({$useracc})</span></a>
           {/if}
           <a id="printlink" title="Print this page" href="javascript:this.print();"><span>Print</span></a>
           <a id="fullscreenlink" href="javascript:toggleFullScreenMode()" title="Switch to/from full screen mode"><span>Switch to/from full screen mode</span></a>
@@ -53,14 +53,19 @@
       <div class="breadcrumbtrail">
 	<div class="breadcrumbhead">You are here:</div>
 	<div class="breadcrumbitem eionetaccronym"><a href="http://www.eionet.europa.eu">Eionet</a></div>
+       {if $pagetitle eq ""}
+	<div class="breadcrumbitemlast">DAMPOS</div>
+       {else}
 	<div class="breadcrumbitem"><a href="/">DAMPOS</a></div>
-	<div class="breadcrumbitemlast">Frontpage</div>
+	<div class="breadcrumbitemlast">{$pagetitle}</div>
+      {/if}
 	<div class="breadcrumbtail"></div>
       </div>
 
-      <div id="leftcolumn" class="localnav">
+      <div id="leftcolumn">
 <!--        Menu                   -->
       {if $login eq true}
+      <div class="localnav">
       <ul>
       <li><a href="index.php?lang={$langId}">{$home} </a></li>
       <li><a href="user.php?action=upd&amp;id={$mnuUserId}&amp;lang={$langId}">{$profilManage} </a></li>
@@ -70,16 +75,17 @@
       {/if}
       <li><a href="i18n.php?lang={$langId}">{$translationManage} </a></li>
       </ul>
+      </div>
       {/if}
       <form id="langForm" method="get" action="#">
       <div>
       <select name="lang" onchange="document.getElementById('langForm').submit();">
 		  {html_options values=$langIds selected=$langId output=$langNames}
-	  </select>
+      </select>
       </div>
       </form>
-{include file="legend.tpl"}
 {if $login eq true}
+{include file="legend.tpl"}
 {include file="options.tpl"}
 {/if}
       </div>

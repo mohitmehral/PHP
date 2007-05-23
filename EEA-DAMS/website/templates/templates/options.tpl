@@ -1,45 +1,25 @@
 <div id="options">
-<table class="LeftBoxTable" width="150" cellspacing="0" cellpadding="0" border="0">
-<tbody><tr>
-      <td class="boxtitle"><b>{$statistics}</b></td>
-   </tr>
-   <tr>
-      <td>
-		<div class="BodyColumnLeftContent">
-			{$inchargeof} {$userDamNumber}
-		</div>
-    </td> 
- </tr>
-</tbody>
-</table>
+<h2>{$statistics}</h2>
+	<p>
+		{$inchargeof} {$userDamNumber}
+	</p>
 
-<br/>
 
-<table class="LeftBoxTable" width="150" cellspacing="0" cellpadding="0" border="0">
-<tbody><tr>
-      <td class="boxtitle" ><b>{$addFilter}</b></td>
-   </tr>
-   <tr>
-      <td>
-		<div class="BodyColumnLeftContent">
-		<form method="get" action="dams.php">
-			<input type="hidden" name="lang" value="{$langId}"/>
-			<ul>
-			<li>{$code}: <input type="text" name="cd" size="5"/></li>
-			<li>{$name}: <input type="text" name="srcName" size="5"/></li>
-			<li>{$country}:
-			  <select name="srcCountry">
-				<option value="">*</option>
-			  {html_options values=$damCountryFilter output=$damCountryFilter}
-			  </select>			
-<!--			 <input type="text" name="srcCountry" size="5"/>--><input class="SearchButton" type="submit" value="{$applyfilter}"/></li>
-			</ul>
-		</form>
-		</div>
-    </td> 
- </tr>
-</tbody>
-</table>
+<h2>{$addFilter}</h2>
+<form method="get" action="dams.php">
+	<input type="hidden" name="lang" value="{$langId}"/>
+	<ul>
+	<li><label>{$code}:</label> <input type="text" name="cd" size="5"/></li>
+	<li><label>{$name}:</label> <input type="text" name="srcName" size="5"/></li>
+	<li><label>{$country}:</label>
+	  <select name="srcCountry">
+		<option value="">*</option>
+	  {html_options values=$damCountryFilter output=$damCountryFilter}
+	  </select>			
+<!--			 <input type="text" name="srcCountry" size="5"/>-->
+    <input class="SearchButton" type="submit" value="{$applyfilter}"/></li>
+	</ul>
+</form>
 </div>
 
 
