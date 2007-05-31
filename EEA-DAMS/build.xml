@@ -1,0 +1,64 @@
+<project name="EEA-DAMS" default="install" basedir=".">
+    <description>
+        Installs the source code without overwriting essential configuration files
+    </description>
+  <!-- set global properties for this build -->
+  <property file="build.properties" />
+  <property name="website" location="website"/>
+  <property name="dist"  location="dist"/>
+
+  <target name="install" 
+        description="generate the distribution" >
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}"/>
+
+       <!-- Copy the JSP files -->
+    <copy todir="${dist}">
+      <fileset dir="${website}">
+        <include name="*.php"/>
+      </fileset>
+    </copy>
+ 
+    <copy todir="${dist}/commons">
+      <fileset dir="${website}/commons">
+       <exclude name="inc-config.conf-dist"/>
+      </fileset>
+    </copy>
+
+    <copy todir="${dist}/css">
+      <fileset dir="${website}/css"/>
+    </copy>
+
+    <copy todir="${dist}/DataObjects">
+      <fileset dir="${website}/DataObjects"/>
+    </copy>
+
+    <copy todir="${dist}/img">
+      <fileset dir="${website}/img"/>
+    </copy>
+
+    <copy todir="${dist}/js">
+      <fileset dir="${website}/js"/>
+    </copy>
+
+    <mkdir dir="${dist}/templates"/>
+    <mkdir dir="${dist}/templates/cache"/>
+  
+    <copy todir="${dist}/templates/configs">
+      <fileset dir="${website}/templates/configs"/>
+    </copy>
+
+    <copy todir="${dist}/templates/templates">
+      <fileset dir="${website}/templates/templates"/>
+    </copy>
+
+    <mkdir dir="${dist}/templates/templates_c"/>
+    <mkdir dir="${dist}/tmp"/>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${dist} directory tree -->
+    <delete dir="${dist}"/>
+  </target>
+</project>
