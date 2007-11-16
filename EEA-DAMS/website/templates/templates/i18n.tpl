@@ -2,35 +2,26 @@
 {include file="login.tpl"}
 
 <div id="rightcolumn">
-<table  width="150" cellspacing="0" cellpadding="0" border="0">
-<tbody><tr>
-      <td><b>Filter lang</b></td>
-   </tr>
-   <tr>
-      <td>
+      <b>Target language</b><br/>
 			<form method="post" action="">
 		<div>
-			<select name="listselect[]" multiple="multiple" size="16">
+			<input type="hidden" name="listselect[]" value="en"/>
+			<select name="listselect[]" size="26">
 			{html_options values=$langIds selected=$selectedLang output=$langNames}
 			</select><br/>
 			<input type="submit" class="SearchButton" value="{$applyfilter}"/>
 		</div>
 			</form>
-    </td> 
- </tr>
-</tbody>
-</table>
 </div>
 
 
 <div id="workarea">
-<div id='div1' style='width: 99%; height: 470px; z-index: 1; overflow: scroll;' class="scroll">
-
+<p>Enter the translation and click on Update</p>
 <table style="margin:0;">
 {assign var="i" value=0}
 <tr>
 {foreach name=outer item=term from=$selectedLang}
-	<td>{$term}</td>
+	<th>{$term}</th>
 {/foreach}
 </tr>
 {foreach name=outer item=term from=$terms}
@@ -94,7 +85,6 @@
 </tr>
 </table>
 </p>
-</div>
 </div>
 
 {include file="footer.tpl"}
