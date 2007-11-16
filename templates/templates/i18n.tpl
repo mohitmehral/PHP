@@ -16,7 +16,10 @@
 
 
 <div id="workarea">
-<p>Enter the translation and click on Update</p>
+<div class="tip-msg">
+<strong>Information</strong>
+<p>Please select your target language on the list to the right. Then enter the translation and click on Update.</p>
+</div>
 <table style="margin:0;">
 {assign var="i" value=0}
 <tr>
