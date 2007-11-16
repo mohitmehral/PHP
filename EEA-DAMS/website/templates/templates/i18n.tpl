@@ -33,16 +33,16 @@
 	{foreach key=key item=item from=$term}
   		{if $key eq 'page_id'}
 	    		{assign var="myPage" value=$item}
-	  			<input type="hidden" size="2" name="{$key}" value="{$item}"/>
+	  			<input type="hidden" name="{$key}" value="{$item}"/>
     		{elseif $key eq 'id'}
 	    		{assign var="myId" value=$item}
 	  			<input type="hidden" name="{$key}" value="{$item}"/>
   			{else}
   				<td>
   					{if $item|count_words > 5}
-  					<textarea name="{$key}" cols="11">{$item}</textarea>
+  					<textarea name="{$key}" cols="22">{$item}</textarea>
   					{else}
-  					<input type="text" size="14" name="{$key}" value="{$item}"/>
+  					<input type="text" size="28" name="{$key}" value="{$item}"/>
   					{/if}
   				</td>
   			{/if}  		

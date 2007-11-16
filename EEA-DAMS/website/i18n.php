@@ -80,7 +80,8 @@ if ($a->getAuth()) {
 	if (isset($_REQUEST["listselect"]))			// Get langs based on i18n conf or user demand
 		$lst = $_REQUEST["listselect"];
 	else
-		$lst = $i18n->getLangs('ids');	
+		$lst = array ("en");
+		//$lst = $i18n->getLangs('ids');	
 	
 	$do->selectAdd();
 	$lang = '';
