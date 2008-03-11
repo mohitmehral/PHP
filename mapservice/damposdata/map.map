@@ -1,0 +1,199 @@
+NAME EEA
+STATUS ON
+FONTSET   "/var/local/damposdata/etc/fonts.list"
+
+
+# Map image size. Change size as desired
+SIZE 400 300
+#
+# Start of web interface definition. Only the TEMPLATE parameter
+# must be specified to display a map. See Mapserver documentation
+#
+WEB 
+  IMAGEPATH '/tmp/'
+  IMAGEURL '/tmp/'
+
+        METADATA
+                "original_projection"   	"init=epsg:4326"
+                "ows_extent"                    "-12 34 36 74"
+                "ows_schemas_location"  	"http://schemas.opengeospatial.net"
+                "ows_title"                     "IOW - EEA - For internal only"
+                "ows_abstract"          	""
+                "ows_keywordlist"               ""
+                "ows_onlineresource"    	"http://dampos.eionet.europa.eu/cgi-bin/mapserv?map=/var/local/damposdata/map.map"
+                "ows_fees"                      "none"
+                "ows_accessconstraints"         "none"
+                "ows_contactperson"             ""
+                "ows_contactorganization"       "EEA"
+                "ows_contactposition"   	""
+                "ows_addresstype"               "postal"
+                "ows_address"           	""
+                "ows_city"                      ""
+                "ows_stateorprovince"   	""
+                "ows_postcode"          	""
+                "ows_country"           	""
+                "ows_contactvoicetelephone" 	""
+                "ows_contactfacsimiletelephone" ""
+                "ows_electronicmailaddress" 	""
+                "ows_srs"                       "EPSG:4326 EPSG:3035"
+                "ows_namespace_uri"             ""
+                "ows_namespace_prefix"  	"eea"
+                "wms_encoding"          	"UTF-8"
+                "wms_context_version"   	"1.1.1"
+                "wms_connectiontimeout" 	"3000"
+        END
+
+
+
+END
+
+OUTPUTFORMAT
+        NAME "PNG-24"
+        DRIVER "GD/PNG"
+        MIMETYPE "image/png"
+        IMAGEMODE RGB
+        EXTENSION "png"
+END
+
+# Extent based on full extent of QGIS view
+EXTENT -12 34 36 74
+UNITS dd
+IMAGECOLOR 255 255 255
+IMAGETYPE png
+
+PROJECTION
+        "init=epsg:4326"
+END
+
+
+SYMBOL
+  NAME "cross"
+  TYPE vector
+  POINTS
+    2 0
+    2 4
+    -99 -99
+    0 2
+    4 2
+  END 
+END
+
+
+LAYER
+  NAME A7
+  GROUP "EEA"
+  TYPE POLYGON
+
+  STATUS ON
+  DUMP FALSE
+  TOLERANCEUNITS PIXELS
+  TOLERANCE 5
+  TEMPLATE "queryable"
+  LABELITEM "Name"
+  LABELMAXSCALE 5000000
+  
+
+
+
+  DATA /var/local/damposdata/A7.shp
+
+  METADATA
+        "ows_title"       "A7"
+        "ows_srs"         "EPSG:4326"
+        "ows_group_title" "EEA"
+        "ows_extent"      "-12 34 36 74"
+        "ows_metadataurl_href" ""
+        "ows_metadataurl_format" "text/plain"
+        "ows_metadataurl_type" "TC211"
+        #"gml_include_items" "all"
+  END
+
+  PROJECTION
+       "init=epsg:4326"
+  END
+
+  CLASS
+     NAME ""
+     COLOR -1 -1 -1
+     OUTLINECOLOR 199 173 126
+
+     LABEL
+        COLOR 251 253 50
+        SHADOWCOLOR 0 0 0
+        TYPE TRUETYPE
+        FONT "ARIAL"
+        SIZE 9
+        MINSIZE 1
+	 MAXSIZE 9
+	 OFFSET 5 0
+        ANTIALIAS TRUE
+        POSITION CR
+        PARTIALS FALSE
+        FORCE TRUE
+        MINDISTANCE 300
+        BUFFER 2
+      END
+  END
+
+END
+
+LAYER
+  NAME SM
+  GROUP "EEA"
+  TYPE POINT
+
+  STATUS ON
+  DUMP FALSE
+  TOLERANCEUNITS PIXELS
+  TOLERANCE 5
+  TEMPLATE "queryable"
+  LABELITEM "Name"
+  LABELMAXSCALE 150000
+  MAXSCALE 500000
+
+  DATA /var/local/damposdata/SM.shp
+  
+  CLASS
+    NAME ""
+    STYLE
+       SYMBOL "cross"
+       OUTLINECOLOR 199 173 126
+       COLOR 199 173 126
+       SIZE 6
+       MINSIZE 1
+     END
+     LABEL
+        COLOR 243 174 5
+        SHADOWCOLOR 0 0 0
+        TYPE TRUETYPE
+        FONT "ARIAL"
+        SIZE 10
+        MINSIZE 1
+	 MAXSIZE 9
+	 OFFSET 5 0
+        ANTIALIAS TRUE
+        POSITION CR
+        PARTIALS FALSE
+        FORCE TRUE
+        MINDISTANCE 300
+        BUFFER 2
+      END
+  END
+
+
+  METADATA
+        "ows_title"       "SM"
+        "ows_srs"         "EPSG:4326"
+        "ows_group_title" "EEA"
+        "ows_extent"      "-12 34 36 74"
+        #"gml_include_items" "all"
+  END
+
+  PROJECTION
+
+       "init=epsg:4326"
+  END
+END
+
+END # Map File
+

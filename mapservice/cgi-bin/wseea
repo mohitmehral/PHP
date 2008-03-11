@@ -1,0 +1,5 @@
+#! /bin/sh
+export PROJ_LIB=/usr/local/share/proj
+export MS_MAPFILE=/var/local/damposdata/map.map
+/var/www/cgi-bin/mapserv
+

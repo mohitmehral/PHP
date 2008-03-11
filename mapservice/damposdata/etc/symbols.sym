@@ -1,0 +1,336 @@
+#
+# tent
+# losange
+# star
+# triangle
+# triu
+# trid
+# square
+# plus
+# cross
+# circle
+#
+# There is a maximum of 64 symbols / file (MS_MAXSYMBOLS)
+
+
+
+#PLN
+SYMBOL   
+  NAME "downwarddiagonalfill"
+  TYPE vector
+  TRANSPARENT 0
+  POINTS
+    0 1
+    1 0
+  END   
+END
+
+SYMBOL
+  NAME "hachurestrans"
+  TYPE vector
+  TRANSPARENT 0
+  POINTS
+    0 5
+    5 0
+  END
+END
+
+
+#-------------------------------------------
+SYMBOL
+  NAME "tent"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS 0 1 .5 0 1 1 .75 1 .5 .5 .25 1 0 1 END
+END 
+
+
+#-------------------------------------------
+SYMBOL
+  NAME "losange"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS .5 0 1 .5 .5 1 0 .5 .5 0 END
+END 
+
+
+#-------------------------------------------
+SYMBOL
+  NAME "circle"
+  TYPE ELLIPSE
+  FILLED FALSE
+  POINTS 1 1 END
+END 
+
+#-------------------------------------------
+# To set line width in a polygon outline:
+# Use a circle symbol as your CLASS in the layer. 
+# Set the size of the circle to the thickness you want. 
+
+SYMBOL
+  NAME "line"
+  TYPE ELLIPSE
+  FILLED TRUE
+  POINTS 1 1 END
+END 
+
+SYMBOL
+  NAME "line1"
+  TYPE ELLIPSE
+  FILLED TRUE
+  POINTS 1 1 END
+END 
+
+
+#-------------------------------------------
+SYMBOL
+  NAME "circle3px"
+  TYPE ELLIPSE
+  FILLED false
+  POINTS 1 1 END
+  STYLE 
+    0 -1
+    0 0
+    0 1
+  END 
+END 
+
+
+
+SYMBOL
+  NAME "empty"
+  TYPE ELLIPSE
+  FILLED FALSE
+  POINTS 0 0 END
+END 
+
+
+
+
+#-------------------------------------------
+SYMBOL
+  NAME "star"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS
+    0 .375
+    .35 .375
+    .5 0
+    .65 .375
+    1 .375
+    .75 .625
+    .875 1
+    .5 .75
+    .125 1
+    .25 .625
+  END
+END
+
+#-------------------------------------------
+SYMBOL
+  NAME "triangle"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS
+    0 1
+    .5 0
+    1 1
+    0 1
+  END
+END 
+
+#-------------------------------------------
+SYMBOL
+  NAME "triu"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS
+    0 1
+    1 1
+    .5 0
+    0 1
+  END
+END
+
+#-------------------------------------------
+SYMBOL
+  NAME "trid"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS
+    0 0
+    .5 1
+    1 0
+    0 0
+  END
+END
+
+
+
+#-------------------------------------------
+SYMBOL
+  NAME "square"
+  TYPE VECTOR
+  FILLED true
+  POINTS
+    0 1
+    0 0
+    1 0
+    1 1
+    0 1
+  END
+END
+
+#-------------------------------------------
+SYMBOL
+  NAME "plus"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS
+    .5 0
+    .5 1
+    .5 .5
+    0 .5
+    1 .5
+    .5 .5
+  END
+END
+
+SYMBOL
+  NAME 'pattern_plus'
+  TYPE PIXMAP
+  IMAGE 'pattern_plus.png'
+  TRANSPARENT 1
+END
+
+
+SYMBOL   
+  NAME "patternfill_downwarddiagonal"
+  TYPE vector
+  TRANSPARENT 0
+  POINTS
+    0 1
+    1 0
+  END   
+END
+
+SYMBOL   
+  NAME "patternfill_plus"
+  TYPE vector
+  TRANSPARENT 1
+  POINTS
+    .5 0
+    .5 1
+  END   
+END
+
+
+#-------------------------------------------
+#SYMBOL
+#NAME 'cross'
+#TYPE VECTOR
+#POINTS
+#0 0
+#1 1
+#-99 -99
+#0 1
+#1 0
+#END
+#END
+
+#SYMBOL
+#  NAME "cross"
+ # TYPE vector
+  #FILLED TRUE
+  #POINTS
+   # 2 0
+   # 2 4
+ #   -99 -99
+ #   0 2
+ #   4 2
+ # END 
+#END
+
+
+SYMBOL
+  NAME "cross"
+  TYPE vector
+  FILLED TRUE
+  POINTS
+    0 0
+    1 1
+    0.5 0.5 
+    0 1
+    1 0
+    0.5 0.5
+  END 
+END
+
+
+
+
+
+
+SYMBOL
+  NAME "diamond"
+  TYPE VECTOR
+  FILLED TRUE
+  POINTS .5 0 1 .5 .5 1 0 .5 .5 0 END
+END
+
+
+#-------------------------------------------
+
+# Ligne pointillée de 10 pixels, puis 5 pixels vides, 5 pixels, 10 pixels vides
+
+SYMBOL 
+  NAME 'dashed_line1'
+  TYPE ELLIPSE
+  POINTS 1 1 END
+  FILLED true
+  STYLE 10 5 5 10 END
+END
+
+SYMBOL
+  NAME 'dashed1'
+  TYPE ELLIPSE
+  POINTS 1 1 END
+  FILLED TRUE
+  STYLE 5 5 5 5 END
+  END
+END 
+
+
+  SYMBOL
+    NAME "cross_marker"
+    TYPE TRUETYPE
+    FONT "monotype"
+    CHARACTER ';'
+    ANTIALIAS TRUE
+  END
+
+
+
+SYMBOL
+  TYPE ELLIPSE
+  FILLED TRUE
+  POINTS
+    1 1
+  END
+
+END 
+
+#-------------------------------------------
+#SYMBOLS ATLAS ZONAGES
+
+#-------------------------------------------
+SYMBOL
+  NAME "circle_bvrn"
+  TYPE ELLIPSE
+  FILLED FALSE
+  POINTS 1 1 END
+END 
+
+
+
+
