@@ -1,0 +1,65 @@
+/**
+ * EEA-DAMS 
+ *
+ * @abstract	 CSS style for module.
+ * @author       François-Xavier Prunayre <fx.prunayre@oieau.fr>
+ * @copyright    2005
+ * @version    	 1.0
+ *
+ */
+ 
+tr {
+	vertical-align:top;
+}
+
+#login {
+	margin: 0.3em;
+}
+#langForm {
+	text-align: center;
+	padding: 0.5em;
+}
+#legend {
+	background-color: #eee;
+	margin: 0.3em;
+}
+
+#options {
+	margin: 0.3em;
+}
+
+#options ul {
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0;
+	padding: 0 0 0 0.3em;
+}
+#options label {
+	width: 6em;
+}
+#legend h2, #options h2 {
+	text-align: center;
+	font-size: 100%;
+        font-weight: bold;
+	
+}
+
+#contents {
+	margin: 0.3em;
+	z-index:4;
+	
+}
+
+#countries li {
+        display: block;
+        float:left;
+        width: 5em;
+        border: 1px solid black;
+        padding: 0.3em;
+        background-color: #bbf;
+        color: #000;
+        font-weight: bold;
+        margin: 0.1em 0.3em;
+        text-align: center;
+}
+
