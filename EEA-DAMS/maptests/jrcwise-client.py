@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import urllib
-
+import xml.dom.minidom
 
 def makeurl(url, params):
     listparams = [ key + "=" + val for key,val in params.items()]
@@ -18,8 +18,7 @@ def getamap(url):
     'BGCOLOR':'0xFFFFFF',
     'TRANSPARENT':'TRUE',
     'SRS':'EPSG:4326',
-#   'BBOX':'22.5,21.94304553343818,33.75,31.95216223802497',
-    'BBOX':'-12.0,34.0,36.0,74.0',
+    'BBOX':'22.5,21.94304553343818,33.75,31.95216223802497',
     'WIDTH':'256',
     'HEIGHT':'256',
     'reaspect':'false'
@@ -35,6 +34,6 @@ def getamap(url):
 from wmsclient import getcapabilities
 
 if __name__ == '__main__':
-    url="http://dampos-demo.eea.europa.eu/cgi-bin/wseea?"
+    url="http://wise.jrc.it/cgi-bin/mapserv?map=/home/www/utils-cgi-bin/map/wms.map&"
     getcapabilities(url)
-    getamap(url)
+#   getamap(url)
