@@ -95,7 +95,7 @@ LAYER
 
 
 
-  DATA /var/local/damposdata/A7.shp
+  DATA /var/local/damposdata/A7
 
   METADATA
         "ows_title"       "A7"
@@ -108,9 +108,9 @@ LAYER
         #"gml_include_items" "all"
   END
 
-#  PROJECTION
-#       "init=epsg:4326"
-#  END
+  PROJECTION
+       "init=epsg:4326"
+  END
 
   CLASS
      NAME ""
@@ -151,7 +151,7 @@ LAYER
   LABELMAXSCALE 150000
   MAXSCALE 500000
 
-  DATA /var/local/damposdata/SM.shp
+  DATA /var/local/damposdata/SM
   
   CLASS
     NAME ""
@@ -189,9 +189,9 @@ LAYER
         #"gml_include_items" "all"
   END
 
-#  PROJECTION
-#       "init=epsg:4326"
-#  END
+  PROJECTION
+       "init=epsg:4326"
+  END
 END
 
 
@@ -211,7 +211,7 @@ LAYER
 
 
 
-  DATA /var/local/damposdata/ERM2_rivers.shp
+  DATA /var/local/damposdata/ERM2_rivers
 
   METADATA
         "ows_title"       "ERM2 rivers"
@@ -224,9 +224,9 @@ LAYER
         #"gml_include_items" "all"
   END
 
-#  PROJECTION
-#       "init=epsg:4326"
-#  END
+  PROJECTION
+       "init=epsg:4326"
+  END
 
   CLASS
      NAME ""
