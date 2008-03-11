@@ -27,28 +27,30 @@
  * @copyright    2005
  * @version    	 1.0
  *
- * 
+ *
  */
-
 require_once ('commons/config.php');
 
 $i18nPage = 'home';
 $smarty = iniI18n ($i18nPage, $smarty, $i18n);
-
 require_once 'DataObjects/Public_dams.php';
 require_once 'DataObjects/Public_user_dams.php';
+require_once 'google.php';
 
-if ($a->getAuth()) {
+if ($a->getAuth()) 
+{
 	$file->log('Connected: '.$_SESSION["ID"]);
-
-	if ($_SESSION["ADM"] == 't'){
+	if ($_SESSION["ADM"] == 't')
+  {
 		// Maps by country access for ADM only
 		$do = new DataObjects_Public_Dams();
 		$smarty->assign('damCountryFilter',	$do->getCountryList ());
 		$smarty->assign('map', null);
 		$do->free();
-	}else{
-		$do = new DataObjects_Public_Dams();				// Loading dam countries
+	}
+  else
+  {
+		$do = new DataObjects_Public_Dams();				
 		$smarty->assign('damCountryFilter',	$do->getCountryList ());
 		$do->free();		
 
@@ -58,24 +60,22 @@ if ($a->getAuth()) {
 		$userDams = array();
 		
 		$i = 0;
-		$map = displayGoogleMapHead ();
+		$map = googleMapMain();
 		while ($do->fetch()) {
 			$do->getLinks();
-			$map .= googleMarker (	($do->_cd_dam->x_val?$do->_cd_dam->x_val:$do->_cd_dam->x_icold), 
-							($do->_cd_dam->y_val?$do->_cd_dam->y_val:$do->_cd_dam->y_icold), 
-							$do->_cd_dam->noeea, 
-							$do->_cd_dam->name, 
+			$map .= googleMarkerMain(	
+              ($do->_cd_dam->x_val?$do->_cd_dam->x_val:$do->_cd_dam->x_icold),
+							($do->_cd_dam->y_val?$do->_cd_dam->y_val:$do->_cd_dam->y_icold),
+              $do->_cd_dam->noeea,
+							$do->_cd_dam->name,
 							($do->_cd_dam->y_val&&$do->_cd_dam->x_val?VALIDICON:ICOLDICON)
-						);
+      );
 		}
-		$map .= displayGoogleMapFoot ();
+		$map .= displayGoogleMapFoot();
+		$a->getAuth();
 		$smarty->assign('map', $map);
 		$do->free();
-		
-	}	
+	}
 }
-
 $smarty->display('index.tpl');
-
-
 ?>

@@ -14,8 +14,9 @@
     <script type="text/javascript" 	src="js/script.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
     <script type="text/javascript" src="js/pageops.js"></script>
-    <!--<script type="text/javascript" src="js/GMaps_WMSSpec_0.4.js"></script>-->
-    <!--<script type="text/javascript" 	src="js/gmap-wms.js"></script>-->
+    <!--script type="text/javascript" src="js/GMaps_WMSSpec_0.4.js"></script-->
+    <!--script type="text/javascript" 	src="js/gmap-wms.js"></script-->
+    <script type="text/javascript" 	src="js/wms236.js"></script>
     <!-- TODO : Set Google on --> 
     <script src="http://maps.google.com/maps?file=api&amp;v=1&amp;key={$GOOGLEMAPKEY}" type="text/javascript"></script>
     <title>{$Name}</title>
@@ -47,7 +48,7 @@
         <div id="sitetagline">Place the dam on the map</div>
       </div>
       <div id="menuribbon">
-{include file="dropdownmenus.xml"}
+{include file="dropdownmenus.txt"}
       </div>
 
       <div class="breadcrumbtrail">
