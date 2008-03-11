@@ -75,7 +75,7 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   
   /* EEA WMS */
   var eea_layer = new GTileLayer( new GCopyrightCollection("(c) Teleatlas"), 1, 17 );
-  eea_layer.myLayers="SM,A7";
+  eea_layer.myLayers="ERM2_rivers";
   eea_layer.myFormat="image/png";
   eea_layer.myBaseURL="http://dampos-demo.eea.europa.eu/cgi-bin/wseea?";
   //eea_layer.myBaseURL="http://dev.sandre.eaufrance.fr/eeadamsgeo?";
