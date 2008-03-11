@@ -84,7 +84,7 @@ LAYER
   GROUP "EEA"
   TYPE POLYGON
 
-  STATUS ON
+  STATUS OFF
   DUMP FALSE
   TOLERANCEUNITS PIXELS
   TOLERANCE 5
@@ -108,9 +108,9 @@ LAYER
         #"gml_include_items" "all"
   END
 
-  PROJECTION
-       "init=epsg:4326"
-  END
+#  PROJECTION
+#       "init=epsg:4326"
+#  END
 
   CLASS
      NAME ""
@@ -142,7 +142,7 @@ LAYER
   GROUP "EEA"
   TYPE POINT
 
-  STATUS ON
+  STATUS OFF
   DUMP FALSE
   TOLERANCEUNITS PIXELS
   TOLERANCE 5
@@ -189,10 +189,68 @@ LAYER
         #"gml_include_items" "all"
   END
 
-  PROJECTION
+#  PROJECTION
+#       "init=epsg:4326"
+#  END
+END
 
-       "init=epsg:4326"
+
+LAYER
+  NAME ERM2_rivers
+  GROUP "EEA"
+  TYPE LINE
+
+  STATUS ON
+  DUMP FALSE
+  TOLERANCEUNITS PIXELS
+  TOLERANCE 5
+  TEMPLATE "queryable"
+  LABELITEM "NAMN1"
+  LABELMAXSCALE 300000
+  MAXSCALE 500000
+
+
+
+  DATA /var/local/damposdata/ERM2_rivers.shp
+
+  METADATA
+        "ows_title"       "ERM2 rivers"
+        "ows_srs"         "EPSG:4326"
+        "ows_group_title" "EEA"
+        "ows_extent"      "-12 34 36 74"
+        "ows_metadataurl_href" ""
+        "ows_metadataurl_format" "text/plain"
+        "ows_metadataurl_type" "TC211"
+        #"gml_include_items" "all"
   END
+
+#  PROJECTION
+#       "init=epsg:4326"
+#  END
+
+  CLASS
+     NAME ""
+#    COLOR -1 -1 -1
+     OUTLINECOLOR 0 51 153
+
+     LABEL
+        COLOR 108 142 192
+        SHADOWCOLOR 0 0 0
+        TYPE TRUETYPE
+        FONT "ARIAL"
+        SIZE 9
+        MINSIZE 1
+	 MAXSIZE 9
+	 OFFSET 5 0
+        ANTIALIAS TRUE
+        POSITION CR
+        PARTIALS FALSE
+        FORCE TRUE
+        MINDISTANCE 300
+        BUFFER 2
+      END
+  END
+
 END
 
 END # Map File
