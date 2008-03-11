@@ -1,16 +1,8 @@
 <?php
 function googleMapMain ($x = 4, $y = 55, $z = 3)
 {
-    return '
-  <input type="checkbox" name="test" value="test" onclick="onclickTest()" />
-  
+  return '
   <script type="text/javascript">
-  function onClickTest()
-  {
-    alert( "push" );
-  }
-  
-  
   function createMarkerMain( point, id, iconimg, damName ) {
     var icon = new GIcon();
     icon.image = iconimg;
@@ -26,16 +18,9 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
 
   //if (GBrowserIsCompatible()) {
   // WMS servers definitions
-  var WMS_URL_JRC="http://wise.jrc.it/cgi-bin/mapserv?map=/home/www/utils-cgi-bin/map/wms.map&";
-    
-  //var G_MAP_EEA = createWMSSpec(WMS_URL_EEA, "Admin.", "WMS", "SM,A7", "default", "image/png", "1.1.1", "(c) Teleatlas");
+  //var WMS_URL_JRC="http://wise.jrc.it/cgi-bin/mapserv?map=/home/www/utils-cgi-bin/map/wms.map&";
   //var G_MAP_EEA_GEONODE = createWMSSpec(WMS_URL_EEAGEONODE, "EEA", "WMS", "100,200,300,Counties,Capitals,ContryBorder,RiverLarge,Riverlarge_label,RiverMedium,Coastline,Villages", "default", "image/png", "1.1.1", "(c) Teleatlas");
   //var G_MAP_JRC = createWMSSpec(WMS_URL_JRC, "CCM", "WMS", "RIVERSEGMENTS", "default", "image/png", "1.1.1", "CCM River and Catchment Database JRC/IES (c) European Commission - JRC, 2003");
-  //var G_MAP_JRC_I2K = createWMSSpec(WMS_URL_I2K,"I2K.", "WMS", "0", "default", "image/png", "1.1.1", "(c) European Commission");
-  // Create a transparent overlay on a Google MapSpec
-  //var G_MAP_EEA_OVER_SAT = createWMSOverlaySpec(G_SATELLITE_TYPE, G_MAP_EEA, "Admin", "Admin");
-  //var G_MAP_JRC_OVER_SAT = createWMSOverlaySpec(G_SATELLITE_TYPE, G_MAP_JRC, "CCM", "CCM");
-  //var G_MAP_EEA_OVER_I2K = createWMSOverlaySpec(G_MAP_JRC_I2K, G_MAP_EEA, "I2K", "I2K");
   
   // Setup the map
   var map = new GMap2(document.getElementById("map"));
@@ -50,10 +35,6 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   var layer_WMS_GEONODE = [G_SATELLITE_MAP.getTileLayers()[0], tile_WMS_GEONODE];
   var map_WMS_GEONODE = new GMapType(layer_WMS_GEONODE, G_SATELLITE_MAP.getProjection(), "EEA Geonode", G_SATELLITE_MAP);
 
-  //var baseLayer = [G_SATELLITE_MAP.getTileLayers()[0], G_NORMAL_MAP.getTileLayers()[0], G_HYBRID_MAP.getTileLayers()[0]];
-  var baseLayer = [G_SATELLITE_MAP.getTileLayers()[0]];
-  var baseMap   = new GMapType(baseLayer, G_SATELLITE_MAP.getProjection(), "Google", G_SATELLITE_MAP);
-  
   GEvent.addListener(map, "click", function(overlay, point) 
     {
       document.carto_form.x.value = point.x;
@@ -61,12 +42,11 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
     }
   );
 
-  //map.getMapTypes().length = 0;
-  //map.addMapType(baseMap);
-  //map.addMapType(map_WMS_EEA);
-  //map.addMapType(map_tile_test);
-  //map.addMapType(map_I2K);
+  map.getMapTypes().length = 3;
   map.setMapType(G_SATELLITE_MAP);
+  map.addControl(new GSmallMapControl());
+  //map.addControl(new GMapTypeControl(true));
+  //map.addControl(new GScaleControl());  
   
   /* TEST */
   var test_layer = new GTileLayer( new GCopyrightCollection("(c) TEST"), 1, 17 );
@@ -78,7 +58,6 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   
   var test_overlay = new GTileLayerOverlay( test_layer );
   map.addOverlay(test_overlay);
-  test_overlay.hide();
   
   /* Image2000 */
   var i2k_layer = new GTileLayer( new GCopyrightCollection("(c) European Commission"), 1, 17 );
@@ -90,8 +69,10 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   
   var i2k_overlay = new GTileLayerOverlay( i2k_layer );
   map.addOverlay(i2k_overlay);
-  i2k_overlay.hide();
-
+  GEvent.addListener(map,"zoomend",function() {
+    onZoomEnd();
+  });
+  
   /* EEA WMS */
   var eea_layer = new GTileLayer( new GCopyrightCollection("(c) Teleatlas"), 1, 17 );
   eea_layer.myLayers="SM,A7";
@@ -103,11 +84,91 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   
   var eea_overlay = new GTileLayerOverlay( eea_layer );
   map.addOverlay(eea_overlay);
+  
+
+  // Initially hide additional overlays
+  test_overlay.hide();
+  i2k_overlay.hide();
   eea_overlay.hide();
   
+  function onTestClick() {
+  	testButton.press();
+  	if(test_overlay.isHidden())
+  	{
+  	  test_overlay.show();
+  	  return;
+  	}
+  	test_overlay.hide();
+  }
   
-  map.addControl(new GLargeMapControl());
-  map.addControl(new GMapTypeControl());  
+  function onI2KClick() {
+  	i2kButton.press();
+  	if(i2k_overlay.isHidden())
+  	{
+  	  i2k_overlay.show();
+  	  return;
+  	}
+  	i2k_overlay.hide();
+  }
+  
+  function onEEAClick() {
+  	eeaButton.press();
+  	if(eea_overlay.isHidden())
+  	{
+  	  eea_overlay.show();
+  	  return;
+  	}
+  	eea_overlay.hide();
+  }
+
+  
+  function onHybClick() {
+    if( !hybButton.isPress() )
+    {
+  	  hybButton.press();
+  	  satButton.press();
+  	  map.setMapType(G_HYBRID_MAP);
+  	  restoreOverlays();
+  	}
+  }
+  
+  function onSatClick() {
+    if( !satButton.isPress() )
+    {
+  	  hybButton.press();
+  	  satButton.press();
+  	  map.setMapType(G_SATELLITE_MAP);
+  	  restoreOverlays();
+  	}
+  }
+  
+  function onZoomEnd()
+  {
+  	restoreOverlays();
+  }
+  
+  //When changing map type (onSatClick/onHybClick), preserve overlays state of visibility 
+  function restoreOverlays()
+  {
+  	if(test_overlay.isHidden()) test_overlay.hide();
+  	if(i2k_overlay.isHidden()) i2k_overlay.hide(); 
+  	if(eea_overlay.isHidden()) eea_overlay.hide();
+  }
+      
+  var testButton = new LayerSelectControl( "Test", onTestClick, new GSize( 5, 5 ) ); 
+  var i2kButton = new LayerSelectControl( "I2K", onI2KClick, new GSize( 60, 5 ) );
+  var eeaButton = new LayerSelectControl( "EEA", onEEAClick, new GSize( 115, 5 ) );
+  var hybButton = new LayerSelectControl( "Hyb", onHybClick, new GSize( 190, 5 ) );
+  var satButton = new LayerSelectControl( "Sat", onSatClick, new GSize( 245, 5 ) );
+  
+  map.addControl( testButton );
+  map.addControl( i2kButton );
+  map.addControl( eeaButton );
+  map.addControl( hybButton );
+  map.addControl( satButton );
+
+  satButton.press();
+  
 ';
 }
 

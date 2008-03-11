@@ -19,6 +19,7 @@
     <script type="text/javascript" 	src="js/wms236.js"></script>
     <!-- TODO : Set Google on --> 
     <script src="http://maps.google.com/maps?file=api&amp;v=1&amp;key={$GOOGLEMAPKEY}" type="text/javascript"></script>
+    <script type="text/javascript" src="js/google.js"></script>
     <title>{$Name}</title>
 </head>
 <body onunload="GUnload()" class="{$bodyclass}">

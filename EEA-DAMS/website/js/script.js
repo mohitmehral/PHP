@@ -130,6 +130,7 @@ function getNbSel(select) {
 	return nbsel;
 }
 
+/* romancri: Commented out since throws an JS error
 function getSelection(select) {
 	j = 0;
 	nb = select.options.length;
@@ -141,6 +142,7 @@ function getSelection(select) {
 		}
 	return listeObj;
 }
+*/
 
 function getAll(select) {
 	nb = select.options.length;
