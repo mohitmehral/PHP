@@ -49,15 +49,15 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   //map.addControl(new GScaleControl());  
   
   /* TEST */
-  var test_layer = new GTileLayer( new GCopyrightCollection("(c) TEST"), 1, 17 );
-  test_layer.myLayers="gadm2";
-  test_layer.myFormat="image/gif";
-  test_layer.myBaseURL="http://bg.berkeley.edu/cgi-bin/mapserv?map=/usr/local/apache2/htdocs/gadm.map&";
-  test_layer.getTileUrl=CustomGetTileUrl;
-  test_layer.getOpacity = function() {return 1;}
+  //var test_layer = new GTileLayer( new GCopyrightCollection("(c) TEST"), 1, 17 );
+  //test_layer.myLayers="gadm2";
+  //test_layer.myFormat="image/gif";
+  //test_layer.myBaseURL="http://bg.berkeley.edu/cgi-bin/mapserv?map=/usr/local/apache2/htdocs/gadm.map&";
+  //test_layer.getTileUrl=CustomGetTileUrl;
+  //test_layer.getOpacity = function() {return 1;}
   
-  var test_overlay = new GTileLayerOverlay( test_layer );
-  map.addOverlay(test_overlay);
+  //var test_overlay = new GTileLayerOverlay( test_layer );
+  //map.addOverlay(test_overlay);
   
   /* Image2000 */
   var i2k_layer = new GTileLayer( new GCopyrightCollection("(c) European Commission"), 1, 17 );
@@ -87,10 +87,11 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   
 
   // Initially hide additional overlays
-  test_overlay.hide();
+  //test_overlay.hide();
   i2k_overlay.hide();
   eea_overlay.hide();
-  
+
+/*  
   function onTestClick() {
   	testButton.press();
   	if(test_overlay.isHidden())
@@ -100,6 +101,7 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   	}
   	test_overlay.hide();
   }
+*/
   
   function onI2KClick() {
   	i2kButton.press();
@@ -126,7 +128,8 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
     if( !hybButton.isPress() )
     {
   	  hybButton.press();
-  	  satButton.press();
+  	  if( satButton.isPress() ) satButton.press();
+  	  if( normalButton.isPress() ) normalButton.press();
   	  map.setMapType(G_HYBRID_MAP);
   	  restoreOverlays();
   	}
@@ -135,9 +138,21 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   function onSatClick() {
     if( !satButton.isPress() )
     {
-  	  hybButton.press();
+  	  if( hybButton.isPress() ) hybButton.press();
   	  satButton.press();
+  	  if( normalButton.isPress() ) normalButton.press();
   	  map.setMapType(G_SATELLITE_MAP);
+  	  restoreOverlays();
+  	}
+  }
+  
+  function onNormalClick() {
+    if( !normalButton.isPress() )
+    {
+  	  if( hybButton.isPress() ) hybButton.press();
+  	  if( satButton.isPress() ) satButton.press();
+  	  normalButton.press();
+  	  map.setMapType(G_NORMAL_MAP);
   	  restoreOverlays();
   	}
   }
@@ -150,22 +165,24 @@ function googleMapMain ($x = 4, $y = 55, $z = 3)
   //When changing map type (onSatClick/onHybClick), preserve overlays state of visibility 
   function restoreOverlays()
   {
-  	if(test_overlay.isHidden()) test_overlay.hide();
+  	//if(test_overlay.isHidden()) test_overlay.hide();
   	if(i2k_overlay.isHidden()) i2k_overlay.hide(); 
   	if(eea_overlay.isHidden()) eea_overlay.hide();
   }
       
-  var testButton = new LayerSelectControl( "Test", onTestClick, new GSize( 5, 5 ) ); 
+  //var testButton = new LayerSelectControl( "Test", onTestClick, new GSize( 5, 5 ) ); 
   var i2kButton = new LayerSelectControl( "I2K", onI2KClick, new GSize( 60, 5 ) );
   var eeaButton = new LayerSelectControl( "EEA", onEEAClick, new GSize( 115, 5 ) );
   var hybButton = new LayerSelectControl( "Hyb", onHybClick, new GSize( 190, 5 ) );
   var satButton = new LayerSelectControl( "Sat", onSatClick, new GSize( 245, 5 ) );
+  var normalButton = new LayerSelectControl( "Normal", onNormalClick, new GSize( 300, 5 ) );
   
-  map.addControl( testButton );
+  //map.addControl( testButton );
   map.addControl( i2kButton );
   map.addControl( eeaButton );
   map.addControl( hybButton );
   map.addControl( satButton );
+  map.addControl( normalButton );
 
   satButton.press();
   
