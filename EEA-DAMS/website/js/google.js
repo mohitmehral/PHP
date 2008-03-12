@@ -155,4 +155,9 @@ function damDragEndListener() {
   } 
 }
 
-
+function resetSeed( x, y ) {
+  var xCtrl = document.getElementById( "x" );
+  var yCtrl = document.getElementById( "y" );
+  if( xCtrl != null ) xCtrl.value = x;
+  if( yCtrl != null ) yCtrl.value = y;
+}

@@ -28,6 +28,7 @@
                 {$valposition}<br/>
                 <label for="x">x:</label> <input size="10" type="text" id="x" name="x" value="{$x_val}"/>
 				<label for="y">y:</label> <input size="10" type="text" id="y" name="y" value="{$y_val}"/>
+                <input type="button" name="btnResetSeed" id="btnResetSeed" value="N/A" onclick="javascript:resetSeed('{$outOfRangeX}','{$outOfRangeY}');" />
               </li>
 			</ul>
 			<input class="SearchButton" type="submit" value="{$saveandvalid}"/>

@@ -69,6 +69,11 @@ if ($a->getAuth()) {
   $i18nPage = 'dams';
   $smarty = iniI18n ($i18nPage, $smarty, $i18n);
 
+  $dummy = new DataObjects_Public_dams();
+  // Set the outOfRange values on N/A reset button
+  $smarty->assign( "outOfRangeX", $dummy->outOfRange );
+  $smarty->assign( "outOfRangeY", $dummy->outOfRange );
+  
   if ( isset( $_SESSION[ "damIdsOrdered" ] ) && isset( $_REQUEST["cd"] ) ) {
     $smarty->assign('first', $_SESSION["damIdsOrdered"][0] );
     $idx = array_search( $_REQUEST["cd"], $_SESSION["damIdsOrdered"] );
@@ -97,6 +102,7 @@ if ($a->getAuth()) {
   //DB_DataObject::debugLevel(5);
   $daml = new DataObjects_Public_dams();
   $smarty->assign( 'damCountryFilter', $daml->getCountryList() );
+
   $dam = new DataObjects_Public_User_Dams();
   $urlFilter = '';
   $whereAdd = " where 1=1 ";
@@ -158,8 +164,13 @@ if ($a->getAuth()) {
     $smarty->assign('y_val', 			$daml->y_val);
     $smarty->assign('valid', 			$daml->valid);
     $i18nPage = 'dam';
+    
     $smarty = iniI18n ($i18nPage, $smarty, $i18n);
-
+    // Set the outOfRange values on N/A reset button
+    $dummy = new DataObjects_Public_dams();
+    $smarty->assign( "outOfRangeX", $dummy->outOfRange );
+    $smarty->assign( "outOfRangeY", $dummy->outOfRange );
+    
     // File with images ...
     if (file_exists (BASEDIR.TOPOPATH.''.strtoupper($daml->noeea).'.png') || file_exists (BASEDIR.TOPOPATH.''.strtolower($daml->noeea).'.png'))
       $smarty->assign('imgTopook',true);
