@@ -27,186 +27,189 @@
  * @copyright    2005
  * @version    	 1.0
  *
- * 
+ *
  */
 
-require_once 'commons/config.php'; 
+require_once 'commons/config.php';
 require_once 'DataObjects/Public_dams.php';
+require_once 'google.php';
 
-	
 if ($a->getAuth()) {
-	
-	
-	if (isset($_REQUEST["action"]) && isset($_REQUEST["cd"])) {
-		$dam = new DataObjects_Public_dams();
-		$dam->whereAdd ("NOEEA = '".$_REQUEST["cd"]."'");
-		$dam->find(true);
-		$dam->x_val = $_REQUEST["x"];
-		$dam->y_val = $_REQUEST["y"];
-		$dam->x_icold = $_REQUEST["xini"];
-		$dam->y_icold = $_REQUEST["yini"];
-		$dam->comments = $_REQUEST["comment"];
-		
-		if ($_REQUEST["x"] != null)					// Unvalid if null
-			$dam->valid = 1;
-		else
-			$dam->valid = 0;
+  if (isset($_REQUEST["action"]) && isset($_REQUEST["cd"])) {
+    $dam = new DataObjects_Public_dams();
+    $dam->whereAdd ("NOEEA = '".$_REQUEST["cd"]."'");
+    $dam->find(true);
+    $dam->x_val = $_REQUEST["x"];
+    $dam->y_val = $_REQUEST["y"];
+    $dam->x_icold = $_REQUEST["xini"];
+    $dam->y_icold = $_REQUEST["yini"];
+    $dam->comments = $_REQUEST["comment"];
 
-		if ($_REQUEST["is_oncanal"] != null)
-			$dam->is_oncanal = 1;
-		else 
-			$dam->is_oncanal = 0;
+    if ($_REQUEST["x"] != null)					// Unvalid if null
+    $dam->valid = 1;
+    else
+    $dam->valid = 0;
 
-		if ($_REQUEST["is_dyke"] != null)
-			$dam->is_dyke = 1;
-		else 
-			$dam->is_dyke = 0;
-		
+    if ($_REQUEST["is_oncanal"] != null)
+    $dam->is_oncanal = 1;
+    else
+    $dam->is_oncanal = 0;
+
+    if ($_REQUEST["is_dyke"] != null)
+    $dam->is_dyke = 1;
+    else
+    $dam->is_dyke = 0;
+
+    $dam->update(DB_DATAOBJECT_WHEREADD_ONLY);
+    $dam->free();
+
+    $file->log('Dams: '.$_REQUEST["cd"].' validated by '.$_SESSION["LOGIN"]);
+  }
+
+  $i18nPage = 'dams';
+  $smarty = iniI18n ($i18nPage, $smarty, $i18n);
+
+  if ( isset( $_SESSION[ "damIdsOrdered" ] ) && isset( $_REQUEST["cd"] ) ) {
+    $smarty->assign('first', $_SESSION["damIdsOrdered"][0] );
+    $idx = array_search( $_REQUEST["cd"], $_SESSION["damIdsOrdered"] );
+
+    if ( $idx > 0 && $idx < sizeof( $_SESSION[ "damIdsOrdered" ] ) - 1 ) {
+      $smarty->assign('next',  $_SESSION["damIdsOrdered"][$idx+1]);
+      $smarty->assign('previous', $_SESSION["damIdsOrdered"][$idx-1]);
+    } elseif ( $idx == 0 ) {
+      $smarty->assign('next',  $_SESSION["damIdsOrdered"][$idx+1]);
+      $smarty->assign('previous', $_REQUEST["cd"]);
+    } elseif ( $idx == sizeof( $_SESSION[ "damIdsOrdered" ] ) - 1 ) {
+      $smarty->assign('previous', $_SESSION["damIdsOrdered"][$idx-1]);
+      $smarty->assign('next', $_REQUEST["cd"]);
+    } else {
+      $smarty->assign('next', $_REQUEST["cd"]);
+      $smarty->assign('previous', $_REQUEST["cd"]);
+    }
+    $smarty->assign('last', $_SESSION["damIdsOrdered"][sizeof($_SESSION["damIdsOrdered"])-1]);
+  } else {
+    $smarty->assign('first', '');
+    $smarty->assign('next', '');
+    $smarty->assign('previous', '');
+    $smarty->assign('last', '');
+  }
+
+  //DB_DataObject::debugLevel(5);
+  $daml = new DataObjects_Public_dams();
+  $smarty->assign( 'damCountryFilter', $daml->getCountryList() );
+  $dam = new DataObjects_Public_User_Dams();
+  $urlFilter = '';
+  $whereAdd = " where 1=1 ";
+
+  if( isset( $_REQUEST["cd"] ) )
+  if( $_REQUEST["cd"] != '' ) {
+    $whereAdd .= " and NOEEA like '%".$_REQUEST["cd"]."%'";
+    //$urlFilter .= '&cd='.$_REQUEST["cd"];
+  }
+  if ( isset( $_REQUEST[ "srcName" ] ) ) {
+    if ($_REQUEST["srcName"]!='')
+    $whereAdd .= " and NAME like '%".$_REQUEST["srcName"]."%'";
+    $urlFilter .= '&amp;srcName='.$_REQUEST["srcName"];
+  }
+  if (isset($_REQUEST["srcCountry"])) {
+    if ($_REQUEST["srcCountry"]!='')
+    $whereAdd .= " and COUNTRY like '%".$_REQUEST["srcCountry"]."%'";
+    $urlFilter .= '&amp;srcCountry='.$_REQUEST["srcCountry"];
+  }
+  $orderBy = " order by VALID desc, COUNTRY, NAME asc";
 
 
-		$dam->update(DB_DATAOBJECT_WHEREADD_ONLY);
-		$dam->free();	
-		
-		$file->log('Dams: '.$_REQUEST["cd"].' validated by '.$_SESSION["LOGIN"]);
-	
-	}
 
-	$i18nPage = 'dams';
-	$smarty = iniI18n ($i18nPage, $smarty, $i18n);
-	
-	if (isset($_SESSION["damIdsOrdered"])&&isset($_REQUEST["cd"])){
-		$smarty->assign('first', $_SESSION["damIdsOrdered"][0]);
-		$idx = array_search($_REQUEST["cd"], $_SESSION["damIdsOrdered"]);
+  if ($_SESSION["ADM"]!='t')
+  {	
+    $whereAdd .= " and NOEEA = CD_DAM ";
+    $whereAdd .= "and CD_USER = ".$_SESSION["ID"].""; 	// Filter on user logged in if not ADM. Else display all dams
+    $daml->query ("Select * "."from $daml->__table a, $dam->__table b ".$whereAdd.$orderBy);
+  } else {
+    $daml->query ("Select * "."from $daml->__table ".$whereAdd.$orderBy);
+  }
 
-		if ($idx>0 && $idx<sizeof($_SESSION["damIdsOrdered"])-1){
-			$smarty->assign('next',  $_SESSION["damIdsOrdered"][$idx+1]);
-			$smarty->assign('previous', $_SESSION["damIdsOrdered"][$idx-1]);
-		}elseif ($idx==0){
-			$smarty->assign('next',  $_SESSION["damIdsOrdered"][$idx+1]);
-			$smarty->assign('previous', $_REQUEST["cd"]);
-		}elseif ($idx==sizeof($_SESSION["damIdsOrdered"])-1){
-			$smarty->assign('previous', $_SESSION["damIdsOrdered"][$idx-1]);
-			$smarty->assign('next', $_REQUEST["cd"]);
-		}else{
-			$smarty->assign('next', $_REQUEST["cd"]);
-			$smarty->assign('previous', $_REQUEST["cd"]);
-		}
-		$smarty->assign('last', $_SESSION["damIdsOrdered"][sizeof($_SESSION["damIdsOrdered"])-1]);
-	}else{
-		$smarty->assign('first', '');
-		$smarty->assign('next', '');
-		$smarty->assign('previous', '');
-		$smarty->assign('last', '');
-	}
+  if ( $daml->N > 1 ) {
+    $_SESSION["urlFilter"] = $urlFilter;
+    // Dams list if more than one
+    $dt = array();
+    $damIdsOrdered = array();
+    $i = 0;
+    while ($daml->fetch()) {
+      $tmp = $daml->toArray();
+      $dt[$i] = $tmp;
+      $damIdsOrdered[$i] = $daml->noeea;
+      $i ++;
+    }
+    //print_r($dt);
+    $_SESSION["damIdsOrdered"] = $damIdsOrdered;
+    $smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
+    $smarty->assign('dt', $dt);
+    $smarty->display('dams.tpl');
+  } elseif ( $daml->N == 1 ) {
+    // One dam go to validation and process
+    $smarty->assign('urlFilter', $_SESSION["urlFilter"]);
+    $smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
 
+    $daml->fetch();
+    $daml->get($_REQUEST["cd"]);
+    $smarty->assign('dam', 				$daml);
+    $smarty->assign('x_val', 			$daml->x_val);
+    $smarty->assign('y_val', 			$daml->y_val);
+    $smarty->assign('valid', 			$daml->valid);
+    $i18nPage = 'dam';
+    $smarty = iniI18n ($i18nPage, $smarty, $i18n);
 
-	//DB_DataObject::debugLevel(5);
-	$daml = new DataObjects_Public_dams();
+    // File with images ...
+    if (file_exists (BASEDIR.TOPOPATH.''.strtoupper($daml->noeea).'.png') || file_exists (BASEDIR.TOPOPATH.''.strtolower($daml->noeea).'.png'))
+      $smarty->assign('imgTopook',true);
+    else
+      $smarty->assign('imgTopook',false);
+    $smarty->assign('imgTopo', 	WWWDIR.TOPOPATH.''.$daml->noeea.'.png');
 
-	$smarty->assign('damCountryFilter',	$daml->getCountryList ());
-	
-	$dam = new DataObjects_Public_User_Dams();
-	$urlFilter = '';
-	$whereAdd = " where 1=1 ";
+    if (file_exists (BASEDIR.SPUDPATH.'clip_'.strtoupper($daml->noeea).'.jpg') || file_exists (BASEDIR.SPUDPATH.'clip_'.strtolower($daml->noeea).'.jpg'))
+      $smarty->assign('imgSpudok',true);
+    else
+      $smarty->assign('imgSpudok',false);
+    $smarty->assign('imgSpud', 	WWWDIR.SPUDPATH.'clip_'.strtolower($daml->noeea).'.jpg');
 
-	if (isset($_REQUEST["cd"]))
-		if ($_REQUEST["cd"]!=''){
-			$whereAdd .= " and NOEEA like '%".$_REQUEST["cd"]."%'";	
-			//$urlFilter .= '&cd='.$_REQUEST["cd"];
-		}
-	if (isset($_REQUEST["srcName"])){
-		if ($_REQUEST["srcName"]!='')
-			$whereAdd .= " and NAME like '%".$_REQUEST["srcName"]."%'";	
-			$urlFilter .= '&amp;srcName='.$_REQUEST["srcName"];
-		}
-	if (isset($_REQUEST["srcCountry"])){
-		if ($_REQUEST["srcCountry"]!='')
-			$whereAdd .= " and COUNTRY like '%".$_REQUEST["srcCountry"]."%'";	
-			$urlFilter .= '&amp;srcCountry='.$_REQUEST["srcCountry"];
-		}
-	$orderBy = " order by VALID desc, COUNTRY, NAME asc";
+    if (file_exists (BASEDIR.SPANPATH.'clip_'.strtoupper($daml->noeea).'.jpg') || file_exists (BASEDIR.SPANPATH.'clip_'.strtolower($daml->noeea).'.jpg'))
+      $smarty->assign('imgSpanok',true);
+    else
+      $smarty->assign('imgSpanok',false);
+    $smarty->assign('imgSpan', 	WWWDIR.SPANPATH.'clip_'.strtolower($daml->noeea).'.jpg');
 
-	
-
-	if ($_SESSION["ADM"]!='t')
-	{	$whereAdd .= " and NOEEA = CD_DAM ";
-		$whereAdd .= "and CD_USER = ".$_SESSION["ID"].""; 	// Filter on user logged in if not ADM. Else display all dams
-		$daml->query ("Select * ".
-			"from $daml->__table a, $dam->__table b ".
-			$whereAdd . $orderBy);
-	}else{
-		$daml->query ("Select * ".
-			"from $daml->__table ".
-			$whereAdd . $orderBy);
-	}
-	
-	
-	if ($daml->N>1){
-		
-		$_SESSION["urlFilter"] = $urlFilter;
-		
-		// Dams list if more than one
-		$dt = array();
-		$damIdsOrdered = array();
-		$i = 0;
-		while ($daml->fetch()) {
-			$tmp = $daml->toArray();
-			$dt[$i] = $tmp;
-			$damIdsOrdered[$i] = $daml->noeea;
-			$i ++;	
-		}
-		//print_r($dt);
-		$_SESSION["damIdsOrdered"] = $damIdsOrdered;
-		$smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
-		$smarty->assign('dt', $dt);
-		$smarty->display('dams.tpl');
-	}elseif ($daml->N==1){
-		// One dam go to validation and process
-		$smarty->assign('urlFilter', $_SESSION["urlFilter"]);
-		$smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
-		
-		$daml->fetch();
-		$daml->get($_REQUEST["cd"]);
-		$smarty->assign('dam', 				$daml);
-		$smarty->assign('x_val', 			$daml->x_val);
-		$smarty->assign('y_val', 			$daml->y_val);
-		$smarty->assign('valid', 			$daml->valid);
-		$i18nPage = 'dam';
-		$smarty = iniI18n ($i18nPage, $smarty, $i18n);
-		
-		// File with images ...
-		if (file_exists (BASEDIR.TOPOPATH.''.strtoupper($daml->noeea).'.png') || file_exists (BASEDIR.TOPOPATH.''.strtolower($daml->noeea).'.png'))
-			$smarty->assign('imgTopook',true);
-		else
-			$smarty->assign('imgTopook',false);
-		$smarty->assign('imgTopo', 	WWWDIR.TOPOPATH.''.$daml->noeea.'.png');
-
-		if (file_exists (BASEDIR.SPUDPATH.'clip_'.strtoupper($daml->noeea).'.jpg') || file_exists (BASEDIR.SPUDPATH.'clip_'.strtolower($daml->noeea).'.jpg'))
-			$smarty->assign('imgSpudok',true);
-		else
-			$smarty->assign('imgSpudok',false);
-		$smarty->assign('imgSpud', 	WWWDIR.SPUDPATH.'clip_'.strtolower($daml->noeea).'.jpg');
-
-		if (file_exists (BASEDIR.SPANPATH.'clip_'.strtoupper($daml->noeea).'.jpg') || file_exists (BASEDIR.SPANPATH.'clip_'.strtolower($daml->noeea).'.jpg'))
-			$smarty->assign('imgSpanok',true);
-		else
-			$smarty->assign('imgSpanok',false);
-		$smarty->assign('imgSpan', 	WWWDIR.SPANPATH.'clip_'.strtolower($daml->noeea).'.jpg');
-
-		if ($googleOn == true)
-			$smarty->assign('googleMap', 	$daml->displayGoogleMap());
-		else
-			$smarty->assign('googleMap', 	null);
-			
-		$smarty->display('dam.tpl');
-	}else{
-		// None
-		$smarty->assign('dt', null);
-		$smarty->display('dams.tpl');
-	}
-
-}else{
-	$smarty->display('index.tpl');
+    if ($googleOn == true)
+    {
+      $center = $daml->getDamMapCenter();
+      $gmap = startGoogleViewport( $center[ 0 ], $center[ 1 ], $center[ 2 ], "damMapClickListener" );
+      if( $daml->isValidPosition( $daml->x_icold, $daml->y_icold ) )
+      {
+        $gmap .= createCrossMarker( "ICOLD", "ICOLD position", $daml->x_icold, $daml->y_icold, ICOLDICON, 1 );
+      }
+      if( $daml->isValidPosition( $daml->x_prop, $daml->y_prop ) )
+      {
+        $gmap .= createCrossMarker( "EEA", "EEA proposed position", $daml->x_prop, $daml->y_prop, EEAICON, 2 );
+      }
+      if( $daml->isValidPosition( $daml->x_val, $daml->y_val ) )
+      {
+        $gmap .= createCrossMarker( "VAL", "Validated position", $daml->x_val, $daml->y_val, VALIDICON, 3 );
+      }
+      $gmap .= endGoogleViewport();
+      $smarty->assign('googleMap', 	$gmap);
+    }
+    else
+    {
+      $smarty->assign('googleMap', 	null);
+    }
+    	
+    $smarty->display('dam.tpl');
+  } else {
+    // None
+    $smarty->assign('dt', null);
+    $smarty->display('dams.tpl');
+  }
+} else {
+  $smarty->display('index.tpl');
 }
- 
 ?>

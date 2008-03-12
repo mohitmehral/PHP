@@ -60,18 +60,18 @@ if ($a->getAuth())
 		$userDams = array();
 		
 		$i = 0;
-		$map = googleMapMain();
+		$map = startGoogleViewport();
 		while ($do->fetch()) {
 			$do->getLinks();
 			$map .= googleMarkerMain(	
               ($do->_cd_dam->x_val?$do->_cd_dam->x_val:$do->_cd_dam->x_icold),
-							($do->_cd_dam->y_val?$do->_cd_dam->y_val:$do->_cd_dam->y_icold),
+              ($do->_cd_dam->y_val?$do->_cd_dam->y_val:$do->_cd_dam->y_icold),
               $do->_cd_dam->noeea,
-							$do->_cd_dam->name,
-							($do->_cd_dam->y_val&&$do->_cd_dam->x_val?VALIDICON:ICOLDICON)
-      );
+              $do->_cd_dam->name,
+              ($do->_cd_dam->y_val && $do->_cd_dam->x_val?VALIDICON:ICOLDICON)
+            );
 		}
-		$map .= displayGoogleMapFoot();
+		$map .= endGoogleViewport();
 		$a->getAuth();
 		$smarty->assign('map', $map);
 		$do->free();

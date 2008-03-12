@@ -268,6 +268,42 @@ if ($this->x_val!=null && $this->y_val!=null &&
 		
 		return $a;
     }
-
-
+    
+  /**
+   * Retrieve the center of the map for the specified dam. Dam will be on map center.
+   * Checks for Validated position, EEA position, ICOLD position, Country position in this order. First one which is
+   * valid is returned  
+   * @return An array of 3 elements in this order index 0 = X, index 1 = Y, index 2 = Zoom level 
+   */
+  function getDamMapCenter() 
+  {
+    $ret = array( 0, 0, 11 );
+    // Zoom to where ? VALID -> EEA -> ICOLD -> COUNTRY
+    if ( $this->isValidPosition( $this->x_val, $this->y_val ) ) {
+      // Zoom to validated position
+      $ret[ 0 ] = $this->x_val;
+	  $ret[ 1 ] = $this->y_val; 
+    }
+    elseif ( $this->isValidPosition( $this->x_prop, $this->y_prop ) ) {
+      // Zoom to EEA position		        
+      $ret[ 0 ] = $this->x_prop;
+      $ret[ 1 ] = $this->y_prop; 
+    }
+    elseif ( $this->isValidPosition( $this->x_icold, $this->y_icold ) ) {
+      // ICOLD or Country center
+      $ret[ 0 ] = $this->x_icold;
+	  $ret[ 1 ] = $this->y_icold; 
+    }
+    else {
+      // ICOLD or Country center
+      $ret[ 0 ] = $this->countryCoord[$this->country]["X"];
+	  $ret[ 1 ] = $this->countryCoord[$this->country]["Y"]; 
+	  $ret[ 2 ] = $this->countryCoord[$this->country]["Z"];			
+    }
+    return $ret;
+  }
+  
+  function isValidPosition( $x, $y ) {
+    return ( $x != null && $y != null && $x != '' && $y != '' && $x != 0 && $y != 0 && $x != $this->outOfRange && $y != $this->outOfRange ); 
+  }
 }
