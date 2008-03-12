@@ -139,8 +139,8 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
 /**
  * Create a marker on google viewport.
  *
- * @param integer $x Center position - x
- * @param integer $y Center position - y
+ * @param double $x Center position - x
+ * @param double $y Center position - y
  * @param integer $id Marker id (unique within page)
  * @param string $name Marker (appears as tooltip on marker)
  * @param string $iconurl Marker icon

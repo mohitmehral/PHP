@@ -32,8 +32,8 @@
 
 
 require_once ('commons/config.php');
-
 require_once 'DataObjects/Public_dams.php';
+require_once 'google.php';
 
 if ($a->getAuth()) {
 	
@@ -49,33 +49,32 @@ $do = new DataObjects_Public_User_Dams();
 	$i = 0;
 	$damIdsOrdered = array();
 
-	$map = displayGoogleMapHead (	$daml->countryCoord[$_REQUEST["country"]]["X"], 
-						$daml->countryCoord[$_REQUEST["country"]]["Y"], 
-						$daml->countryCoord[$_REQUEST["country"]]["Z"]);
-	while ($daml->fetch()) {
-		$map .= googleMarker (	($daml->x_val?$daml->x_val:$daml->x_icold), 
-							($daml->y_val?$daml->y_val:$daml->y_icold), 
-							$daml->noeea, 
-							$daml->name, 
-							($daml->y_val&&$daml->x_val?VALIDICON:ICOLDICON)
-						);
-		$damIdsOrdered[$i] = $daml->noeea;
-		$i ++;	
-
-//googleMarker ($daml->x_icold, $daml->y_icold, $daml->noeea, $daml->name);
+	$map = startGoogleViewport(
+	          $daml->countryCoord[$_REQUEST["country"]]["X"], 
+              $daml->countryCoord[$_REQUEST["country"]]["Y"],
+              5
+    );
+	while ($daml->fetch()) 
+    {
+      $map .= googleMarkerMain (
+                $daml->x_val ? $daml->x_val : $daml->x_icold, 
+				$daml->y_val ? $daml->y_val : $daml->y_icold, 
+				$daml->noeea, 
+				$daml->name, 
+				$daml->y_val && $daml->x_val ? VALIDICON:ICOLDICON
+      );
+      $damIdsOrdered[$i] = $daml->noeea;
+      $i++;
 	}
-	
-	$_SESSION["damIdsOrdered"] = $damIdsOrdered;
-		
+	$_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
 	$daml->free();
-
-	$map .= displayGoogleMapFoot ();
+	$map .= endGoogleViewport();
 	$smarty->assign('map', $map);
-
 	$smarty->display('mapit.tpl');
+} else {
+  $smarty->display('index.tpl');
+}
 
-}else
-	$smarty->display('index.tpl');
 
 
 

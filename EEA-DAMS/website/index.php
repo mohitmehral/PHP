@@ -59,7 +59,6 @@ if ($a->getAuth())
 		$nb = $do->find();
 		$userDams = array();
 		
-		$i = 0;
 		$map = startGoogleViewport();
 		while ($do->fetch()) {
 			$do->getLinks();
