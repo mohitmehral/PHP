@@ -24,7 +24,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
 
   map.getMapTypes().length = 3;
   map.setMapType(G_SATELLITE_MAP);
-  map.addControl(new GSmallMapControl());
+  map.addControl(new GLargeMapControl());
   
   /* Image2000 */
   var i2k_layer = new GTileLayer( new GCopyrightCollection("(c) European Commission"), 1, 17 );
@@ -121,7 +121,8 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
   }
       
   var i2kButton = new LayerSelectControl( "I2K", onI2KClick, new GSize( 60, 5 ) );
-  var eeaButton = new LayerSelectControl( "EEA", onEEAClick, new GSize( 115, 5 ) );
+  var eeaButton = new LayerSelectControl( "Rivers", onEEAClick, new GSize( 115, 5 ) );
+
   var hybButton = new LayerSelectControl( "Hyb", onHybClick, new GSize( 190, 5 ) );
   var satButton = new LayerSelectControl( "Sat", onSatClick, new GSize( 245, 5 ) );
   var normalButton = new LayerSelectControl( "Normal", onNormalClick, new GSize( 300, 5 ) );
