@@ -42,7 +42,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
     
   /* EEA WMS */
   var eea_layer = new GTileLayer( new GCopyrightCollection("(c) Teleatlas"), 1, 17 );
-  eea_layer.myLayers="ERM2_rivers";
+  eea_layer.myLayers="ERM2Water";
   eea_layer.myFormat="image/png";
   eea_layer.myBaseURL="http://dampos-demo.eionet.europa.eu/cgi-bin/wseea?";
   eea_layer.getTileUrl=CustomGetTileUrl;
@@ -121,7 +121,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
   }
       
   var i2kButton = new LayerSelectControl( "I2K", onI2KClick, new GSize( 60, 5 ) );
-  var eeaButton = new LayerSelectControl( "Rivers", onEEAClick, new GSize( 115, 5 ) );
+  var eeaButton = new LayerSelectControl( "Water", onEEAClick, new GSize( 115, 5 ) );
 
   var hybButton = new LayerSelectControl( "Hyb", onHybClick, new GSize( 190, 5 ) );
   var satButton = new LayerSelectControl( "Sat", onSatClick, new GSize( 245, 5 ) );
