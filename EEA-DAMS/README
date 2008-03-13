@@ -44,3 +44,17 @@ WMS for Google Maps:
 --------------------
   See:
   http://www.spatialdatalogic.com/cs/blogs/brian_flood/archive/2005/07/11/39.aspx
+  
+  Update 2008-03-13:
+  - Due to a change in Google Map API, previous version of WMS does not 
+  longer work. A new library has been installed working with 
+  Google Maps >= v2.36:
+  http://chignik.berkeley.edu/google/wms236.js. 
+  The library can be found in folder website/js/wms236.js and 
+  contains sample code too. Future updates may require replacing this 
+  file and test functionality (see below where);
+  - Due to code duplication within the project, two new files were 
+  created: google.php and js/google.js. These have the purpose of unifying the
+  calls to Google API across the project (mapit.php, dams.php and index.php)
+  from a single place.
+  
