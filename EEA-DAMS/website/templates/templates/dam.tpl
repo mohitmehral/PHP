@@ -19,11 +19,13 @@
                 <label for="yini">y:</label> <input size="10" type="text" id="yini" name="yini" value="{$dam->y_icold}"/>
                 <input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_icold};this.form.y.value={$dam->y_icold};" value="{$icoldistrue}"/>
 			  </li>
+<!-- See https://svn.eionet.europa.eu/projects/Zope/ticket/1300        
               <li>
                 {$eeaposition}<br/>
 				x: {$dam->x_prop} y: {$dam->y_prop}
 				<input class="SearchButton" type="button" onclick="this.form.x.value={$dam->x_prop};this.form.y.value={$dam->y_prop};" value="{$eeaistrue}"/>
               </li>
+-->              
               <li>
                 {$valposition}<br/>
                 <label for="x">x:</label> <input size="10" type="text" id="x" name="x" value="{$x_val}"/>

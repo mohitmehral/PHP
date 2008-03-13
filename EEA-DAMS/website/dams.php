@@ -198,10 +198,12 @@ if ($a->getAuth()) {
       {
         $gmap .= createCrossMarker( "ICOLD", "ICOLD position", $daml->x_icold, $daml->y_icold, ICOLDICON, 1 );
       }
+/* See https://svn.eionet.europa.eu/projects/Zope/ticket/1300      
       if( $daml->isValidPosition( $daml->x_prop, $daml->y_prop ) )
       {
         $gmap .= createCrossMarker( "EEA", "EEA proposed position", $daml->x_prop, $daml->y_prop, EEAICON, 2 );
       }
+*/      
       if( $daml->isValidPosition( $daml->x_val, $daml->y_val ) )
       {
         $gmap .= createCrossMarker( "VAL", "Validated position", $daml->x_val, $daml->y_val, VALIDICON, 3 );
