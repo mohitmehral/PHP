@@ -7,7 +7,9 @@ function LayerSelectControl(text, clickHandler, position )
   this.buttonDiv = null;
   this.btnPosition = position;
 }
+
 LayerSelectControl.prototype = new GControl();
+
 
 LayerSelectControl.prototype.press = function()
 {
@@ -15,10 +17,12 @@ LayerSelectControl.prototype.press = function()
   this.setButtonStyle_( this.buttonDiv, this.pressed );
 }
 
+
 LayerSelectControl.prototype.isPress = function()
 {
   return this.pressed;
 }
+
 
 LayerSelectControl.prototype.getDiv = function()
 {
@@ -37,10 +41,13 @@ LayerSelectControl.prototype.initialize = function(map)
   map.getContainer().appendChild(container);
   return container;
 }
+
+
 LayerSelectControl.prototype.getDefaultPosition = function() 
 {
   return new GControlPosition( G_ANCHOR_TOP_RIGHT, this.btnPosition );
 }
+
       
 LayerSelectControl.prototype.setButtonStyle_ = function(button, pressed) 
 {
@@ -80,6 +87,7 @@ function createMarkerMain( point, id, iconimg, damName ) {
   return marker;
 }
 
+
 function createCrossMarker(point, desc, iconimg, mkType ) {
   var icon = new GIcon();
   icon.image = iconimg;
@@ -105,6 +113,7 @@ function createCrossMarker(point, desc, iconimg, mkType ) {
   });
   return marker;
 }
+
 
 /**
   Whenever user clicks on map, this handler is called, filling the form fields.
@@ -132,6 +141,7 @@ function damMapClickListener( overlay, point ) {
   }
 }
 
+
 function damDragEndListener() {
   try {
     var marker = this;
@@ -155,9 +165,98 @@ function damDragEndListener() {
   } 
 }
 
+
 function resetSeed( x, y ) {
   var xCtrl = document.getElementById( "x" );
   var yCtrl = document.getElementById( "y" );
   if( xCtrl != null ) xCtrl.value = x;
   if( yCtrl != null ) yCtrl.value = y;
+}
+
+var reqObj = false;
+
+function startRequestNearbyDams( xtop, ytop, xbtm, ybtm ) {
+  var url = new String ( document.location );
+  url = url.substr( 0, url.lastIndexOf( "/" ) );
+  url += "/ajax.php?op=displayNearbyDams&xtop=" + xtop + "&ytop=" + ytop + "&xbtm=" + xbtm + "&ybtm=" + ybtm;
+  serverRequest( url, endRequestNearbyDams );
+}
+
+var nearbydamsPoints = new Array();
+var markerMgr = null;
+
+function endRequestNearbyDams() {
+  if ( reqObj.readyState == 4 ) { // Loaded
+    if (reqObj.status == 200) { // OK
+    
+      if( markerMgr == null ) {
+        markerMgr = new MarkerManager( map );      
+      }
+    
+      var items = reqObj.responseXML.getElementsByTagName( "d" );
+      var batch = [];
+      for( i = 0; i < items.length; i++ ) {
+        var p = new GPoint( items[i].getAttribute( "x" ), items[i].getAttribute( "y" ) );
+        var title = items[i].getAttribute( "id" ) + ": " + items[i].getAttribute( "n" );
+        if( !duplicate( p ) ) 
+        {
+          var marker = createCrossMarker( p, title, nearbyicon, 2 );
+          batch.push( marker );
+        }
+      }
+      markerMgr.addMarkers( batch, 8 );
+    } else {
+      alert("There was a problem retrieving the XML data:\n" + reqObj.statusText);
+    }
+  }
+}
+
+function duplicate( p )
+{
+  for( i = 0; i < nearbydamsPoints.length; i++ )
+  {
+    var ep = nearbydamsPoints[ i ];
+    if( p.x == ep.x && p.y == ep.y ) {
+      return true;
+    }
+  }
+  nearbydamsPoints.push( p );
+  return false;
+}
+
+
+/**
+ * XML Calls on server using JavaSscript XML-HTTP request
+ * @param url URL to request from server (must return a valid XML, non-cached)
+ * @param handler Callback handler since request is asynchronous
+ */
+function serverRequest( url, handler ) {
+  reqObj = false;
+  // branch for native XMLHttpRequest object
+  if(window.XMLHttpRequest) {
+    try {
+      reqObj = new XMLHttpRequest();
+    } catch(e) {
+      reqObj = false;
+    }
+    // branch for IE/Windows ActiveX version
+  } else if(window.ActiveXObject) {
+    try {
+      reqObj = new ActiveXObject("Msxml2.XMLHTTP");
+    } catch(e) {
+      try {
+        reqObj = new ActiveXObject("Microsoft.XMLHTTP");
+      } catch(e) {
+        alert ("Fonctionnality not available with this browser.");
+        reqObj = false;
+      }
+    }
+  }
+  if( reqObj ) {
+    reqObj.onreadystatechange = handler ;
+    reqObj.open( "GET", url, true );
+    //req.settimeout();
+    reqObj.send( "" );
+  }
+  return reqObj;
 }

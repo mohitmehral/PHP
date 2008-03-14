@@ -8,7 +8,7 @@
  * @param string $mapClickListener JavaScript function called when user clicks the map
  * @return string JS script. Please note that the script starts with <script type ... but does not append end script tag!. Do that explicitly calling endGoogleViewport()
  */
-function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null )
+function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null, $showNearbyDams = false )
 {
   $handlerStr = "";
   if( $mapClickListener != null )
@@ -16,7 +16,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
     $handlerStr = "GEvent.addListener(map, 'click', $mapClickListener )";
   }
   
-  return '
+  $ret = '
   <script type="text/javascript">
   // Setup the map
   var map = new GMap2( document.getElementById( "map" ) );
@@ -25,6 +25,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
   map.getMapTypes().length = 3;
   map.setMapType(G_SATELLITE_MAP);
   map.addControl(new GLargeMapControl());
+  map.enableScrollWheelZoom();
   
   /* Image2000 */
   var i2k_layer = new GTileLayer( new GCopyrightCollection("(c) European Commission"), 1, 17 );
@@ -37,6 +38,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
   var i2k_overlay = new GTileLayerOverlay( i2k_layer );
   map.addOverlay( i2k_overlay );
   GEvent.addListener( map, "zoomend", function() { onZoomEnd(); } );
+  GEvent.addListener( map, "moveend", function() { onMoveEnd(); } );
   
   '.$handlerStr.'
     
@@ -113,6 +115,23 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
   	restoreOverlays();
   }
   
+  var nearbyicon = "'.NEARBYICON.'";
+  
+  
+  function onMoveEnd()
+  {';
+  if( $showNearbyDams ) {
+    $ret .= '  
+  	var bbox = map.getBounds();
+  	var xtop = bbox.getNorthEast().lng();
+  	var ytop = bbox.getNorthEast().lat();
+  	var xbtm = bbox.getSouthWest().lng();
+  	var ybtm = bbox.getSouthWest().lat();
+  	//alert( "onMoveEnd(): xtop=" + xtop + ",ytop=" + ytop + ",xbtm=" + xbtm + ",ybtm=" + ybtm );
+  	startRequestNearbyDams( xtop, ytop, xbtm, ybtm, nearbyicon );';
+  }
+  $ret.= '
+  }
   //When changing map type (onSatClick/onHybClick), preserve overlay state of visibility 
   function restoreOverlays()
   {
@@ -135,6 +154,7 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3, $mapClickListener = null
 
   satButton.press();
 ';
+  return $ret;
 }
 
 /**

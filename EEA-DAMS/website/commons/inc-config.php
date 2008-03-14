@@ -27,6 +27,7 @@ $googlekey 		= & $map->getItem("directive", "GOOGLEKEY");
 $googleiconicold= & $map->getItem("directive", "ICOLDICON");
 $googleiconvalid= & $map->getItem("directive", "VALIDICON");
 $googleiconeea	= & $map->getItem("directive", "EEAICON");
+$googleiconnearby = & $map->getItem("directive", "NEARBYICON");
 
 $dbtype 		= & $db->getItem("directive", "DB_TYPE");
 $dbuser 		= & $db->getItem("directive", "DB_USER");
@@ -52,6 +53,7 @@ define ('DB_SERVER',$dbserver->getContent());
 define ('ICOLDICON',$googleiconicold->getContent());
 define ('VALIDICON',$googleiconvalid->getContent());
 define ('EEAICON',	$googleiconeea->getContent());
+define ('NEARBYICON',  $googleiconnearby->getContent());
 
 define ('GOOGLEMAPKEY',	$googlekey->getContent());
 

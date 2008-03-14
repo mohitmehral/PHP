@@ -193,7 +193,7 @@ if ($a->getAuth()) {
     if ($googleOn == true)
     {
       $center = $daml->getDamMapCenter();
-      $gmap = startGoogleViewport( $center[ 0 ], $center[ 1 ], $center[ 2 ], "damMapClickListener" );
+      $gmap = startGoogleViewport( $center[ 0 ], $center[ 1 ], $center[ 2 ], "damMapClickListener", true );
       if( $daml->isValidPosition( $daml->x_icold, $daml->y_icold ) )
       {
         $gmap .= createCrossMarker( "ICOLD", "ICOLD position", $daml->x_icold, $daml->y_icold, ICOLDICON, 1 );
