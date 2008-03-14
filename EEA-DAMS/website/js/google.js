@@ -99,11 +99,11 @@ function createCrossMarker(point, desc, iconimg, mkType ) {
   var marker = null;
   if( mkType == 1 || mkType == 3 ) // mkType == 2 is not draggable
   {
-    marker = new GMarker(point, {icon: icon, draggable: true });
+    marker = new GMarker(point, {icon: icon, draggable: true, title: desc });
     marker.enableDragging();
     GEvent.addListener( marker, "dragend", damDragEndListener );
   } else {
-    marker = new GMarker(point, {icon: icon, draggable: false });
+    marker = new GMarker(point, {icon: icon, draggable: false, title: desc });
   }
   marker.markerType = mkType;
   var html = "" + desc + " <br/>Longitude :"+ point.x+"<br/>Latitude :"+ point.y;
@@ -163,6 +163,7 @@ function damDragEndListener() {
   } catch( e ) {
     alert( "Dragging exception. Reason: " + e.message );
   } 
+  startRequestNearbyDams();
 }
 
 
@@ -175,53 +176,70 @@ function resetSeed( x, y ) {
 
 var reqObj = false;
 
-function startRequestNearbyDams( xtop, ytop, xbtm, ybtm ) {
+function startRequestNearbyDams() {
+  var bbox = map.getBounds();
+  var xtop = bbox.getNorthEast().lng();
+  var ytop = bbox.getNorthEast().lat();
+  var xbtm = bbox.getSouthWest().lng();
+  var ybtm = bbox.getSouthWest().lat();
+
   var url = new String ( document.location );
   url = url.substr( 0, url.lastIndexOf( "/" ) );
   url += "/ajax.php?op=displayNearbyDams&xtop=" + xtop + "&ytop=" + ytop + "&xbtm=" + xbtm + "&ybtm=" + ybtm;
+  url += "&exclude0x=" + exclude0x + "&exclude0y=" + exclude0y + "&exclude1x=" + exclude0y + "&exclude1y=";
   serverRequest( url, endRequestNearbyDams );
 }
 
 var nearbydamsPoints = new Array();
-var markerMgr = null;
 
 function endRequestNearbyDams() {
   if ( reqObj.readyState == 4 ) { // Loaded
     if (reqObj.status == 200) { // OK
-    
-      if( markerMgr == null ) {
-        markerMgr = new MarkerManager( map );      
-      }
-    
       var items = reqObj.responseXML.getElementsByTagName( "d" );
       var batch = [];
-      for( i = 0; i < items.length; i++ ) {
-        var p = new GPoint( items[i].getAttribute( "x" ), items[i].getAttribute( "y" ) );
-        var title = items[i].getAttribute( "id" ) + ": " + items[i].getAttribute( "n" );
-        if( !duplicate( p ) ) 
-        {
+      
+      if( map.getZoom() < 8 ) // Hide all the markers
+      {
+      } else { // Display all the markers plus new ones
+        for( i = 0; i < items.length; i++ ) {
+          var p = new GPoint( items[i].getAttribute( "x" ), items[i].getAttribute( "y" ) );
+          var title = items[i].getAttribute( "id" ) + ": " + items[i].getAttribute( "n" );
           var marker = createCrossMarker( p, title, nearbyicon, 2 );
-          batch.push( marker );
+          //if( !duplicate( marker ) ) 
+          {
+            map.addOverlay( marker );
+          }
         }
       }
-      markerMgr.addMarkers( batch, 8 );
     } else {
       alert("There was a problem retrieving the XML data:\n" + reqObj.statusText);
     }
   }
 }
 
-function duplicate( p )
+function duplicate( marker )
 {
   for( i = 0; i < nearbydamsPoints.length; i++ )
   {
-    var ep = nearbydamsPoints[ i ];
-    if( p.x == ep.x && p.y == ep.y ) {
+    var em = nearbydamsPoints[ i ];
+    if( em.title == marker.title ) 
       return true;
-    }
   }
-  nearbydamsPoints.push( p );
+  nearbydamsPoints.push( marker );
   return false;
+}
+
+function showMarkers( show ) {
+  for( i = 0; i < nearbydamsPoints.length; i++ )
+  {
+    marker = nearbydamsPoints[ i ];
+    if( show ) 
+    {
+      marker.show();
+    } else {
+      marker.hide();
+    }
+  }   
 }
 
 
@@ -231,24 +249,26 @@ function duplicate( p )
  * @param handler Callback handler since request is asynchronous
  */
 function serverRequest( url, handler ) {
-  reqObj = false;
-  // branch for native XMLHttpRequest object
-  if(window.XMLHttpRequest) {
-    try {
-      reqObj = new XMLHttpRequest();
-    } catch(e) {
-      reqObj = false;
-    }
-    // branch for IE/Windows ActiveX version
-  } else if(window.ActiveXObject) {
-    try {
-      reqObj = new ActiveXObject("Msxml2.XMLHTTP");
-    } catch(e) {
+  if( !reqObj )
+  { 
+    // branch for native XMLHttpRequest object
+    if(window.XMLHttpRequest) {
       try {
-        reqObj = new ActiveXObject("Microsoft.XMLHTTP");
+        reqObj = new XMLHttpRequest();
       } catch(e) {
-        alert ("Fonctionnality not available with this browser.");
         reqObj = false;
+      }
+      // branch for IE/Windows ActiveX version
+    } else if(window.ActiveXObject) {
+      try {
+        reqObj = new ActiveXObject("Msxml2.XMLHTTP");
+      } catch(e) {
+        try {
+          reqObj = new ActiveXObject("Microsoft.XMLHTTP");
+        } catch(e) {
+          alert ("Fonctionality not available with this browser.");
+          reqObj = false;
+        }
       }
     }
   }

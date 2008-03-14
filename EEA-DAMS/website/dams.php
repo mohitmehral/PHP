@@ -193,7 +193,19 @@ if ($a->getAuth()) {
     if ($googleOn == true)
     {
       $center = $daml->getDamMapCenter();
-      $gmap = startGoogleViewport( $center[ 0 ], $center[ 1 ], $center[ 2 ], "damMapClickListener", true );
+      $exclude0x = "0"; $exclude0y = "0"; $exclude1x = "0"; $exclude1y = "0";
+      if( $daml->isValidPosition( $daml->x_icold, $daml->y_icold ) )
+      {
+        $exclude0x = $daml->x_icold;
+        $exclude0y = $daml->y_icold;
+      }
+      if( $daml->isValidPosition( $daml->x_val, $daml->y_val ) )
+      {
+        $exclude1x = $daml->x_val;
+        $exclude1y = $daml->y_val;
+      }
+      
+      $gmap = startGoogleViewport( $center[ 0 ], $center[ 1 ], $center[ 2 ], "damMapClickListener", true, $exclude0x, $exclude0y, $exclude1x, $exclude1y );
       if( $daml->isValidPosition( $daml->x_icold, $daml->y_icold ) )
       {
         $gmap .= createCrossMarker( "ICOLD", "ICOLD position", $daml->x_icold, $daml->y_icold, ICOLDICON, 1 );

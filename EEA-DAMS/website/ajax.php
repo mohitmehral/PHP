@@ -15,6 +15,11 @@ if ($a->getAuth())
     $ytop = isset( $_REQUEST[ "ytop" ] ) ? $_REQUEST[ "ytop" ] : null;
     $xbtm = isset( $_REQUEST[ "xbtm" ] ) ? $_REQUEST[ "xbtm" ] : null;
     $ybtm = isset( $_REQUEST[ "ybtm" ] ) ? $_REQUEST[ "ybtm" ] : null;
+
+    $exclude0x = isset( $_REQUEST[ "exclude0x" ] ) ? $_REQUEST[ "exclude0x" ] : null;
+    $exclude0y = isset( $_REQUEST[ "exclude0y" ] ) ? $_REQUEST[ "exclude0y" ] : null;
+    $exclude1x = isset( $_REQUEST[ "exclude1x" ] ) ? $_REQUEST[ "exclude1x" ] : null;
+    $exclude1y = isset( $_REQUEST[ "exclude1y" ] ) ? $_REQUEST[ "exclude1y" ] : null;
     
     if( $xtop && $ytop && $xbtm && $ybtm )
     {
@@ -23,7 +28,29 @@ if ($a->getAuth())
       header( "Content-type: text/xml" );
       echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
       echo "<dams>";
-      echo displayNearbyDams( $xtop, $ytop, $xbtm, $ybtm, $file );
+      
+      $xml = "";
+      $do = new DataObjects_Public_Dams();
+      $where = "x_icold < $xtop AND y_icold < $ytop AND x_icold > $xbtm AND y_icold > $ybtm";
+      if( $exclude0x && $exclude0y ) {
+        $where .= " AND x_icold <> $exclude0x AND y_icold <> $exclude0y "; 
+      }
+      if( $exclude1x && $exclude1y ) {
+        $where .= " AND x_icold <> $exclude1x AND y_icold <> $exclude1y "; 
+      }
+      $do->whereAdd( $where );
+      $file->log( "SELECT * FROM dams WHERE $where" );
+      $res = $do->find();
+      if( $do != null ) {
+        $i = 0;    
+        while ($do->fetch()) {
+          $xml .= "<d id=\"$do->noeea\" x=\"$do->x_icold\" y=\"$do->y_icold\" n=\"$do->name\"/>";
+          $i++;
+        }
+        $file->log( "i=$i" );
+        $do->free();
+      }
+      echo $xml;
       echo "</dams>";
     } else {
       badRequest401();
@@ -33,25 +60,6 @@ if ($a->getAuth())
   }
 } else {
   header( "Location: loginpage.php" );
-}
-
-function displayNearbyDams( $xtop, $ytop, $xbtm, $ybtm, $logger ) {
-  $ret = "";
-  $do = new DataObjects_Public_Dams();
-  $where = "x_icold < $xtop AND y_icold < $ytop AND x_icold > $xbtm AND y_icold > $ybtm"; 
-  $do->whereAdd( $where );
-  $logger->log( $where );
-  $res = $do->find();
-  if( $do != null ) {
-    $i = 0;    
-    while ($do->fetch()) {
-      $ret .= "<d id=\"$do->noeea\" x=\"$do->x_icold\" y=\"$do->y_icold\" n=\"$do->name\"/>";
-      $i++;
-    }
-    $logger->log( "i=$i" );
-    $do->free();
-  }
-  return $ret;
 }
 
 function badRequest401() 
