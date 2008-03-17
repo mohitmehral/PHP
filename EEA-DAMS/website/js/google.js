@@ -97,7 +97,7 @@ function createCrossMarker(point, desc, iconimg, mkType ) {
   icon.iconAnchor = new GPoint(19, 19);
   icon.infoWindowAnchor = new GPoint(5, 1);
   var marker = null;
-  if( mkType == 1 || mkType == 3 ) // mkType == 2 is not draggable
+  if( mkType == 3 ) // Green cross
   {
     marker = new GMarker(point, {icon: icon, draggable: true, title: desc });
     marker.enableDragging();
@@ -153,12 +153,14 @@ function damDragEndListener() {
         if( xCtrl != null ) xCtrl.value = position.x;
         if( yCtrl != null ) yCtrl.value = position.y;
       break;
-      case 1: // Seed position - Red cross
+/*
+        case 1: // Seed position - Red cross
         var xIniCtrl = document.getElementById( "xini" );
         var yIniCtrl = document.getElementById( "yini" );
         if( xIniCtrl != null ) xIniCtrl.value = position.x;
         if( yIniCtrl != null ) yIniCtrl.value = position.y;       
       break;
+*/      
     }
   } catch( e ) {
     alert( "Dragging exception. Reason: " + e.message );
@@ -193,26 +195,30 @@ function startRequestNearbyDams() {
 var nearbydamsPoints = new Array();
 
 function endRequestNearbyDams() {
-   if ( reqObj.readyState == 4 ) { // Loaded
-    if (reqObj.status == 200) { // OK
-      var items = reqObj.responseXML.getElementsByTagName( "d" );
-      var batch = [];
-      if( map.getZoom() < 8 ) // Hide all the markers
-      {
-      } else { // Display all the markers plus new ones
-        for( i = 0; i < items.length; i++ ) {
-          var node = items[ i ];
-          var p = new GPoint( node.getAttribute( "x" ), node.getAttribute( "y" ) );
-          var title = node.getAttribute( "id" ) + ": " + node.getAttribute( "n" );
-          var marker = createCrossMarker( p, title, nearbyicon, 2 );
-          {
-            map.addOverlay( marker );
+  try {
+    if ( reqObj.readyState == 4 ) { // Loaded
+      if (reqObj.status == 200) { // OK
+        var items = reqObj.responseXML.getElementsByTagName( "d" );
+        var batch = [];
+        if( map.getZoom() < 8 ) // Hide all the markers
+        {
+        } else { // Display all the markers plus new ones
+          for( i = 0; i < items.length; i++ ) {
+            var node = items[ i ];
+            var p = new GPoint( node.getAttribute( "x" ), node.getAttribute( "y" ) );
+            var title = node.getAttribute( "id" ) + ": " + node.getAttribute( "n" );
+            var marker = createCrossMarker( p, title, nearbyicon, 2 );
+            {
+              map.addOverlay( marker );
+            }
           }
         }
+      } else {
+        alert("There was a problem retrieving the XML data:\n" + reqObj.statusText);
       }
-    } else {
-      alert("There was a problem retrieving the XML data:\n" + reqObj.statusText);
     }
+  } catch( e ) {
+    alert( "Error while displaying dams. Reason:" + e.message );
   }
 }
 
