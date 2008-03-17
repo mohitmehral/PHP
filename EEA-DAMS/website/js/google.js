@@ -193,19 +193,18 @@ function startRequestNearbyDams() {
 var nearbydamsPoints = new Array();
 
 function endRequestNearbyDams() {
-  if ( reqObj.readyState == 4 ) { // Loaded
+   if ( reqObj.readyState == 4 ) { // Loaded
     if (reqObj.status == 200) { // OK
       var items = reqObj.responseXML.getElementsByTagName( "d" );
       var batch = [];
-      
       if( map.getZoom() < 8 ) // Hide all the markers
       {
       } else { // Display all the markers plus new ones
         for( i = 0; i < items.length; i++ ) {
-          var p = new GPoint( items[i].getAttribute( "x" ), items[i].getAttribute( "y" ) );
-          var title = items[i].getAttribute( "id" ) + ": " + items[i].getAttribute( "n" );
+          var node = items[ i ];
+          var p = new GPoint( node.getAttribute( "x" ), node.getAttribute( "y" ) );
+          var title = node.getAttribute( "id" ) + ": " + node.getAttribute( "n" );
           var marker = createCrossMarker( p, title, nearbyicon, 2 );
-          //if( !duplicate( marker ) ) 
           {
             map.addOverlay( marker );
           }
@@ -252,7 +251,7 @@ function serverRequest( url, handler ) {
   if( !reqObj )
   { 
     // branch for native XMLHttpRequest object
-    if(window.XMLHttpRequest) {
+    if( window.XMLHttpRequest ) {
       try {
         reqObj = new XMLHttpRequest();
       } catch(e) {
@@ -261,22 +260,24 @@ function serverRequest( url, handler ) {
       // branch for IE/Windows ActiveX version
     } else if(window.ActiveXObject) {
       try {
-        reqObj = new ActiveXObject("Msxml2.XMLHTTP");
-      } catch(e) {
+        reqObj = new ActiveXObject( "Msxml2.XMLHTTP" );
+      } catch( e ) {
         try {
-          reqObj = new ActiveXObject("Microsoft.XMLHTTP");
-        } catch(e) {
-          alert ("Fonctionality not available with this browser.");
+          reqObj = new ActiveXObject( "Microsoft.XMLHTTP" );
+        } catch( e ) {
+          alert ( "Functionality not available with this browser." );
           reqObj = false;
         }
       }
     }
   }
+  // Check if the request object is in a state which allows new request
   if( reqObj ) {
-    reqObj.onreadystatechange = handler ;
     reqObj.open( "GET", url, true );
-    //req.settimeout();
+    reqObj.onreadystatechange = handler ;
     reqObj.send( "" );
+  } else {
+    alert( "Nearby dams cannot be displayed on this browser" );
   }
   return reqObj;
 }

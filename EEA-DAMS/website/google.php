@@ -28,8 +28,6 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3,
   map.getMapTypes().length = 3;
   map.setMapType(G_SATELLITE_MAP);
   map.addControl(new GLargeMapControl());
-  map.enableScrollWheelZoom();
-  map.enableContinuousZoom();
   
   /* Image2000 */
   var i2k_layer = new GTileLayer( new GCopyrightCollection("(c) European Commission"), 1, 17 );
