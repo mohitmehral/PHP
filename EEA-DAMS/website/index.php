@@ -52,6 +52,7 @@ if ($a->getAuth())
   {
 		$do = new DataObjects_Public_Dams();				
 		$smarty->assign('damCountryFilter',	$do->getCountryList ());
+		$smarty->assign( "urlFilter", $_SESSION[ "urlFilter" ] );
 		$do->free();		
 
 		$do = new DataObjects_Public_User_Dams();

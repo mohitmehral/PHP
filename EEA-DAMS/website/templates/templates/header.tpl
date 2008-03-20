@@ -7,9 +7,9 @@
     <link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/screen.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/print.css" media="print" />
     <link rel="stylesheet" type="text/css" href="http://www.eionet.europa.eu/styles/eionet2007/handheld.css" media="handheld" />
-
     <link rel="stylesheet" 		type="text/css" href="css/damstyle.css"/>
     <link rel="stylesheet" 		type="text/css" href="css/folders.css"/>
+    
     <script type="text/javascript" 	src="js/EventManager.js"></script>
     <script type="text/javascript" 	src="js/script.js"></script>
     <script type="text/javascript" src="js/ajax.js"></script>
@@ -70,7 +70,7 @@
       <ul>
       <li><a href="index.php?lang={$langId}">{$home} </a></li>
       <li><a href="user.php?action=upd&amp;id={$mnuUserId}&amp;lang={$langId}">{$profilManage} </a></li>
-      <li><a href="dams.php?lang={$langId}&amp;{$urlFilter}">{$damValidation} </a></li>
+      <li><a href="dams.php?srcCountry=all">{$damValidation} </a></li>
       {if $roleAdm eq 't'}
       	<li><a href="users.php?lang={$langId}">{$userAdm} </a></li>
       {/if}

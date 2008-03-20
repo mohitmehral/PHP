@@ -13,7 +13,7 @@
 	<li><label>{$name}:</label> <input type="text" name="srcName" size="5"/></li>
 	<li><label>{$country}:</label>
 	  <select name="srcCountry">
-		<option value="">*</option>
+		<option value="all">*</option>
 	  {html_options values=$damCountryFilter output=$damCountryFilter}
 	  </select>			
 <!--			 <input type="text" name="srcCountry" size="5"/>-->

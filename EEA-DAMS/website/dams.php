@@ -32,6 +32,11 @@
 
 require_once 'commons/config.php';
 require_once 'DataObjects/Public_dams.php';
+require_once 'DataObjects/DamObject.php';
+require_once 'DataObjects/CountryDamObject.php';
+require_once 'DataObjects/Public_user_dams_assigned.php';
+require_once 'DataObjects/stat_country_dams_valid_user.php';
+require_once 'DataObjects/stat_country_dams_valid.php';
 require_once 'google.php';
 
 if ($a->getAuth()) {
@@ -73,91 +78,236 @@ if ($a->getAuth()) {
   // Set the outOfRange values on N/A reset button
   $smarty->assign( "outOfRangeX", $dummy->outOfRange );
   $smarty->assign( "outOfRangeY", $dummy->outOfRange );
-  
-  if ( isset( $_SESSION[ "damIdsOrdered" ] ) && isset( $_REQUEST["cd"] ) ) {
-    $smarty->assign('first', $_SESSION["damIdsOrdered"][0] );
-    $idx = array_search( $_REQUEST["cd"], $_SESSION["damIdsOrdered"] );
-
-    if ( $idx > 0 && $idx < sizeof( $_SESSION[ "damIdsOrdered" ] ) - 1 ) {
-      $smarty->assign('next',  $_SESSION["damIdsOrdered"][$idx+1]);
-      $smarty->assign('previous', $_SESSION["damIdsOrdered"][$idx-1]);
-    } elseif ( $idx == 0 ) {
-      $smarty->assign('next',  $_SESSION["damIdsOrdered"][$idx+1]);
-      $smarty->assign('previous', $_REQUEST["cd"]);
-    } elseif ( $idx == sizeof( $_SESSION[ "damIdsOrdered" ] ) - 1 ) {
-      $smarty->assign('previous', $_SESSION["damIdsOrdered"][$idx-1]);
-      $smarty->assign('next', $_REQUEST["cd"]);
-    } else {
-      $smarty->assign('next', $_REQUEST["cd"]);
-      $smarty->assign('previous', $_REQUEST["cd"]);
-    }
-    $smarty->assign('last', $_SESSION["damIdsOrdered"][sizeof($_SESSION["damIdsOrdered"])-1]);
-  } else {
-    $smarty->assign('first', '');
-    $smarty->assign('next', '');
-    $smarty->assign('previous', '');
-    $smarty->assign('last', '');
-  }
-
   //DB_DataObject::debugLevel(5);
+  // Process the request
+  $urlFilter = "";
   $daml = new DataObjects_Public_dams();
   $smarty->assign( 'damCountryFilter', $daml->getCountryList() );
 
-  $dam = new DataObjects_Public_User_Dams();
-  $urlFilter = '';
-  $whereAdd = " where 1=1 ";
-
-  if( isset( $_REQUEST["cd"] ) )
-  if( $_REQUEST["cd"] != '' ) {
-    $whereAdd .= " and NOEEA like '%".$_REQUEST["cd"]."%'";
-    //$urlFilter .= '&cd='.$_REQUEST["cd"];
-  }
-  if ( isset( $_REQUEST[ "srcName" ] ) ) {
-    if ($_REQUEST["srcName"]!='')
-    $whereAdd .= " and NAME like '%".$_REQUEST["srcName"]."%'";
-    $urlFilter .= '&amp;srcName='.$_REQUEST["srcName"];
-  }
-  if (isset($_REQUEST["srcCountry"])) {
-    if ($_REQUEST["srcCountry"]!='')
-    $whereAdd .= " and COUNTRY like '%".$_REQUEST["srcCountry"]."%'";
-    $urlFilter .= '&amp;srcCountry='.$_REQUEST["srcCountry"];
-  }
-  $orderBy = " order by VALID desc, COUNTRY, NAME asc";
-
-
-
-  if ($_SESSION["ADM"]!='t')
-  {	
-    $whereAdd .= " and NOEEA = CD_DAM ";
-    $whereAdd .= "and CD_USER = ".$_SESSION["ID"].""; 	// Filter on user logged in if not ADM. Else display all dams
-    $daml->query ("Select * "."from $daml->__table a, $dam->__table b ".$whereAdd.$orderBy);
-  } else {
-    $daml->query ("Select * "."from $daml->__table ".$whereAdd.$orderBy);
-  }
-
-  if ( $daml->N > 1 ) {
-    $_SESSION["urlFilter"] = $urlFilter;
-    // Dams list if more than one
-    $dt = array();
-    $damIdsOrdered = array();
-    $i = 0;
-    while ($daml->fetch()) {
-      $tmp = $daml->toArray();
-      $dt[$i] = $tmp;
-      $damIdsOrdered[$i] = $daml->noeea;
-      $i ++;
+  $userid = $_SESSION["ID"];
+  $template = "dams_list.tpl";
+  $i = 0;
+  $isSingleDam = false;
+  $singleDam = null;
+  
+  // cd parameter passed -> one or more dams
+  if( isset( $_REQUEST[ "cd" ] ) && $_REQUEST[ "cd" ] != '' ) {
+    $code = $_REQUEST[ "cd" ];
+    if ( $_SESSION[ "ADM" ] == 't' ) {
+      $daml = new DataObjects_Public_dams();
+      $daml->query( "SELECT * FROM $daml->__table WHERE noeea ILIKE '%$code%' ORDER BY name" );
+      if( $daml->N > 1 || $daml->N == 0 ) {
+        $dt = array();
+        while ($daml->fetch()) {
+          $aDam = new DamObject();
+          $aDam->name = $daml->name;
+          $aDam->code = $daml->noeea;
+          $aDam->valid = $daml->valid == 't' ? true : false;
+          $aDam->country = $daml->country;
+          $dt[ $i++ ] = $aDam;
+        }
+        $smarty->assign('dt', $dt);
+        $smarty->display('dams_list.tpl');
+        
+        return;
+      } else {
+        $daml->fetch();
+        $singleDam = $daml->noeea;
+        $isSingleDam = true;
+      }
+    } else {
+      $daml = new DataObjects_Public_user_dams_assigned();
+      $whereAdd .= "";
+      $daml->query( "SELECT * FROM $daml->__table WHERE cd_dam ILIKE '%$code%' AND cd_user = $userid ORDER BY name" ); 
+      if( $daml->N > 1 || $daml->N == 0 ) {
+        $dt = array();
+        while ($daml->fetch()) {
+          $aDam = new DamObject();
+          $aDam->name = $daml->name;
+          $aDam->code = $daml->cd_dam;
+          $aDam->valid = $daml->valid == 't' ? true : false;
+          $aDam->country = $daml->country;
+          $dt[ $i++ ] = $aDam;
+        }
+        $smarty->assign_by_ref( 'dt', $dt );
+        $smarty->display('dams_list.tpl');
+        
+        return;
+      } else {
+        $daml->fetch();
+        $singleDam = $daml->cd_dam;
+        $isSingleDam = true;
+      }
     }
-    //print_r($dt);
-    $_SESSION["damIdsOrdered"] = $damIdsOrdered;
-    $smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
-    $smarty->assign('dt', $dt);
-    $smarty->display('dams.tpl');
-  } elseif ( $daml->N == 1 ) {
+    $urlFilter .= "&amp;cd=$code";
+  }
+  // srcName passed -> one or more dams
+  else if( isset( $_REQUEST[ "srcName" ] ) && $_REQUEST[ "srcName" ] != '' ) {
+    $name = $_REQUEST[ "srcName" ];
+    if ( $_SESSION[ "ADM" ] == 't' ) {
+      $daml = new DataObjects_Public_dams();
+      $whereAdd .= "";  
+      $daml->query( "SELECT * FROM $daml->__table WHERE name ILIKE '%$name%' ORDER BY name" );
+      if( $daml->N > 1 || $daml->N == 0 ) {
+        $dt = array();
+        while ($daml->fetch()) {
+          $aDam = new DamObject();
+          $aDam->name = $daml->name;
+          $aDam->code = $daml->noeea;
+          $aDam->valid = $daml->valid == 't' ? true : false;
+          $aDam->country = $daml->country;
+          $dt[ $i++ ] = $aDam;
+        }
+        $smarty->assign('dt', $dt);
+        $smarty->display('dams_list.tpl');
+      } else {
+        $daml->fetch();
+        $singleDam = $daml->noeea;
+        $isSingleDam = true;
+      }
+    } else {
+      $daml = new DataObjects_Public_user_dams_assigned();
+      $whereAdd .= " ";
+      $daml->query( "SELECT * FROM $daml->__table WHERE name ILIKE '%$name%' AND cd_user=$userid ORDER BY name" ); 
+      if( $daml->N > 1 || $daml->N == 0 ) {
+        $dt = array();
+        while ($daml->fetch()) {
+          $aDam = new DamObject();
+          $aDam->name = $daml->name;
+          $aDam->code = $daml->cd_dam;
+          $aDam->valid = $daml->valid == 't' ? true : false;
+          $aDam->country = $daml->country;
+          $dt[ $i++ ] = $aDam;
+        }
+        $smarty->assign_by_ref( 'dt', $dt );
+        $smarty->display('dams_list.tpl');
+        
+        return;
+      } else {
+        $daml->fetch();
+        $singleDam = $daml->cd_dam;
+        $isSingleDam = true;
+      }
+    }
+    $urlFilter .= "&amp;srcName=$name";
+  }
+  // srcCountry passed -> Multiple dams
+  else if( isset( $_REQUEST[ "srcCountry" ] ) && $_REQUEST[ "srcCountry" ] != '' ) {
+    $country = $_REQUEST[ "srcCountry" ];
+    if( $country == "all" ) {
+      if( $_SESSION[ "ADM" ] == 't' ) {
+        $daml = new DataObjects_stat_country_dams_valid();
+        $daml->query( "SELECT * FROM $daml->__table ORDER BY country_code" );
+        $dt = array();
+        $aCDO = null;
+        $added = false;
+        $i = 0;
+        $prevCDO = null;
+        while ($daml->fetch()) {
+          $prevMatch = false;
+          if( $prevCDO != null && $prevCDO->country_code == $daml->country_code )
+          {
+            $prevMatch = true;
+            $aCDO = $prevCDO;
+          } else {
+            $aCDO = new CountryDamObject();
+            $aCDO->country_code = $daml->country_code;
+            $dt[ $i++ ] = $aCDO;
+            $prevCDO = $aCDO;
+          }
+          if( $daml->valid == 't' )
+          { 
+            $aCDO->validatedDams = $daml->count;
+          }
+          else
+          {
+            $aCDO->invalidatedDams = $daml->count;
+          }
+        }
+        $smarty->assign_by_ref( 'dt', $dt );
+        $smarty->display('dams_country.tpl');
+        
+        return;
+      } else {
+        $daml = new DataObjects_stat_country_dams_valid_user();
+        $daml->query( "SELECT * FROM $daml->__table WHERE cd_user=$userid ORDER BY country_code" );
+        $dt = array();
+        $aCDO = null;
+        $added = false;
+        $i = 0;
+        $prevCDO = null;
+        while ($daml->fetch()) {
+          $prevMatch = false;
+          if( $prevCDO != null && $prevCDO->country_code == $daml->country_code )
+          {
+            $prevMatch = true;
+            $aCDO = $prevCDO;
+          } else {
+            $aCDO = new CountryDamObject();
+            $aCDO->country_code = $daml->country_code;
+            $dt[ $i++ ] = $aCDO;
+            $prevCDO = $aCDO;
+          }
+          if( $daml->valid == 't' )
+          { 
+            $aCDO->validatedDams = $daml->count;
+          }
+          else
+          {
+            $aCDO->invalidatedDams = $daml->count;
+          }
+        }
+        $smarty->assign_by_ref( 'dt', $dt );
+        $smarty->display('dams_country.tpl');
+        
+        return;
+      }
+    } else {
+      if( $_SESSION[ "ADM" ] == 't' ) {
+        $daml = new DataObjects_Public_dams();
+        $daml->query( "SELECT * FROM $daml->__table WHERE country='$country' ORDER BY name" );
+        $dt = array();
+        while ($daml->fetch()) {
+          
+          $aDam = new DamObject();
+          $aDam->name = $daml->name;
+          $aDam->code = $daml->noeea;
+          $aDam->valid = $daml->valid == 't' ? true : false;
+          $aDam->country = $daml->country;
+          $dt[ $i++ ] = $aDam;
+        }
+        $smarty->assign('dt', $dt);
+        $smarty->display('dams_list.tpl');
+        
+        return;
+      } else {
+        $daml = new DataObjects_Public_user_dams_assigned();
+        $daml->query( "SELECT * FROM $daml->__table WHERE cd_user=$userid AND country='$country' ORDER BY name"  );
+        $dt = array();
+        while ($daml->fetch()) {
+          $aDam = new DamObject();
+          $aDam->name = $daml->name;
+          $aDam->code = $daml->cd_dam;
+          $aDam->valid = $daml->valid == 't' ? true : false;
+          $aDam->country = $daml->country;
+          $dt[ $i++ ] = $aDam;
+        }
+        $smarty->assign('dt', $dt);
+        $smarty->display('dams_list.tpl');
+        
+        return;
+      }
+    }
+  }    
+  
+  if ( $isSingleDam ) {
+    $daml = new DataObjects_Public_dams();
+    $daml->query( "SELECT * FROM $daml->__table WHERE noeea='$singleDam'" );
+    $daml->fetch();
     // One dam go to validation and process
     $smarty->assign('urlFilter', $_SESSION["urlFilter"]);
     $smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
-
-    $daml->fetch();
+    
     $daml->get($_REQUEST["cd"]);
     $smarty->assign('dam', 				$daml);
     $smarty->assign('x_val', 			$daml->x_val);
@@ -229,10 +379,6 @@ if ($a->getAuth()) {
     }
     	
     $smarty->display('dam.tpl');
-  } else {
-    // None
-    $smarty->assign('dt', null);
-    $smarty->display('dams.tpl');
   }
 } else {
   $smarty->display('index.tpl');

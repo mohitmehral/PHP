@@ -58,3 +58,8 @@ WMS for Google Maps:
   calls to Google API across the project (mapit.php, dams.php and index.php)
   from a single place.
   
+  Update 2008-03-20:
+  - For existing installations, you'll need to patch the database in order to upgrade
+  to repository revisions > 82, please apply the patch.20080320.sql patch.
+  
+  

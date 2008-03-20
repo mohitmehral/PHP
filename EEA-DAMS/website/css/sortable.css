@@ -1,0 +1,31 @@
+table {
+  border: 1px solid black;
+  font-size: 0.9em;
+  line-height:normal;
+}
+
+thead th, tfoot th {
+  background: #ccc;
+  border: 2px outset #999;
+  margin:0;
+  padding:0;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+tbody td {
+	padding: 0.5em;
+}
+
+tbody tr.odd {
+	background-color: #eee;
+}
+
+td.numeric,
+th.numeric {
+	text-align: right;
+}
+
+.tableSortArrow {
+  display: inline;
+}
