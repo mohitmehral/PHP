@@ -52,23 +52,23 @@
 		        {elseif $dam->score eq  6} {$s6} 
               {/if}
 		      | 
-		      {if $first neq $dam->noeea}
+		      {if isset( $first ) && $first neq $dam->noeea}
 		        <input onclick="location.replace('dams.php?lang={$langId}&amp;cd={$first}');" type="button" value="&lt;&lt;" class="SearchButton" />
 		      {/if}
-		      {if $previous neq $dam->noeea}
+		      {if isset( $previous ) && $previous neq $dam->noeea}
 		        <input onclick="location.replace('dams.php?lang={$langId}&amp;cd={$previous}');" type="button" value="&lt;" class="SearchButton" />
 		      {/if}
-		      {if $next neq $dam->noeea}
+		      {if isset( $next ) && $next neq $dam->noeea}
 		        <input onclick="location.replace('dams.php?lang={$langId}&amp;cd={$next}');" type="button" value="&gt;" class="SearchButton" />
 		      {/if}
-		      {if $last neq $dam->noeea}
+		      {if isset( $last ) && $last neq $dam->noeea}
 		        <input onclick="location.replace('dams.php?lang={$langId}&amp;cd={$last}');" type="button" value="&gt;&gt;" class="SearchButton" />
 		      {/if}
 		    </p>
 			{$clickinfo}
             <br/>
-			<div id="map" style="width: 400px; height: 400px; "></div>
-			<input type="checkbox" checked="checked" id="setWhichPoint" name="setWhichPoint"/>{$setWhichPoint}
+			     <div id="map" style="width: 400px; height: 400px; "></div>
+			     <input type="checkbox" checked="checked" id="setWhichPoint" name="setWhichPoint"/>{$setWhichPoint}
           </td>
         </tr>
       </table>

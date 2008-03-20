@@ -90,6 +90,7 @@ if ($a->getAuth()) {
   $isSingleDam = false;
   $singleDam = null;
   
+  $damIdsOrdered = array();
   // cd parameter passed -> one or more dams
   if( isset( $_REQUEST[ "cd" ] ) && $_REQUEST[ "cd" ] != '' ) {
     $code = $_REQUEST[ "cd" ];
@@ -104,8 +105,11 @@ if ($a->getAuth()) {
           $aDam->code = $daml->noeea;
           $aDam->valid = $daml->valid == 't' ? true : false;
           $aDam->country = $daml->country;
-          $dt[ $i++ ] = $aDam;
+          $dt[ $i ] = $aDam;
+          $damIdsOrdered[ $i ] = $daml->noeea;
+          $i++;
         }
+        $_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
         $smarty->assign('dt', $dt);
         $smarty->display('dams_list.tpl');
         
@@ -127,8 +131,11 @@ if ($a->getAuth()) {
           $aDam->code = $daml->cd_dam;
           $aDam->valid = $daml->valid == 't' ? true : false;
           $aDam->country = $daml->country;
-          $dt[ $i++ ] = $aDam;
+          $dt[ $i ] = $aDam;
+          $damIdsOrdered[ $i ] = $daml->cd_dam;
+          $i++;
         }
+        $_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
         $smarty->assign_by_ref( 'dt', $dt );
         $smarty->display('dams_list.tpl');
         
@@ -156,10 +163,15 @@ if ($a->getAuth()) {
           $aDam->code = $daml->noeea;
           $aDam->valid = $daml->valid == 't' ? true : false;
           $aDam->country = $daml->country;
-          $dt[ $i++ ] = $aDam;
+          $dt[ $i ] = $aDam;
+          $damIdsOrdered[ $i ] = $daml->noeea;
+          $i++;
         }
+        $_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
         $smarty->assign('dt', $dt);
         $smarty->display('dams_list.tpl');
+        
+        return;
       } else {
         $daml->fetch();
         $singleDam = $daml->noeea;
@@ -177,8 +189,11 @@ if ($a->getAuth()) {
           $aDam->code = $daml->cd_dam;
           $aDam->valid = $daml->valid == 't' ? true : false;
           $aDam->country = $daml->country;
-          $dt[ $i++ ] = $aDam;
+          $dt[ $i ] = $aDam;
+          $damIdsOrdered[ $i ] = $daml->cd_dam;
+          $i++;
         }
+        $_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
         $smarty->assign_by_ref( 'dt', $dt );
         $smarty->display('dams_list.tpl');
         
@@ -274,8 +289,11 @@ if ($a->getAuth()) {
           $aDam->code = $daml->noeea;
           $aDam->valid = $daml->valid == 't' ? true : false;
           $aDam->country = $daml->country;
-          $dt[ $i++ ] = $aDam;
+          $dt[ $i ] = $aDam;
+          $damIdsOrdered[ $i ] = $daml->noeea;
+          $i++;
         }
+        $_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
         $smarty->assign('dt', $dt);
         $smarty->display('dams_list.tpl');
         
@@ -290,23 +308,46 @@ if ($a->getAuth()) {
           $aDam->code = $daml->cd_dam;
           $aDam->valid = $daml->valid == 't' ? true : false;
           $aDam->country = $daml->country;
-          $dt[ $i++ ] = $aDam;
+          $dt[ $i ] = $aDam;
+          $damIdsOrdered[ $i ] = $daml->cd_dam;
+          $i++;
         }
+        $_SESSION[ "damIdsOrdered" ] = $damIdsOrdered;
         $smarty->assign('dt', $dt);
         $smarty->display('dams_list.tpl');
         
         return;
       }
     }
-  }    
+  }
+  
   
   if ( $isSingleDam ) {
+    $sessionDamIdsOrdered = $_SESSION[ "damIdsOrdered" ];
+    if( count( $sessionDamIdsOrdered ) > 0 ) {
+      $smarty->assign( 'first', $sessionDamIdsOrdered[ 0 ] );
+      $idx = array_search( $singleDam, $sessionDamIdsOrdered );
+  
+      if( $idx > 0 && $idx < count( $sessionDamIdsOrdered ) - 1 ) {
+        $smarty->assign( 'next',  $sessionDamIdsOrdered[ $idx + 1 ] );
+        $smarty->assign( 'previous', $sessionDamIdsOrdered[ $idx - 1 ] );
+      } elseif( $idx == 0 ) {
+        $smarty->assign( 'next',  $sessionDamIdsOrdered[ $idx + 1] );
+        $smarty->assign( 'previous', $singleDam );
+      } elseif( $idx == sizeof( $sessionDamIdsOrdered ) - 1 ) {
+        $smarty->assign( 'previous', $sessionDamIdsOrdered[ $idx - 1 ] );
+        $smarty->assign( 'next', $singleDam );
+      } else {
+        $smarty->assign( 'next', $singleDam );
+        $smarty->assign( 'previous', $singleDam );
+      }
+      $smarty->assign('last', $sessionDamIdsOrdered[ sizeof( $sessionDamIdsOrdered ) - 1 ] );
+    } 
     $daml = new DataObjects_Public_dams();
     $daml->query( "SELECT * FROM $daml->__table WHERE noeea='$singleDam'" );
     $daml->fetch();
     // One dam go to validation and process
     $smarty->assign('urlFilter', $_SESSION["urlFilter"]);
-    $smarty->assign('damIdsOrdered', $_SESSION["damIdsOrdered"] );
     
     $daml->get($_REQUEST["cd"]);
     $smarty->assign('dam', 				$daml);
