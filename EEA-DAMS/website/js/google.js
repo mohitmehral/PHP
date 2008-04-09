@@ -114,6 +114,35 @@ function createCrossMarker(point, desc, iconimg, mkType ) {
   return marker;
 }
 
+function createCrossMarker2(id, point, desc, iconimg, mkType ) {
+  var icon = new GIcon();
+  icon.image = iconimg;
+  icon.shadow = "http://www.google.com/mapfiles/shadow50.png";
+  icon.iconSize = new GSize(37, 37);
+  icon.shadowSize = new GSize(37, 34);
+  icon.iconAnchor = new GPoint(19, 19);
+  icon.infoWindowAnchor = new GPoint(5, 1);
+  var marker = null;
+  if( mkType == 3 ) // Green cross
+  {
+    marker = new GMarker(point, {icon: icon, draggable: true, title: desc });
+    marker.enableDragging();
+    GEvent.addListener( marker, "dragend", damDragEndListener );
+  } else {
+    marker = new GMarker(point, {icon: icon, draggable: false, title: desc });
+  }
+  marker.markerType = mkType;
+  var url = new String ( document.location );
+  url = url.substr( 0, url.lastIndexOf( "/" ) );
+  url += "/dams.php?cd=" + id;
+  var html = "" + desc + " <br/>Longitude :"+ point.x+"<br/>Latitude :"+ point.y+"<br/><a href=\"" + url + "\">Make current</a>";
+  GEvent.addListener(marker, "click", function() 
+  {
+    marker.openInfoWindowHtml(html);
+  });
+  return marker;
+}
+
 
 /**
   Whenever user clicks on map, this handler is called, filling the form fields.
@@ -207,7 +236,7 @@ function endRequestNearbyDams() {
             var node = items[ i ];
             var p = new GPoint( node.getAttribute( "x" ), node.getAttribute( "y" ) );
             var title = node.getAttribute( "id" ) + ": " + node.getAttribute( "n" );
-            var marker = createCrossMarker( p, title, nearbyicon, 2 );
+            var marker = createCrossMarker2( node.getAttribute( "id" ), p, title, nearbyicon, 2 );
             {
               map.addOverlay( marker );
             }
