@@ -287,3 +287,24 @@ function serverRequest( url, handler ) {
   }
   return reqObj;
 }
+
+// This method builds the copyright string, by appending to the existing one build by Google, 
+// thus without causing any copyright infringement.    
+function buildCopyright( bounds, zoom ) {
+  arr = [];
+  try {
+    var myarr = this.getTileLayers();
+    for( lcnt = 0; lcnt < myarr.length; lcnt++ ) {
+      var obj = myarr[ lcnt ];
+      if( obj != null ) {
+        arr.push( obj.getCopyright( map.getBounds(), map.getZoom() ) );
+      }
+    }
+    if( !eea_overlay.isHidden() )
+      arr.push( copyrightStringEEA );
+    if( !i2k_overlay.isHidden() )
+      arr.push( copyrightStringI2K ); 
+  } catch (e) {
+  }
+  return arr;
+}

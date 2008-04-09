@@ -21,40 +21,62 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3,
   
   $ret = '
   <script type="text/javascript">
-  // Setup the map
-  var map = new GMap2( document.getElementById( "map" ) );
-  map.setCenter( new GLatLng( '.$y.','.$x.'), '.$z.');
-
-  map.getMapTypes().length = 3;
-  map.setMapType(G_SATELLITE_MAP);
-  map.addControl(new GLargeMapControl());
+  /* Copyright handling */
+  var copyrightStringEEA = "ERM v2, &#169; Eurogeographics";
+  var copyrightStringI2K = "&#169; JRC";
+  var copyrightBounds = new GLatLngBounds( new GLatLng( -90, -180 ), new GLatLng( 90, 180 ) );
+  var copyright = new GCopyright( 1, copyrightBounds, 5, copyrightStringEEA, copyrightStringI2K );
+  var copyrightCollection = new GCopyrightCollection( "" );
+  copyrightCollection.addCopyright( copyright );
   
-  /* Image2000 */
-  var i2k_layer = new GTileLayer( new GCopyrightCollection("(c) European Commission"), 1, 17 );
+  
+  /* Image2000 tile */
+  var i2k_layer = new GTileLayer( copyrightCollection, 1, 17 );
   i2k_layer.myLayers="0";
   i2k_layer.myFormat="image/png";
   i2k_layer.myBaseURL="http://mapserver.jrc.it/wmsconnector/com.esri.wms.Esrimap/image2000_pan?";
   i2k_layer.getTileUrl=CustomGetTileUrl;
   i2k_layer.getOpacity = function() {return 1;}
-  
   var i2k_overlay = new GTileLayerOverlay( i2k_layer );
-  map.addOverlay( i2k_overlay );
-  GEvent.addListener( map, "zoomend", function() { onZoomEnd(); } );
-  GEvent.addListener( map, "moveend", function() { onMoveEnd(); } );
-  //GEvent.addListener( map, "load", function() { onLoad(); } );
-  
-  '.$handlerStr.'
-    
+
   /* EEA WMS */
-  var eea_layer = new GTileLayer( new GCopyrightCollection("(c) Teleatlas"), 1, 17 );
+  var eea_layer = new GTileLayer( copyrightCollection, 1, 17 );
   eea_layer.myLayers="ERM2Water";
   eea_layer.myFormat="image/png";
   eea_layer.myBaseURL="http://dampos-demo.eionet.europa.eu/cgi-bin/wseea?";
   eea_layer.getTileUrl=CustomGetTileUrl;
   eea_layer.getOpacity = function() {return 1;}
-  
   var eea_overlay = new GTileLayerOverlay( eea_layer );
-  map.addOverlay(eea_overlay);
+  
+  //var map = new GMap2( document.getElementById( "map" ), { mapTypes:[ G_SATELLITE_MAP, custommap ] } );
+  var map = new GMap2( document.getElementById( "map" ) );
+  map.setCenter( new GLatLng( '.$y.','.$x.'), '.$z.');
+
+  var i2kButton = new LayerSelectControl( "I2K", onI2KClick, new GSize( 60, 5 ) );
+  var eeaButton = new LayerSelectControl( "Water", onEEAClick, new GSize( 115, 5 ) );
+
+  var hybButton = new LayerSelectControl( "Hyb", onHybClick, new GSize( 190, 5 ) );
+  var satButton = new LayerSelectControl( "Sat", onSatClick, new GSize( 245, 5 ) );
+  var normalButton = new LayerSelectControl( "Normal", onNormalClick, new GSize( 300, 5 ) );
+  
+  
+  map.addControl( i2kButton );
+  map.addControl( eeaButton );
+  map.addControl( hybButton );
+  map.addControl( satButton );
+  map.addControl( normalButton );
+  map.addControl( new GLargeMapControl() );
+  map.addOverlay( i2k_overlay );
+  map.addOverlay( eea_overlay );
+  map.setMapType( G_SATELLITE_MAP );
+  
+  '.$handlerStr.'
+    
+  GEvent.addListener( map, "zoomend", function() { onZoomEnd(); } );
+  GEvent.addListener( map, "moveend", function() { onMoveEnd(); } );
+  //GEvent.addListener( map, "load", function() { onLoad(); } );
+  
+  // Register the copyright handler
   
   // Initially hide additional overlays
   i2k_overlay.hide();
@@ -62,23 +84,41 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3,
 
   function onI2KClick() {
   	i2kButton.press();
+  	var eea_was_hidden = eea_overlay.isHidden();
   	if(i2k_overlay.isHidden())
   	{
   	  i2k_overlay.show();
+      // Force a refresh of the map to reload the copyright string
+      map.setCenter( map.getCenter() );
+      i2k_overlay.show();
+      if( eea_was_hidden ) eea_overlay.hide();
   	  return;
   	}
-  	i2k_overlay.hide();
+    // Force a refresh of the map to reload the copyright string
+    i2k_overlay.hide();
+    map.setCenter( map.getCenter() );
+    if( eea_was_hidden ) eea_overlay.hide();
+    i2k_overlay.hide();
   }
   
   function onEEAClick() {
   	eeaButton.press();
+  	var i2k_was_hidden = i2k_overlay.isHidden();
   	if(eea_overlay.isHidden())
   	{
   	  eea_overlay.show();
+      // Force a refresh of the map to reload the copyright string
+      map.setCenter( map.getCenter() );
+      eea_overlay.show();
+      if( i2k_was_hidden ) i2k_overlay.hide();
   	  return;
   	}
-  	eea_overlay.hide();
-  }
+    // Force a refresh of the map to reload the copyright string
+    eea_overlay.hide();
+    map.setCenter( map.getCenter() );
+    if( i2k_was_hidden ) i2k_overlay.hide();
+    eea_overlay.hide();
+}
 
   function onHybClick() {
     if( !hybButton.isPress() )
@@ -113,6 +153,9 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3,
   	}
   }
   
+  G_SATELLITE_MAP.getCopyrights = buildCopyright;
+  G_HYBRID_MAP.getCopyrights = buildCopyright;
+  G_NORMAL_MAP.getCopyrights = buildCopyright;
   function onZoomEnd()
   {
   	restoreOverlays();
@@ -147,19 +190,6 @@ function startGoogleViewport ( $x = 4, $y = 55, $z = 3,
   	if(i2k_overlay.isHidden()) i2k_overlay.hide(); 
   	if(eea_overlay.isHidden()) eea_overlay.hide();
   }
-      
-  var i2kButton = new LayerSelectControl( "I2K", onI2KClick, new GSize( 60, 5 ) );
-  var eeaButton = new LayerSelectControl( "Water", onEEAClick, new GSize( 115, 5 ) );
-
-  var hybButton = new LayerSelectControl( "Hyb", onHybClick, new GSize( 190, 5 ) );
-  var satButton = new LayerSelectControl( "Sat", onSatClick, new GSize( 245, 5 ) );
-  var normalButton = new LayerSelectControl( "Normal", onNormalClick, new GSize( 300, 5 ) );
-  
-  map.addControl( i2kButton );
-  map.addControl( eeaButton );
-  map.addControl( hybButton );
-  map.addControl( satButton );
-  map.addControl( normalButton );
   
   satButton.press();
   
