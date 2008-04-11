@@ -16,6 +16,7 @@ if ($a->getAuth())
     $xbtm = isset( $_REQUEST[ "xbtm" ] ) ? $_REQUEST[ "xbtm" ] : null;
     $ybtm = isset( $_REQUEST[ "ybtm" ] ) ? $_REQUEST[ "ybtm" ] : null;
 
+    // Exclude the original validated position and its seed position (they cannot appear red/green AND gray)
     $exclude0x = isset( $_REQUEST[ "exclude0x" ] ) ? $_REQUEST[ "exclude0x" ] : null;
     $exclude0y = isset( $_REQUEST[ "exclude0y" ] ) ? $_REQUEST[ "exclude0y" ] : null;
     $exclude1x = isset( $_REQUEST[ "exclude1x" ] ) ? $_REQUEST[ "exclude1x" ] : null;
@@ -44,7 +45,9 @@ if ($a->getAuth())
       if( $do != null ) {
         $i = 0;    
         while ($do->fetch()) {
-          $xml .= "<d id=\"$do->noeea\" x=\"$do->x_icold\" y=\"$do->y_icold\" n=\"$do->name\"/>";
+          $pos = $do->getDamMapCenter();
+          //$xml .= "<d id=\"$do->noeea\" x=\"$do->x_icold\" y=\"$do->y_icold\" n=\"$do->name\"/>";
+          $xml .= "<d id=\"$do->noeea\" x=\"$pos[0]\" y=\"$pos[1]\" n=\"$do->name\"/>";
           $i++;
         }
         $file->log( "i=$i" );
