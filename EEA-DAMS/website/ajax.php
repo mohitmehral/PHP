@@ -33,9 +33,9 @@ if ($a->getAuth())
       $xml = "";
       $do = new DataObjects_Public_Dams();
       $where = "";
-      $where .= "     ( x_val < $xtop AND y_val < $ytop AND x_val > $xbtm AND y_val > $ybtm ) ";
+      $where .= "     (( x_val < $xtop AND y_val < $ytop AND x_val > $xbtm AND y_val > $ybtm ) ";
       $where .= "  OR ( x_prop < $xtop AND y_prop < $ytop AND x_prop > $xbtm AND y_prop > $ybtm ) ";
-      $where .= "  OR ( x_icold < $xtop AND y_icold < $ytop AND x_icold > $xbtm AND y_icold > $ybtm ) ";
+      $where .= "  OR ( x_icold < $xtop AND y_icold < $ytop AND x_icold > $xbtm AND y_icold > $ybtm ) )";
       if( $exclude0x && $exclude0y ) {
         $where .= " AND ( x_val <> $exclude0x AND y_val <> $exclude0y ";
         $where .= " AND x_prop <> $exclude0x AND y_prop <> $exclude0y ";
