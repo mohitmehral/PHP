@@ -135,7 +135,7 @@ function createCrossMarker2(id, point, desc, iconimg, mkType ) {
   var url = new String ( document.location );
   url = url.substr( 0, url.lastIndexOf( "/" ) );
   url += "/dams.php?cd=" + id;
-  var html = "" + desc + " <br/>Longitude :"+ point.x+"<br/>Latitude :"+ point.y+"<br/><a href=\"" + url + "\">Make current</a>";
+  var html = "" + desc + " <br/>Longitude :"+ point.x+"<br/>Latitude :"+ point.y+"<br/><a href=\"" + url + "\">Make dam active</a>";
   GEvent.addListener(marker, "click", function() 
   {
     marker.openInfoWindowHtml(html);
