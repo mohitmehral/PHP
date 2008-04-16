@@ -400,6 +400,7 @@ if ($a->getAuth()) {
       if( $daml->isValidPosition( $daml->x_icold, $daml->y_icold ) )
       {
         $gmap .= createCrossMarker( "ICOLD", "ICOLD position", $daml->x_icold, $daml->y_icold, ICOLDICON, 1 );
+        #$gmap .= createCrossMarker( "ICOLD", "ICOLD position", $center[ 0 ], $center[ 1 ], ICOLDICON, 1 );
       }
 /* See https://svn.eionet.europa.eu/projects/Zope/ticket/1300      
       if( $daml->isValidPosition( $daml->x_prop, $daml->y_prop ) )

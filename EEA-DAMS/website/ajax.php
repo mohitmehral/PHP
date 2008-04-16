@@ -32,12 +32,19 @@ if ($a->getAuth())
       
       $xml = "";
       $do = new DataObjects_Public_Dams();
-      $where = "x_icold < $xtop AND y_icold < $ytop AND x_icold > $xbtm AND y_icold > $ybtm";
+      $where = "";
+      $where .= "     ( x_val < $xtop AND y_val < $ytop AND x_val > $xbtm AND y_val > $ybtm ) ";
+      $where .= "  OR ( x_prop < $xtop AND y_prop < $ytop AND x_prop > $xbtm AND y_prop > $ybtm ) ";
+      $where .= "  OR ( x_icold < $xtop AND y_icold < $ytop AND x_icold > $xbtm AND y_icold > $ybtm ) ";
       if( $exclude0x && $exclude0y ) {
-        $where .= " AND x_icold <> $exclude0x AND y_icold <> $exclude0y "; 
+        $where .= " AND ( x_val <> $exclude0x AND y_val <> $exclude0y ";
+        $where .= " AND x_prop <> $exclude0x AND y_prop <> $exclude0y ";
+        $where .= " AND x_icold <> $exclude0x AND y_icold <> $exclude0y ) ";
       }
       if( $exclude1x && $exclude1y ) {
-        $where .= " AND x_icold <> $exclude1x AND y_icold <> $exclude1y "; 
+        $where .= " AND ( x_val <> $exclude1x AND y_val <> $exclude1y ";
+        $where .= " AND x_prop <> $exclude1x AND y_prop <> $exclude1y ";
+        $where .= " AND x_icold <> $exclude1x AND y_icold <> $exclude1y ) "; 
       }
       $do->whereAdd( $where );
       $file->log( "SELECT * FROM dams WHERE $where" );

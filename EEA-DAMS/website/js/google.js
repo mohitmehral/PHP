@@ -218,6 +218,12 @@ function startRequestNearbyDams() {
   url = url.substr( 0, url.lastIndexOf( "/" ) );
   url += "/ajax.php?op=displayNearbyDams&xtop=" + xtop + "&ytop=" + ytop + "&xbtm=" + xbtm + "&ybtm=" + ybtm;
   url += "&exclude0x=" + exclude0x + "&exclude0y=" + exclude0y + "&exclude1x=" + exclude0y + "&exclude1y=";
+  web_log( "* Start requesting nearby dams" );
+  web_log( "  xtop=" + xtop );
+  web_log( "  ytop=" + ytop );
+  web_log( "  xbtm=" + xbtm );
+  web_log( "  ybtm=" + ybtm );
+  web_log( url );
   serverRequest( url, endRequestNearbyDams );
 }
 
@@ -232,6 +238,8 @@ function endRequestNearbyDams() {
         if( map.getZoom() < 8 ) // Hide all the markers
         {
         } else { // Display all the markers plus new ones
+          web_log( "  Fetched XML for nearby dams" );
+          web_log( "  Got: " + items.length + " dams" );          
           for( i = 0; i < items.length; i++ ) {
             var node = items[ i ];
             var p = new GPoint( node.getAttribute( "x" ), node.getAttribute( "y" ) );
@@ -240,14 +248,16 @@ function endRequestNearbyDams() {
             {
               map.addOverlay( marker );
             }
+            web_log( "  Dam: " + i + ", " + title + "(" + node.getAttribute( "x" ) + ", " + node.getAttribute( "y" ) + ")" );
           }
+          web_log( "* END requesting nearby dams" );
         }
       } else {
         alert("There was a problem retrieving the XML data:\n" + reqObj.statusText);
       }
     }
   } catch( e ) {
-    alert( "Error while displaying dams. Reason:" + e.message );
+    alert( "Previous request for nearby dams not ended, please wait to load. No new dams were displayed" );
   }
 }
 
@@ -282,6 +292,7 @@ function showMarkers( show ) {
  * @param url URL to request from server (must return a valid XML, non-cached)
  * @param handler Callback handler since request is asynchronous
  */
+
 function serverRequest( url, handler ) {
   if( !reqObj )
   { 
@@ -336,4 +347,36 @@ function buildCopyright( bounds, zoom ) {
   } catch (e) {
   }
   return arr;
+}
+
+
+/*
+ In order to see some debug action in your page, you must have the control
+ <textarea id="debug_console" name="ajax_console" rows="10" cols="80"></textarea>
+ defined within page and log_enabled = true
+*/
+var log_enabled = false;
+
+function web_log( msg ) {
+  if( !log_enabled ) return;
+  
+  try {
+    var ctrl = document.getElementById( "debug_console" );
+    var str = ctrl.value;
+    ctrl.value += msg + "\n";
+    if (typeof ctrl.scrollTop != 'undefined' && typeof ctrl.scrollHeight != 'undefined') {
+      ctrl.scrollTop = ctrl.scrollHeight;
+    }    
+  } catch (e) {
+    alert( "Unable to log in debug console! Do you have control with id 'debug_console' in your page?" );
+  }
+}
+
+function clearWebConsole() {
+  try {
+    var ctrl = document.getElementById( "debug_console" );
+    ctrl.value = "";
+  } catch (e) {
+    alert( "Unable to log in debug console! Do you have control with id 'debug_console' in your page?" );
+  }
 }

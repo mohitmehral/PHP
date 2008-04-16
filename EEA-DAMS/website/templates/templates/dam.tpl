@@ -165,6 +165,13 @@
     </div>
   </form>
 </div>
+
+<div style="display: none;">
+  <textarea id="debug_console" name="ajax_console" rows="10" cols="80"></textarea>
+  <br />
+  <a href="javascript:clearWebConsole();">Clear console</a>
+</div>
+
 {include file="footer.tpl"}
 {if $googleMap}{$googleMap}{/if}
 
