@@ -1,0 +1,84 @@
+body { 
+	font: 14px Arial; 
+	margin: 5px;
+}
+
+table, input { 
+	font: 12px Arial; 
+	border: 1px black solid; 
+}
+
+select { 	font: 12px Arial; 
+			margin-bottom: 2px; }
+
+/* tole je za hover ko greš èez vrstico - da dela tudi v IE	*/ 
+tr  { behavior: url('IEfixes.htc');  }
+tr:active, tr.active	{ }/*Active styles here */
+tr:hover, tr.hover		{ background-color: #E6F7AA; }	/* sv.zelena iz EEA */
+
+table th, .stolpec { 
+	background-color: #00446A; 
+	border-bottom: 1px #00446A solid; 
+	border-right: 1px gray solid;
+	color: white;
+	line-height: 22px;	/* da so tud v IE stolpci height 22px */
+	font-weight: bold;
+}
+
+.prvi_stolpec { 	
+	background-color: white ! important; 
+	padding: 0px ! important;  
+}
+
+table td { 
+	border-bottom: 1px gray solid; 
+	border-right: 1px gray solid;
+	padding: 2px;
+}
+
+table.pravila { 
+	font-weight: bold; 
+	border-collapse: collapse;
+}
+
+table.pravila td { 
+	padding: 3px;
+}
+
+
+table.procedure, table.procedure td { border: 0px black solid; }
+
+.selected { background-color: #D7F5FF;}	 /* modra, prej pastelno zelena: #D6FFCF */
+.mismatch { background-color: #FFD7D7; }
+.alternate { background-color: #F7F7F7; }
+
+a { color: #975B0E; }
+
+/* DIV z grafom */
+#graph_div {
+	/*cursor: hand; cursor: pointer;*/
+	display:none; 
+	position:absolute; 
+	border: 1px solid black; /*#42A9E3;*/
+	border-right: 2px solid black; /*#42A9E3;*/
+	border-bottom: 2px solid black; /*#42A9E3;*/
+	background-color: #83D0E1;  /* moder kot WISE */
+	padding: 2px;
+}
+
+/* DIV z helpom */
+#help_div { 
+	/*cursor: hand; cursor: pointer;*/
+	display:none; 
+	position:absolute; 
+	width:700px; height:700px; top: 50px; left: 230px;
+	border: 1px solid black; border-right: 2px solid black; border-bottom: 2px solid black; 
+	background-color: #E6F7AA;	/* zelen kot mouseover */
+	padding: 8px; 
+	margin: 0;
+} 
+
+/* stili za help.html */
+h1 { font: bold 16px Arial; text-decoration: none; padding: 0px; margin-top: 0px; }
+
+/*.stolpec { font-weight: bold; }*/
