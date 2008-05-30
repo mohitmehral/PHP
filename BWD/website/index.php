@@ -54,79 +54,6 @@ $result = mysql_query($sql) or die($sql."<br>".mysql_error());
 
 // 17.12.2007; Mare; kopirano iz: http://code.google.com/support/bin/answer.py?answer=69906&topic=11364#outputkml
 // BEGIN **************
-  // Creates an array of strings to hold the lines of the KML file.
-  $kml = array('<?xml version="1.0" encoding="UTF-8"?>');
-  $kml[] = '<kml xmlns="http://earth.google.com/kml/2.1">';
-  $kml[] = ' <Document>';
-  
-  // definiranje stilov - kakšnega izgleda so ikonce - sklicuješ se z <styleUrl>#bw_places</styleUrl>
-  // ikonca za BWD places
-  $kml[] = ' <Style id="bw_places">';
-  $kml[] = ' <IconStyle>';
-  $kml[] = ' <scale>1.1</scale>';
-  $kml[] = ' <Icon>';
-  $kml[] = ' <href>http://maps.google.com/mapfiles/kml/shapes/swimming.png</href>';
-  $kml[] = ' </Icon>';
-  $kml[] = ' </IconStyle>';
-  $kml[] = ' </Style>';
-
-  // BWD places
-  while ($row = @mysql_fetch_assoc($result)) {
-    $kml[] = ' <Placemark id="placemark' . $row['numind'] . '">';
-    //$kml[] = ' <name>' . changeChars($row['BathingPlace'],"_") . '</name>';
-    $kml[] = ' <name>' . $row['Bathing water'] . '</name>';
-    $kml[] = ' <styleUrl>#bw_places</styleUrl>';
-    $kml[] = ' <description>';
-    $kml[] = ' <center><table style="border: 1px black solid;" cellpadding="2" cellspacing="1">';
-    //$kml[] = ' <tr><th colspan="2" align="center"><em>Bathing place properties</em></th></tr>';
-    foreach($array_fields as $key=>$val) {
-      $kml[] = "<tr>";
-      //$kml[] = "<th bgcolor='#8BD1FF' width='120'>";
-      //$kml[] = "<th bgcolor='#B9E8F7' width='120'>";
-      $kml[] = "<th bgcolor='lightgray' width='120'>";
-      $kml[] = htmlentities($val); 
-      $kml[] = "</th>";
-      
-      //$kml[] = "<td bgcolor='#F7F7F7' width='300'>";
-      
-      // 14.4.2008; tole sem dodal za user-friendly izpis atributa WaterType, vse zaloge vrednosti:
-      // 1=Sea, 2=River, 3=Lake, 4=Estuary
-      if($val == "Type") {
-        $kml[] = "<td bgcolor='#F7F7F7' width='300'>";
-        switch($row[$val]) {
-            case 1: $kml[] = "SEA"; break;
-            case 2: $kml[] = "RIVER"; break;
-            case 3: $kml[] = "LAKE"; break;
-            case 4: $kml[] = "ESTUARY"; break;
-            default:  $kml[] = "N/A"; break;
-        }
-        $kml[] = "</td>";
-      } 
-      // 14.4.2008; izpis statusov kopalne vode, za atribute y200x
-      // 1=compliant to guide values, 2=prohibited throughout the season, 3=insufficiently sampled, 
-      // 4=not compliant, 5=compliant to mandatory values, 6=not sampled
-      elseif(substr($val,0,1) == "y")  {
-        $kml[] = "<td bgcolor='".complianceColor($row[$val])."' width='300'><font color='gray'>".complianceText($row[$val])."</font></td>";
-      }
-      else {
-        $kml[] = "<td bgcolor='#F7F7F7' width='300'>".$row[$val]."</td>";
-      }
-      $kml[] = "</tr>";
-    }
-    $kml[] = '</table></center>';
-    $kml[] = '</description>';
-    $kml[] = ' <Point>';
-    $kml[] = ' <coordinates>' . $row['Longitude'] . ','  . $row['Latitude'] . '</coordinates>';
-    $kml[] = ' </Point>';
-    $kml[] = ' </Placemark>';
-
-  } // END BWD places 
-  
-  // Footer XML file
-  $kml[] = ' </Document>';
-  $kml[] = '</kml>';
-  $kmlOutput = join("\n", $kml);
-  
   // generira ime kml fajle
   
   if($_GET['cc'] != '')             $string_filename  = $_GET['cc'];
@@ -135,11 +62,83 @@ $result = mysql_query($sql) or die($sql."<br>".mysql_error());
   if($_GET['Province'] != '')       $string_filename .= "-".$_GET['Province'];
   if($_GET['BathingPlace'] != '')   $string_filename .= "-".$_GET['BathingPlace'];
   
-
   header('Content-type: application/vnd.google-earth.kml+xml');
   header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars($string_filename),"_")."_bplaces.kml");
   
-  echo $kmlOutput;
+  
+  echo '<?xml version="1.0" encoding="UTF-8"?>';
+  echo "\n";
+  echo '<kml xmlns="http://earth.google.com/kml/2.1">';
+  echo " <Document>\n";
+  
+  // definiranje stilov - kakšnega izgleda so ikonce - sklicuješ se z <styleUrl>#bw_places</styleUrl>
+  // ikonca za BWD places
+  echo ' <Style id="bw_places">';
+  echo " <IconStyle>\n";
+  echo " <scale>1.1</scale>\n";
+  echo " <Icon>\n";
+  echo " <href>http://maps.google.com/mapfiles/kml/shapes/swimming.png</href>\n";
+  echo " </Icon>\n";
+  echo " </IconStyle>\n";
+  echo " </Style>\n";
+
+  // BWD places
+  while ($row = @mysql_fetch_assoc($result)) {
+    echo ' <Placemark id="placemark' . $row['numind'] . '">';
+    //echo ' <name>' . changeChars($row['BathingPlace'],"_") . '</name>';
+    echo ' <name>' . $row['Bathing water'] . "</name>\n";
+    echo " <styleUrl>#bw_places</styleUrl>\n";
+    echo " <description>\n";
+    echo ' <center><table style="border: 1px black solid;" cellpadding="2" cellspacing="1">';
+    //echo ' <tr><th colspan="2" align="center"><em>Bathing place properties</em></th></tr>';
+    foreach($array_fields as $key=>$val) {
+      echo "<tr>\n";
+      //echo "<th bgcolor='#8BD1FF' width='120'>";
+      //echo "<th bgcolor='#B9E8F7' width='120'>";
+      echo "<th bgcolor='lightgray' width='120'>";
+      echo htmlentities($val); 
+      echo "</th>\n";
+      
+      //echo "<td bgcolor='#F7F7F7' width='300'>";
+      
+      // 14.4.2008; tole sem dodal za user-friendly izpis atributa WaterType, vse zaloge vrednosti:
+      // 1=Sea, 2=River, 3=Lake, 4=Estuary
+      if($val == "Type") {
+        echo "<td bgcolor='#F7F7F7' width='300'>";
+        switch($row[$val]) {
+            case 1: echo "SEA"; break;
+            case 2: echo "RIVER"; break;
+            case 3: echo "LAKE"; break;
+            case 4: echo "ESTUARY"; break;
+            default:  echo "N/A"; break;
+        }
+        echo "</td>";
+      } 
+      // 14.4.2008; izpis statusov kopalne vode, za atribute y200x
+      // 1=compliant to guide values, 2=prohibited throughout the season, 3=insufficiently sampled, 
+      // 4=not compliant, 5=compliant to mandatory values, 6=not sampled
+      elseif(substr($val,0,1) == "y")  {
+        echo "<td bgcolor='".complianceColor($row[$val])."' width='300'><font color='gray'>".complianceText($row[$val])."</font></td>";
+      }
+      else {
+        echo "<td bgcolor='#F7F7F7' width='300'>".$row[$val]."</td>";
+      }
+      echo "</tr>\n";
+    }
+    echo "</table></center>\n";
+    echo "</description>\n";
+    echo " <Point>\n";
+    echo ' <coordinates>' . $row['Longitude'] . ','  . $row['Latitude'] . "</coordinates>\n";
+    echo " </Point>\n";
+    echo " </Placemark>\n";
+
+  } // END BWD places 
+  
+  // Footer XML file
+  echo " </Document>\n";
+  echo "</kml>\n";
+  
+
 // END **************
 exit;
 
@@ -292,7 +291,7 @@ echo "</th>";
 */
 
 // sliko sem dal nad tabelo ! POZOR ! width sem moral povečat na 954px, ker je pri 950 (seštevek stolpcev) blo premalo
-echo "<tr><td style='padding: 0px; margin: 0px;' colspan='5'><img width='954' height='80' src='images/Flash1.jpg' border='0' /></td></tr>";
+echo "<tr><td style='padding: 0px; margin: 0px;' colspan='5'><img width='954' height='80' src='images/Flash1.jpg' border='0' /></td></tr>\n";
 
 echo "<th width='145'>Country</th>";
 echo "<th width='210'>Region</th>";
@@ -325,16 +324,16 @@ echo "<td style='border-bottom: 2px #3180BB solid'>";
 		GROUP BY geographic	
 	";
 	$result_georegion = mysql_query($sql_georegion);
-	echo "<option value='' selected>--- Geographic region ---</option>";
+	echo "<option value='' selected>--- Geographic region ---</option>\n";
 	while($myrow_georegion = mysql_fetch_array($result_georegion))  {
 	  $eu27_stations[$myrow_georegion['geographic']] = $myrow_georegion['no_of_stations'];
 	  if($myrow_georegion['geographic'] != '')	{
 		echo "<option value='".$myrow_georegion['geographic']."' ";
 		  if($myrow_georegion['geographic'] == $_GET['GeoRegion']) 	echo "SELECTED";
-		echo ">".substr($myrow_georegion['geographic'],29)."</option>";
+		echo ">".substr($myrow_georegion['geographic'],29)."</option>\n";
 	  } // END if
 	} // END while
-  echo "</select>";
+  echo "</select>\n";
   echo "&nbsp;";
   
   // POKAŽE GUMB GEOGRAPHIC REGION 
@@ -370,7 +369,7 @@ echo "<td style='border-bottom: 2px #3180BB solid' align='right'>";
 	// GRAF SLADKA
 	echo "<a alt='Quality of freshwater bathing waters' title='Quality of freshwater bathing waters' style='cursor:pointer; cursor:hand;' onclick=\"ShowContent('graph_div','line_jpgraph.php?Country=EU27&GeoRegion=".$_GET['GeoRegion']."&type=fresh','',950,750,10,160); return true;\" ><img  src='images/SladkaVodaGraf.jpg' border='0' /></a>";
 echo "</td>";
-echo "</tr>";
+echo "</tr>\n";
 
 $sql = '
   SELECT 
@@ -426,7 +425,7 @@ while($myrow = mysql_fetch_array($result))  {
           ORDER BY Region
         ";
         $result_region = mysql_query($sql_region);
-        echo "<option value='' selected>--- Region ---</option>";
+        echo "<option value='' selected>--- Region ---</option>\n";
         while($myrow_region = mysql_fetch_array($result_region))  {
           echo "<option value='".$myrow_region['Region']."' ";
           if($myrow['cc'] == $_GET['cc'] && $myrow_region['Region'] == $_GET['Region'])  {
@@ -434,9 +433,9 @@ while($myrow = mysql_fetch_array($result))  {
             $region_freshwater_stations[$stevec]  = $myrow_region['freshwater_stations'];
             $region_coast_stations[$stevec]  = $myrow_region['coast_stations'];
           }
-          echo ">".$myrow_region['Region']."</option>";
+          echo ">".$myrow_region['Region']."</option>\n";
         }
-      echo "</select>";
+      echo "</select>\n";
       echo "&nbsp;";
       
       // POKAŽE GUMB ZA PNG REGIJE, ČE OBSTAJA PNG 
@@ -451,7 +450,7 @@ while($myrow = mysql_fetch_array($result))  {
       if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')  echo "style='visibility: visible; width: 190px;' ";
       else                                                      echo "style='visibility: hidden; width: 190px;' ";
       echo "name='".$myrow['cc']."_province' id='".$myrow['cc']."_province' onchange='document.location=\"index.php?cc=".$_GET['cc']."&GeoRegion=".$_GET['GeoRegion']."&Region=".$_GET['Region']."&Province=\" + (this.value);'>";
-      echo "<option value='' selected>--- Province ---</option>";
+      echo "<option value='' selected>--- Province ---</option>\n";
        if($_GET['cc'] == $myrow['cc'])  {
           $sql_province = "
             SELECT Province, COUNT(IF(SeaWater = 'O',1,NULL)) AS 'coast_stations', COUNT(IF(SeaWater = 'N',1,NULL)) AS 'freshwater_stations'
@@ -474,10 +473,10 @@ while($myrow = mysql_fetch_array($result))  {
               $province_freshwater_stations[$stevec] = $myrow_province['freshwater_stations'];
               $province_coast_stations[$stevec]  = $myrow_province['coast_stations'];
             }
-            echo ">".$myrow_province['Province']."</option>";           
+            echo ">".$myrow_province['Province']."</option>\n";           
           }
        }
-      echo "</select>";
+      echo "</select>\n";
       echo "&nbsp;";
       
       // POKAŽE GUMB ZA PNG PROVINCe, ČE OBSTAJA PNG 
@@ -515,7 +514,7 @@ while($myrow = mysql_fetch_array($result))  {
       echo "onchange=\"if(this.value != '') {ShowContent('graph_div','bar_jpgraph.php?cc=".$myrow['cc']."&Country=".$myrow['Country']."&GeoRegion=".$_GET['GeoRegion']."&Region=".convertUTFtoHTML($_GET['Region'])."&Province=".convertUTFtoHTML($_GET['Province'])."&BathingPlace=' + document.getElementById('".$myrow['cc']."_bplace').value,'',550,250,300,".$top_odmik_grafa."); return true;} else {HideContent('graph_div');}\" ";
       
       echo ">";
-      echo "<option value='' selected>--- ".($province_coast_stations[$stevec]+$province_freshwater_stations[$stevec])." bathing waters in selected province ---</option>";
+      echo "<option value='' selected>--- ".($province_coast_stations[$stevec]+$province_freshwater_stations[$stevec])." bathing waters in selected province ---</option>\n";
        if($_GET['cc'] == $myrow['cc'])  {
           $sql_bplace = "
 			SELECT numind, Prelev 
@@ -532,10 +531,10 @@ while($myrow = mysql_fetch_array($result))  {
           while($myrow_bplace = mysql_fetch_array($result_bplace))  {
             echo "<option value='".$myrow_bplace['numind']."'";
             if($myrow_bplace['numind'] == $_GET['BathingPlace'])  echo "SELECTED";
-            echo ">".$myrow_bplace['Prelev']."</option>";           
+            echo ">".$myrow_bplace['Prelev']."</option>\n";           
           }
        }
-      echo "</select>";
+      echo "</select>\n";
     echo "</td>";
 
     // GUMBKI ZA LINKE - VIZUALIZACIJO
@@ -623,7 +622,7 @@ while($myrow = mysql_fetch_array($result))  {
         }
  
     echo "</td>";
-  echo "</tr>";
+  echo "</tr>\n";
   flush();
   $stevec++;
 }
