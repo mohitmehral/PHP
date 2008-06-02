@@ -20,7 +20,7 @@ mysql_query("SET NAMES 'utf8'");
 header('Content-Type: text/html; charset=utf-8');
 
 ?>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
 <html>
 <head>
   <title>Bathing water quality data/map viewer</title>
@@ -75,37 +75,37 @@ echo "
   <div style='position: relative; '>
 	<h1>Bathing water quality data/map viewer - quick help</h1>
 	<!-- TODO splošni opis -->
-	<!-- <br><br> -->
+	<!-- <br/><br/> -->
 
 	<!-- opis stolpcev -->
-	<font class='stolpec'>&nbsp;Country&nbsp;</font> - All EU countries are listed, drag the mouse over country to display country name in native language.
-	<br><br>
-	<font class='stolpec'>&nbsp;Region&nbsp;</font> - Bigger countries are divided into regions, select a <U>region</U> to narrow the search.
-	<br>
-	<img src='images/Regije.gif' border='0'>&nbsp;\"region icon\" - Shows a map with all regions in selected country. Click on map to close.
-	<br><br>
-	<font class='stolpec'>&nbsp;Province&nbsp;</font> - Bigger <U>regions</U> are divided into <U>provinces</U>, select a <U>province</U> to narrow the search.
-	<br>
-	<img src='images/Regije.gif' border='0'>&nbsp;\"province icon\" - Smaller countries have only one <U>region</U> (no \"region icon\"), for these countries a <U>province map</U> is provided. Click on map to close.
-	<br><br>
-	<font class='stolpec'>&nbsp;Bathing water&nbsp;</font> - Initially number of bathing waters in each country are displayed here. When <U>region</U> or <U>province</U> is selected, number of bathing waters in selected <U>region</U> / <U>provice</U> is shown here. Select a <U>province</U> and <b>select box</b> is shown here: 
-	<li>select a <U>bathing water</U> and a small window with water quality info will pop up. Brackets indicate status for each year, each status has one colour. If the bracket is empty (white), there were no measurements or not sufficient samples for that year. Click on window to close. 
-	<br><br>
-	<font class='stolpec'>&nbsp;Visualization&nbsp;</font>
-	<br>
-	<img src='images/GoogleEarthMali.gif' border='0'> - Download and/or open a <b>kml file</b> with bathing water placemarks. If <U>region</U>, <U>province</U> or <U>bathing water</U> is selected, file contains only bathing waters in selected region, province or bathing water. <b>Kml files</b> are best viewed with <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>Google Earth</a>.
-	<br>
+	<span class='stolpec'>&nbsp;Country&nbsp;</span> - All EU countries are listed, drag the mouse over country to display country name in native language.
+	<br/><br/>
+	<span class='stolpec'>&nbsp;Region&nbsp;</span> - Bigger countries are divided into regions, select a <u>region</u> to narrow the search.
+	<br/>
+	<img src='images/Regije.gif' border='0'/>&nbsp;\"region icon\" - Shows a map with all regions in selected country. Click on map to close.
+	<br/><br/>
+	<span class='stolpec'>&nbsp;Province&nbsp;</span> - Bigger <u>regions</u> are divided into <u>provinces</u>, select a <u>province</u> to narrow the search.
+	<br/>
+	<img src='images/Regije.gif' border='0'/>&nbsp;\"province icon\" - Smaller countries have only one <u>region</u> (no \"region icon\"), for these countries a <u>province map</u> is provided. Click on map to close.
+	<br/><br/>
+	<span class='stolpec'>&nbsp;Bathing water&nbsp;</span> - Initially number of bathing waters in each country are displayed here. When <u>region</u> or <u>province</u> is selected, number of bathing waters in selected <u>region</u> / <u>provice</u> is shown here. Select a <u>province</u> and <b>select box</b> is shown here: 
+	<li>select a <u>bathing water</u> and a small window with water quality info will pop up. Brackets indicate status for each year, each status has one colour. If the bracket is empty (white), there were no measurements or not sufficient samples for that year. Click on window to close. 
+	<br/><br/>
+	<span class='stolpec'>&nbsp;Visualization&nbsp;</span>
+	<br/>
+	<img src='images/GoogleEarthMali.gif' border='0'/> - Download and/or open a <b>kml file</b> with bathing water placemarks. If <u>region</u>, <u>province</u> or <u>bathing water</u> is selected, file contains only bathing waters in selected region, province or bathing water. <b>Kml files</b> are best viewed with <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>Google Earth</a>.
+	<br/>
 
 	<!-- grafi	 -->
-	<img src='images/SlanaVodaGraf.jpg' border='0'> - Graph for <B>coastal</B> bathing waters, there are 2 graph types:
-		<li><B>Line graph</B> is available when <U>country</U> or <U>region</U> is selected. For each year data points show the percentage of bathing waters compliant to each of 4 statuses. A line is connected between data points to show trends.
-		<li><B>Bar graph</B> is available when <U>province</U> is selected. For each year bars show distribution of 4 statuses. If sum is less than 100%, there were bathing waters with no measurements or not sufficient samples for that year.
-	<br>
-	<img src='images/SlanaVodaGrafX.jpg' border='0'> - Indicates that there are no coastal bathing waters in selected <U>country</U>, <U>region</U> or <U>province</U>, so no graph can be displayed.
-	<br>
-	<img src='images/SladkaVodaGraf.jpg' border='0'> - Graph for <B>freshwater</B> bathing waters, same as for <b>coastal graph</b> applies here.
-	<br>
-	<img src='images/SladkaVodaGrafX.jpg' border='0'> - Indicates that there are no freshwater bathing waters in selected <U>country</U>, <U>region</U> or <U>province</U>, so no graph can be displayed.
+	<img src='images/SlanaVodaGraf.jpg' border='0'/> - Graph for <b>coastal</b> bathing waters, there are 2 graph types:
+		<li><b>Line graph</b> is available when <u>country</u> or <u>region</u> is selected. For each year data points show the percentage of bathing waters compliant to each of 4 statuses. A line is connected between data points to show trends.
+		<li><b>Bar graph</b> is available when <u>province</u> is selected. For each year bars show distribution of 4 statuses. If sum is less than 100%, there were bathing waters with no measurements or not sufficient samples for that year.
+	<br/>
+	<img src='images/SlanaVodaGrafX.jpg' border='0'/> - Indicates that there are no coastal bathing waters in selected <u>country</u>, <u>region</u> or <u>province</u>, so no graph can be displayed.
+	<br/>
+	<img src='images/SladkaVodaGraf.jpg' border='0'/> - Graph for <b>freshwater</b> bathing waters, same as for <b>coastal graph</b> applies here.
+	<br/>
+	<img src='images/SladkaVodaGrafX.jpg' border='0'/> - Indicates that there are no freshwater bathing waters in selected <u>country</u>, <u>region</u> or <u>province</u>, so no graph can be displayed.
 	
 	<div style='position: absolute; top: 0px; right: 10px;'>
 		<a onclick='javascript: document.getElementById(\"help_div\").style.display=\"none\";' style='cursor: hand; cursor: pointer; ' >[close]</a>
@@ -119,8 +119,8 @@ echo "
 // DIV, IMG to show graphs  
 echo '<div align="center" id="graph_div" onclick="HideContent(\'graph_div\');" >';
 echo '<div style="position: relative;">';
-echo '<font id="graph_font" style="font-weight: bold; color: white; "></font>';
-echo '<div style="position: absolute; top: 0px; right: 10px;"><a onclick="HideContent(\'graph_div\'); return true;" href="javascript:HideContent(\'graph_div\')">[close]</a></div><br><br>';
+echo '<span id="graph_font" style="font-weight: bold; color: white; "></span>';
+echo '<div style="position: absolute; top: 0px; right: 10px;"><a onclick="HideContent(\'graph_div\'); return true;" href="javascript:HideContent(\'graph_div\')">[close]</a></div><br/><br/>';
 echo '<img id="graph_img" src="images/loading.gif" border="0" />';
 echo '</div>';
 echo '</div>';
@@ -128,10 +128,10 @@ echo '</div>';
 // DIV, IMG to show maps (region, province, georegion)  
 echo '<div align="center" id="map_div" onclick="HideContent(\'map_div\');" >';
 echo '<div style="position: relative;">';
-echo '<font id="map_font" style="font-weight: bold; color: white; "></font>';
-echo '<div style="position: absolute; top: 0px; right: 10px;"><a onclick="HideContent(\'map_div\'); return true;" href="javascript:HideContent(\'map_div\')">[close]</a></div><br><br>';
+echo '<span id="map_font" style="font-weight: bold; color: white; "></span>';
+echo '<div style="position: absolute; top: 0px; right: 10px;"><a onclick="HideContent(\'map_div\'); return true;" href="javascript:HideContent(\'map_div\')">[close]</a></div><br/><br/>';
 echo '<img id="map_img" src="images/loading.gif" border="0" />';
-echo '<br><br><img id="legend_img" src="provinces/legenda.png" border="0" />';
+echo '<br/><br/><img id="legend_img" src="provinces/legenda.png" border="0" />';
 echo '</div>';
 echo '</div>';
 
@@ -139,7 +139,7 @@ echo '</div>';
 // TABLE ON TOP TO SHOW HELP LINK 
 echo "<table style='border: 0px;' border='0' cellpadding='0' cellspacing='0'>";
 echo "<th style='background-color: white; color: black; border: 0px; line-height: 18px;' colspan='6' width='955' align='right'>";
-echo "<font color='#00446A'>Need help using viewer?</font>&nbsp;<a style='text-decoration: none; color: #6FA7DA; cursor: hand; cursor: pointer;' onclick=\"document.getElementById('help_div').style.display='block'; \">Click here!</a>";
+echo "<a style='text-decoration: none; color: #00446A; cursor: hand; cursor: pointer;' onclick=\"document.getElementById('help_div').style.display='block'; \">Help on using viewer</a>";
 echo "</th>";
 echo "</table>";
 
@@ -167,7 +167,7 @@ else							echo "background-color: #F7F7F7;";
 echo "'>";
 echo "<td style='border-bottom: 2px #3180BB solid' height='".$td_height."'>";
 	if(file_exists("images/flags/Europe.jpg")) echo "<img src='images/flags/Europe.jpg' border='0' />&nbsp;";
-	echo "<B>EU 27</B>";
+	echo "<b>EU 27</b>";
 echo "</td>";
 
 // EU 27-GEOGRAPHIC REGION
@@ -200,11 +200,11 @@ echo "</td>";
 echo "<td style='border-bottom: 2px #3180BB solid'>&nbsp;</td>";
 
 echo "<td style='border-bottom: 2px #3180BB solid' >";
-  echo "<font color='gray'>&nbsp;";
+  echo "<span style='color:gray'>&nbsp;";
 	if($_GET['GeoRegion'] != '')	echo $eu27_stations[$_GET['GeoRegion']];
 	else							echo array_sum($eu27_stations);
 	echo " bathing waters";
-  echo "</font>";
+  echo "</span>";
 echo "</td>";
 
 echo "<td style='border-bottom: 2px #3180BB solid' align='right'>";
@@ -241,7 +241,7 @@ if($_GET['GeoRegion'] != '')
 
 $sql .= 'GROUP BY s.cc ORDER BY c.Country';
 
-$result = mysql_query($sql) or die(mysql_error()."<br>".$sql);
+$result = mysql_query($sql) or die(mysql_error()."<br/>".$sql);
 
 
 // LOOP THROUGH COUNTRY-DATA
@@ -259,7 +259,7 @@ while($myrow = mysql_fetch_array($result))  {
     echo "<td alt='".$myrow['NationalName']."' title='".$myrow['NationalName']."' style='cursor:help;' height='".$td_height."'>";
 	$filename_zastava = "images/flags/".ucfirst(strtolower(changeChars($myrow['Country'],"_"))).".jpg";
 	if(file_exists($filename_zastava)) echo "<img src='".$filename_zastava."' border='0' />&nbsp;";
-	echo "<B>".$myrow['Country']."</B>";
+	echo "<b>".$myrow['Country']."</b>";
 	echo "</td>";
     
     // Number of bathing places
@@ -367,7 +367,7 @@ while($myrow = mysql_fetch_array($result))  {
 	else					$top_shift = ($counter*$td_height)-115;
 	
 	echo "<td id='td_".$counter."' >";
-      echo "<font style=\"display:";
+      echo "<span style=\"display:";
         if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '' && $_GET['Province'] != '')   echo "none";
         else                                                                                  echo "block";
       echo "\" color='gray' >";
@@ -375,7 +375,7 @@ while($myrow = mysql_fetch_array($result))  {
         else                                                            echo ($country_coast_stations[$counter]+$country_freshwater_stations[$counter]); 
       echo " bathing waters ";
         if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')        echo "in selected region";
-      echo "</font>";
+      echo "</span>";
 
       echo "<select ";
       if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '' && $_GET['Province'] != '')   echo "style='display: block; width: 290px;' ";
@@ -501,8 +501,8 @@ while($myrow = mysql_fetch_array($result))  {
 
 echo "</table>";
 
-echo "<br><img src='images/GoogleEarthMali.gif' border='0' />&nbsp;Don't have Google Earth? Download it here: <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>http://earth.google.com/download-earth.html</a>";
-//echo "<br><img src='images/PDFmala.gif' border='0' />&nbsp;Adobe Acrobat Reader - download it here: <a target='_NEW_WINDOW' href='http://www.adobe.com/products/acrobat/readstep2.html'>http://www.adobe.com/products/acrobat/readstep2.html</a>";
+echo "<br/><img src='images/GoogleEarthMali.gif' border='0' />&nbsp;Don't have Google Earth? Download it here: <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>http://earth.google.com/download-earth.html</a>";
+//echo "<br/><img src='images/PDFmala.gif' border='0' />&nbsp;Adobe Acrobat Reader - download it here: <a target='_NEW_WINDOW' href='http://www.adobe.com/products/acrobat/readstep2.html'>http://www.adobe.com/products/acrobat/readstep2.html</a>";
 
 //echo array_sum($country_coast_stations) + array_sum($country_freshwater_stations);
 

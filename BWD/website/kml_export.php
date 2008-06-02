@@ -116,7 +116,7 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
       // 1=compliant to guide values, 2=prohibited throughout the season, 3=insufficiently sampled, 
       // 4=not compliant, 5=compliant to mandatory values, 6=not sampled
       elseif(substr($val,0,1) == "y")  {
-        echo "<td bgcolor='".complianceColor($row[$val])."' width='300'><font color='gray'>".complianceText($row[$val])."</font></td>\n";
+        echo "<td bgcolor='".complianceColor($row[$val])."' width='300'>".complianceText($row[$val])."</td>\n";
       }
       else {
         echo "<td bgcolor='#F7F7F7' width='300'>".$row[$val]."</td>\n";
