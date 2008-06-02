@@ -20,7 +20,7 @@ mysql_query("SET NAMES 'utf8'");
 header('Content-Type: text/html; charset=utf-8');
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+
 <html>
 <head>
   <title>Bathing water quality data/map viewer</title>
