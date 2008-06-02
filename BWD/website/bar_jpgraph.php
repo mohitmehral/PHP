@@ -1,27 +1,32 @@
 <?php
 
+/* 
+
+BWD water quality data/map viewer: FILE TO CREATE IMAGE WITH BAR GRAPH
+
+21.3.2008; first version
+
+*/
+
 include('config.php');
 include('functions.php');
 include ("jpgraph-2.3/src/jpgraph.php");
 include ("jpgraph-2.3/src/jpgraph_bar.php");
 
-// connect
+// CONNECT
 $db = mysql_connect($host, $dbuser,$dbpass);
 mysql_select_db($database,$db);
 mysql_query("SET NAMES 'utf8'");
 
 header('Content-Type: text/html; charset=utf-8');
 
-// pretvori nazaj v UTF znake (sploh ni potrebno se mi zdi)
-//$_GET['Region'] = convertHTMLtoUTF($_GET['Region']);
-//$_GET['Province'] = convertHTMLtoUTF($_GET['Province']);
-
-// preverjamo samo za te statuse in leta
-// 1=compliant to guide values = MODRA, 
-// 2=prohibited throughout the season = SIVA, 
-// 4=not compliant = RDEČA, 
-// 5=compliant to mandatory values = ZELENA
-$compliance_values = array(1,2,4,5);
+// ONLY SHOW THESE STATUSES IN GRAPH
+// 1=compliant to guide values = BLUE, 
+// 2=prohibited throughout the season = GRAY, 
+// 4=not compliant = RED, 
+// 5=compliant to mandatory values = GREEN
+// 0,3,6 = not sampled / insufficiently sampled = ORANGE
+$compliance_values = array(0,1,2,3,4,5,6);
 $leta = array(2000,2001,2002,2003,2004,2005,2006,2007);
 
 foreach($compliance_values as $key=>$val) {
@@ -44,14 +49,14 @@ foreach($compliance_values as $key=>$val) {
   $sql .= " WHERE 1 ";
   if($_GET['GeoRegion'] != '')		$sql .= " AND geographic = '".$_GET['GeoRegion']."'";
 
-  // dodajanje pogoja
+  // CONDITION
   if($_GET['type'] == 'coast')  $sql .= " AND SeaWater = 'O'"; 
   if($_GET['type'] == 'fresh')  $sql .= " AND SeaWater = 'N'"; 
   if($_GET['Region'] != "")   $sql .= " AND Region LIKE '".$_GET['Region']."'";
   if($_GET['Province'] != "") $sql .= " AND Province LIKE '".$_GET['Province']."'";
   if($_GET['BathingPlace'] != "") $sql .= " AND Numind = '".$_GET['BathingPlace']."'";
   
-  // dodajanje GROUP BY
+  // GROUP BY
   if($_GET['BathingPlace'] != "")   $sql .= " GROUP BY Numind";
   elseif($_GET['Province'] != "")   $sql .= " GROUP BY Province";
   elseif($_GET['Region'] != "")     $sql .= " GROUP BY Region";
@@ -60,50 +65,52 @@ foreach($compliance_values as $key=>$val) {
   $myrow = mysql_fetch_array($result);
   
   foreach($leta as $key1=>$val1) {
-    // tole je da vrednosti 0 malo odmakne od dna, izpuščeno
+    // to shift 0 values a little above the bottom; disabled
     //$data[$val][] = ($myrow[$val1] < 1)?0.2:$myrow[$val1];
     $data[$val][] = $myrow[$val1];
   }
 } // foreach
 
-/*
-echo "<pre>";
-echo $sql;
-echo "</pre>";
 
+// 20.5.2008; adds together "ORANGE" values: 0+3+6 (unknown + not sampled + insufficiently sampled)
+foreach($data[0] as $key=>$val) 	{
+	$data[0][$key] += $data[3][$key];
+	$data[0][$key] += $data[6][$key];
+}
+
+/*
 echo "<pre>";
 print_r($data);
 echo "</pre>";
-
 die;
 */
 
 // **********************
 // Create the basic graph
 // **********************
-// GRAF ZA POS. BATHING WATER JE DRUGAČEN ...
+// STATUS GRAPH IF BATHING WATER IS SELECTED 
 if($_GET['BathingPlace'] != "")  {
-    // coastal ali freshwater v title
+    // coastal or freshwater in title
     if($_GET['type'] == 'coast' || $myrow['SeaWater'] == 'O')  $title = "Coastal: ".$myrow['Prelev'];
     if($_GET['type'] == 'fresh' || $myrow['SeaWater'] == 'N')  $title = "Freshwater: ".$myrow['Prelev'];
     
-    // manjši graf
+    // status graph for bw is smaller
     $graph_width = 500; 
-    $graph_height = 200; 
+    $graph_height = 220; 
     $margin_left = 20; 
-    $margin_top = 110; 
-    $ycolor = 'white'; // da je text na y osi enak ozadji - se ga ne vidi pol
-    $procent = "";  // da ni procent znaka v "% compliant with ..." ampak samo "compliant with ..."
+    $margin_top = 130; 
+    $ycolor = 'white'; // text on y axis is the same as background, thus hidden
+    $procent = "";  // not to show % sign in: "% compliant with ..." -> "compliant with ..."
 
-	// širši bar - čez celo polje
+	// bar width
 	$width_bar = 1;
 	
-	// pozicija legend boxa
+	// legend box position
 	$legendX = 0.05;
 	$legendY = 0.15;
 
 } 
-// DEFAULT GRAF ZA PROVINCO
+// DEFAULT GRAPH FOR PROVINCE
 else {
     // default title
     $title = $_GET['Country'];
@@ -115,7 +122,7 @@ else {
     if($_GET['type'] == 'fresh')  $title .= "freshwater ";
     $title .= "b.p.";
 
-    // default velikost grafa
+    // default graph dimensions
     $graph_width = 600; 
     $graph_height = 400; 
     $margin_left = 50; 
@@ -123,10 +130,10 @@ else {
     $ycolor = 'black';
     $procent = "% ";
 
-	// default širina bara
+	// default bar width
 	$width_bar = 0.6;
 
-	// pozicija legend boxa
+	// legend box position
 	$legendX = 0.1;
 	$legendY = 0.1;
 }
@@ -135,14 +142,13 @@ $graph = new Graph($graph_width,$graph_height,"auto");
 $graph->SetScale("textlin",0,100);
 $graph->img->SetMargin($margin_left,20,$margin_top,40);
 
-// če je BWATER graf potem je margin bel
+// if STATUS GRAPH for selected BW: white margin
 if($_GET['BathingPlace'] != "") $graph->SetMarginColor('white');
 
 
-// DA MEČE SENCO GRAF ?
 //$graph ->SetShadow();
 
-// TITLE GRAFA
+// TITLE
 $graph->title->Set(replaceUTFChars($title));
 
 // AXIS TITLES AND FONTS
@@ -156,11 +162,11 @@ if($_GET['BathingPlace'] == "") $graph->yaxis->title->Set('% of bathing waters')
 $graph->yaxis->title->SetColor($ycolor);
 $graph->yaxis->SetColor($ycolor);
 
-$graph->yaxis->scale->SetGrace(10);  // da je na Y osi zg. in spodaj še malo prostora
+$graph->yaxis->scale->SetGrace(10);  // on Y axis is some more room, top and bottom 
 
 // posebnosti, če je graf za pos. b.p.
 if($_GET['BathingPlace'] != "") {
-  $graph->ygrid->Show(false,false);  // 1.true da pokaže gridline, 2.true da pokaže minor gridline
+  $graph->ygrid->Show(false,false);  // 1st parameter to show/hide major gridline, 2nd parameter to show/hide minor gridline
   $graph->yscale->ticks->Set(100 ,100);
 }
 
@@ -189,8 +195,14 @@ $b1plot = new BarPlot($data[2]);
 $b1plot->SetFillColor('lightgray');
 $b1plot->SetLegend($procent.complianceText(2));
 
+// 5th BAR - 0,3,6=unknown / not sampled / insufficiently sampled = ORANGE
+$b0plot = new BarPlot($data[0]);
+$b0plot->SetFillColor(complianceColor(0));
+$b0plot->SetLegend($procent.complianceText(0)." / ".complianceText(3));
+
+
 // CREATE THE GROUPED BAR PLOT
-$gbplot = new AccBarPlot(array($b1plot,$b2plot,$b3plot,$b4plot));
+$gbplot = new AccBarPlot(array($b0plot,$b1plot,$b2plot,$b3plot,$b4plot));
 $gbplot->SetWidth($width_bar);
 $graph->Add($gbplot);
 

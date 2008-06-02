@@ -1,21 +1,26 @@
 <?php
+
+/* 
+
+BWD water quality data/map viewer: FILE TO CREATE IMAGE WITH BAR GRAPH
+
+21.3.2008; first version
+
+*/
+
 include('config.php');
 include('functions.php');
 include ("jpgraph-2.3/src/jpgraph.php");
 include ("jpgraph-2.3/src/jpgraph_line.php");
 
-// connect
+// CONNECT
 $db = mysql_connect($host, $dbuser,$dbpass);
 mysql_select_db($database,$db);
 mysql_query("SET NAMES 'utf8'");
 
 header('Content-Type: text/html; charset=utf-8');
 
-// pretvori nazaj v UTF znake (sploh ni potrebno se mi zdi)
-//$_GET['Region'] = convertHTMLtoUTF($_GET['Region']);
-//$_GET['Province'] = convertHTMLtoUTF($_GET['Province']);
-
-// preverjamo samo za te statuse in leta
+// ONLY SHOW THESE STATUSES IN GRAPH
 // 1=compliant to guide values = MODRA, 
 // 2=prohibited throughout the season = SIVA, 
 // 4=not compliant = RDEČA, 
@@ -46,25 +51,29 @@ foreach($compliance_values as $key=>$val) {
   if($_GET['type'] == 'fresh')  $sql .= " AND SeaWater = 'N'"; 
   if($_GET['Region'] != "")     $sql .= " AND Region LIKE '".$_GET['Region']."'";
   if($_GET['Province'] != "")   $sql .= " AND Province LIKE '".$_GET['Province']."'";
+  if($_GET['BathingPlace'] != "") $sql .= " AND Numind = '".$_GET['BathingPlace']."'";
+
+  // GROUP BY
+  if($_GET['BathingPlace'] != "")   $sql .= " GROUP BY Numind";
+  elseif($_GET['Province'] != "")   $sql .= " GROUP BY Province";
+  elseif($_GET['Region'] != "")     $sql .= " GROUP BY Region";
 
   $result = mysql_query($sql) or die($sql."<br>".mysql_error());
   $myrow = mysql_fetch_array($result);
   
   foreach($leta as $key1=>$val1) {
-    // tole je da vrednosti 0 nadomesti z prazno (da ne povezuje na 0)
+    // to shift 0 values a little above the bottom; disabled
     //$data[$val][] = ($myrow[$val1] == 0)?'':$myrow[$val1];
     $data[$val][] = $myrow[$val1];
   }
 }
 
 
-// 20.5.2008; Mare; da v grafih prišteje k 5 (c mandatory) še 1 (c guide), ker če je mandatory vsebuje tudi vse guide
-foreach($data[5] as $key=>$val) {
-	$data[5][$key] += $data[1][$key];
-}
+// 20.5.2008; values with 5 (c mandatory) have to include also values 1 (c guide), because if BW is compl. to mandatory than is also compl. to guide
+foreach($data[5] as $key=>$val) 	$data[5][$key] += $data[1][$key];
 
-// PREČEKIRA ARRAYE, VRSTNI RED JE POMEMBEN !!!:
-// 1. če so v vseh 4 arrayih vse začetne vrednosti 0 jih zamenja z '' - to pomeni, da za to leto ni podatkov  
+// CHECK THE ARRAYS
+// 1. if all 4 arrays have values 0 means that there is no data for the year - change with '' 
 foreach($leta as $key1=>$val1) {
   if($data[1][$key1] == $data[2][$key1] && $data[2][$key1] == $data[4][$key1] && $data[4][$key1] == $data[5][$key1] && $data[5][$key1] == 0) {
     $data[1][$key1] = '';
@@ -74,7 +83,7 @@ foreach($leta as $key1=>$val1) {
   }
 }
 
-// 2. če so vrednosti v enem array za vsa leta 0, jih zamenja z '', da tega ne plota
+// 2. if all values in one array are 0 -> change them to '', so this will not be plotted
 foreach($compliance_values as $key=>$val) {
   if(array_sum($data[$val]) == 0) {
     foreach($leta as $key1=>$val1) {
@@ -87,11 +96,10 @@ foreach($compliance_values as $key=>$val) {
 echo "<pre>";
 print_r($data);
 echo "</pre>";
+die;
 */
 
-// A GRAPH WITH ANTI-ALIASING (ne dela na izvrs.si, izklopil)
-
-// graf za EU27 je večji 
+// EU27 graph is bigger
 if($_GET['Country'] == 'EU27')  {
   $graph_width = 900; $graph_height = 700;
 } else {
@@ -101,12 +109,10 @@ if($_GET['Country'] == 'EU27')  {
 $graph = new Graph($graph_width,$graph_height,"auto");
 $graph->img->SetMargin(50,20,30,40);
 //$graph->img->SetAntiAliasing("white");
-$graph->SetScale("textlin",0,100);  // z tem 0,100 določiš spodnjo, zgornjo mejo
+$graph->SetScale("textlin",0,100);  // set lower and upper Y value of graph
 
-// DA MEČE SENCO GRAF ?
-//$graph ->SetShadow();
 
-// NAREDI TITLE GRAFA
+// TITLE 
 $title = $_GET['Country'];
 if($_GET['GeoRegion'] != "") $title .= " (".substr($_GET['GeoRegion'],29).")";
 if($_GET['Region'] != "") $title .= ", ".$_GET['Region'];
@@ -127,7 +133,7 @@ $graph->yaxis->title->Set('% of bathing waters');
 $graph->yaxis->title->SetColor('black');
 $graph->yaxis->SetColor('black');
 
-$graph->ygrid->Show(true,true);  // 1.true da pokaže gridline, 2.true da pokaže minor gridline
+$graph->ygrid->Show(true,true); // 1st parameter to show/hide major gridline, 2nd parameter to show/hide minor gridline
 
 // POSITION OF THE LEGEND BOX
 $graph->legend->Pos(0.1,0.4,"left","top");

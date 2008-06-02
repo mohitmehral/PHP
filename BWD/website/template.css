@@ -55,7 +55,7 @@ table.procedure, table.procedure td { border: 0px black solid; }
 a { color: #975B0E; }
 
 /* DIV z grafom */
-#graph_div {
+#graph_div, #map_div {
 	/*cursor: hand; cursor: pointer;*/
 	display:none; 
 	position:absolute; 
