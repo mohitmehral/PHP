@@ -20,13 +20,13 @@ mysql_query("SET NAMES 'utf8'");
 header('Content-Type: text/html; charset=utf-8');
 
 ?>
-
 <html>
 <head>
   <title>Bathing water quality data/map viewer</title>
   <link href="template.css" rel="stylesheet" type="text/css" />
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  
   <script type="text/javascript" language="JavaScript"><!--
     // JS FUNCTIONS TO SHOW DIV WITH GRAPH, MAP 
 	function HideContent(div_id) {
@@ -54,6 +54,7 @@ header('Content-Type: text/html; charset=utf-8');
       // 2. set new headline for div (only for region/province maps)
 	  if(div_title != '') {
 		document.getElementById('map_font').innerHTML = div_title;
+		document.getElementById('graph_font').innerHTML = div_title;
 	  }
       // 3. set "Loading ..." gif in div
       document.getElementById(img_id).src = "images/loading.gif";
@@ -152,7 +153,7 @@ $eu27_stations = array();	// array to hold number of stations
 echo "<table border='0' cellpadding='0' cellspacing='0'>";
 
 // IMAGE ABOVE THE MAIN TABLE WITH DATA
-echo "<tr><td style='padding: 0px; margin: 0px;' colspan='5'><img width='954' height='80' src='images/Flash1.jpg' border='0' /></td></tr>";
+echo "<tr><td style='padding: 0px; margin: 0px;' colspan='5'><img width='954' height='80' src='images/Flash1.jpg' border='0' alt=''/></td></tr>";
 
 echo "<th width='145'>Country</th>";
 echo "<th width='210'>Region</th>";
@@ -193,7 +194,7 @@ echo "<td style='border-bottom: 2px #3180BB solid'>";
   
   // EU 27-GEOGRAPHIC REGION MAP
   if(file_exists("regions/geographic_region.png"))  {
-	echo "<a alt='Geographic region map' title='Geographic region map' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('map_div','map_img','regions/geographic_region.png','Geographic region map',725,735,220,160); \"><img src='images/Regije.gif' /></a>";
+	echo "<a alt='Geographic region map' title='Geographic region map' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_img','regions/geographic_region.png','EU 27 - Geographic region map','725px','735px','220px','160px'); \"><img src='images/Regije.gif' /></a>";
   }
 echo "</td>";
 
@@ -219,10 +220,10 @@ echo "<td style='border-bottom: 2px #3180BB solid' align='right'>";
 	echo "&nbsp;";
 
 	// EU 27-GRAPH COASTAL
-	echo "<a alt='Quality of coastal bathing waters' title='Quality of coastal bathing waters' style='cursor:pointer; cursor:hand;' onclick=\"ShowContent('graph_div','graph_img','line_jpgraph.php?Country=EU27&GeoRegion=".$_GET['GeoRegion']."&type=coast','',950,750,10,160); return true;\"><img src='images/SlanaVodaGraf.jpg' border='0' /></a>";
+	echo "<a alt='Quality of coastal bathing waters' title='Quality of coastal bathing waters' style='cursor:pointer; cursor:hand;' onclick=\"ShowContent('graph_div','graph_img','line_jpgraph.php?Country=EU27&GeoRegion=".$_GET['GeoRegion']."&type=coast','','950px','750px','10px','160px'); return true;\"><img src='images/SlanaVodaGraf.jpg' border='0' /></a>";
 	echo "&nbsp;";
 	// EU 27-GRAPH FRESHWATER
-	echo "<a alt='Quality of freshwater bathing waters' title='Quality of freshwater bathing waters' style='cursor:pointer; cursor:hand;' onclick=\"ShowContent('graph_div','graph_img','line_jpgraph.php?Country=EU27&GeoRegion=".$_GET['GeoRegion']."&type=fresh','',950,750,10,160); return true;\" ><img  src='images/SladkaVodaGraf.jpg' border='0' /></a>";
+	echo "<a alt='Quality of freshwater bathing waters' title='Quality of freshwater bathing waters' style='cursor:pointer; cursor:hand;' onclick=\"ShowContent('graph_div','graph_img','line_jpgraph.php?Country=EU27&GeoRegion=".$_GET['GeoRegion']."&type=fresh','','950px','750px','10px','160px'); return true;\" ><img  src='images/SladkaVodaGraf.jpg' border='0' /></a>";
 echo "</td>";
 echo "</tr>";
 
@@ -301,7 +302,7 @@ while($myrow = mysql_fetch_array($result))  {
 	  else					$top_shift = ($counter*$td_height)-585;
 
 	  if(file_exists("regions/pdf_".strtolower($myrow['cc'])."_regions.png"))  {
-        echo "<a alt='".$myrow['Country']." - region map' title='".$myrow['Country']." region map' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_img','regions/pdf_".strtolower($myrow['cc'])."_regions.png','".$myrow['Country']." - region map',725,735,150,".$top_shift."); \"><img src='images/Regije.gif' /></a>";
+        echo "<a alt='".$myrow['Country']." - region map' title='".$myrow['Country']." region map' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_img','regions/pdf_".strtolower($myrow['cc'])."_regions.png','".$myrow['Country']." - region map','725px','735px','150px','".$top_shift."px'); \"><img src='images/Regije.gif' /></a>";
       }
     echo "</td>";
   
@@ -355,7 +356,7 @@ while($myrow = mysql_fetch_array($result))  {
         echo "<a id='".$myrow['cc']."_province_link' ";
         if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')  echo "style='visibility: visible; cursor:pointer; cursor: hand;'";
         else                                                      echo "style='visibility: hidden; cursor:pointer; cursor: hand;'";
-        echo "alt='".$myrow['Country']." - province map' title='".$myrow['Country']." province map'  onclick=\"ShowContent('map_div','map_img','".$file_province_map ."','".$myrow['Country']." - province map',725,875,150,".$top_shift."); \"><img src='images/Regije.gif' border='0' /></a>";
+        echo "alt='".$myrow['Country']." - province map' title='".$myrow['Country']." province map'  onclick=\"ShowContent('map_div','map_img','".$file_province_map ."','".$myrow['Country']." - ".$_GET['Region']." - province map','725px','875px','150px','".$top_shift."px'); \"><img src='images/Regije.gif' border='0' /></a>";
       }
     echo "</td>";
     
@@ -382,7 +383,7 @@ while($myrow = mysql_fetch_array($result))  {
       else                                                                                  echo "style='display: none; width: 290px;' ";
       echo "name='".$myrow['cc']."_bplace' id='".$myrow['cc']."_bplace' ";
       
-      echo "onchange=\"if(this.value != '') {ShowContent('graph_div','graph_img','bar_jpgraph.php?cc=".$myrow['cc']."&Country=".$myrow['Country']."&GeoRegion=".$_GET['GeoRegion']."&Region=".convertUTFtoHTML($_GET['Region'])."&Province=".convertUTFtoHTML($_GET['Province'])."&BathingPlace=' + document.getElementById('".$myrow['cc']."_bplace').value,'',550,270,300,".$top_shift."); return true;} else {HideContent('graph_div');}\" ";
+      echo "onchange=\"if(this.value != '') {ShowContent('graph_div','graph_img','bar_jpgraph.php?cc=".$myrow['cc']."&Country=".$myrow['Country']."&GeoRegion=".$_GET['GeoRegion']."&Region=".convertUTFtoHTML($_GET['Region'])."&Province=".convertUTFtoHTML($_GET['Province'])."&BathingPlace=' + document.getElementById('".$myrow['cc']."_bplace').value,'','550px','270px','300px','".$top_shift."px'); return true;} else {HideContent('graph_div');}\" ";
       
       echo ">";
       echo "<option value='' selected>--- ".($province_coast_stations[$counter]+$province_freshwater_stations[$counter])." bathing waters in selected province ---</option>";
@@ -479,7 +480,7 @@ while($myrow = mysql_fetch_array($result))  {
           echo "<img alt='".$title_graf."' title='".$title_graf."' src='images/SlanaVodaGrafX.jpg' border='0' />";
         } else {
           $title_graf = "Quality of coastal bathing waters in this Country/Region/Province"; // - ".$myrow['Country'];
-          echo "<a alt='".$title_graf."' title='".$title_graf."' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_img','".convertUTFtoHTML($link_za_graf)."&type=coast','',640,450,180,".$top_shift."); \"><img src='images/SlanaVodaGraf.jpg' border='0' /></a>";
+          echo "<a alt='".$title_graf."' title='".$title_graf."' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_img','".convertUTFtoHTML($link_za_graf)."&type=coast','','640px','450px','180px','".$top_shift."px'); \"><img src='images/SlanaVodaGraf.jpg' border='0' /></a>";
         }
         echo "&nbsp;";
         
@@ -489,7 +490,7 @@ while($myrow = mysql_fetch_array($result))  {
           echo "<img alt='".$title_graf."' title='".$title_graf."' src='images/SladkaVodaGrafX.jpg' border='0' />";
         } else {
           $title_graf = "Quality of freshwater bathing waters in this Country/Region/Province"; // - ".$myrow['Country'];
-          echo "<a alt='".$title_graf."' title='".$title_graf."' style='cursor:pointer; cursor: hand;'  onclick=\"ShowContent('graph_div','graph_img','".convertUTFtoHTML($link_za_graf)."&type=fresh','',640,450,180,".$top_shift."); \"><img src='images/SladkaVodaGraf.jpg' border='0' /></a>";
+          echo "<a alt='".$title_graf."' title='".$title_graf."' style='cursor:pointer; cursor: hand;'  onclick=\"ShowContent('graph_div','graph_img','".convertUTFtoHTML($link_za_graf)."&type=fresh','','640px','450px','180px','".$top_shift."px'); \"><img src='images/SladkaVodaGraf.jpg' border='0' /></a>";
         }
  
     echo "</td>";

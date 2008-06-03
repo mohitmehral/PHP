@@ -10,14 +10,14 @@ BWD water quality data/map viewer: COMMON FUNCTIONS
 
 // f. to change 'not-allowed characters' into something else
 function changeChars($input_string, $changeTo) {
-  $charsToChange = array(" ",",",":",";","?");
+  $charsToChange = array(" ",",",":",";","?",".");
   Return str_replace($charsToChange, $changeTo, $input_string);
 }
 
 // f. to change UTF8 chars (Č,Š,Ž,Ü,...) to (C,S,Z,U,...) - only for jpgraph, because default font is not UTF8
 function replaceUTFChars($input_string) {
-  $changeFrom  = array("Č","Š","Ž","Ü","Ä","Ö","ß","É","Õ","Ñ","Ű","Ø","\\'","Ş","Æ","Å","Ő","Ç","Ú","ľ","Ý"); 
-  $changeTo       = array("C","S","Z","UE","AE","OE","SS","E","O","N","U","OE","'","S","AE","A","O","C","U","L","Y"); 
+  $changeFrom  = array("Č","Š","Ž","Ü","Ä","Ö","ß","É","Õ","Ñ","Ű","Ø","\\'","Ş","Æ","Å","Ő","Ç","Ú","ľ","Ý","Á"); 
+  $changeTo       = array("C","S","Z","UE","AE","OE","SS","E","O","N","U","OE","'","S","AE","A","O","C","U","L","Y","A"); 
   Return str_replace($changeFrom, $changeTo, $input_string);
 }
 
