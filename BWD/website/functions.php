@@ -74,11 +74,11 @@ function complianceCharacter($value) {
 function complianceText($value) {
   switch($value) {
       case 0: Return "Not sampled"; break;
-      case 1: Return "Compliant to guide values (excellent)"; break;
-      case 2: Return "Prohibited throughout the season (closed)"; break;
+      case 1: Return "Excellent (Compliant to guide values)"; break;
+      case 2: Return "Closed (Prohibited throughout the season)"; break;
       case 3: Return "Insufficiently sampled"; break;
-      case 4: Return "Not compliant with mandatory values (poor)"; break;
-      case 5: Return "Compliant to mandatory values (good)"; break;
+      case 4: Return "Poor (Not compliant with mandatory values)"; break;
+      case 5: Return "Good (Compliant to mandatory values)"; break;
       case 6: Return "Not compliant"; break;
       default: Return "Not sampled"; break;
   }

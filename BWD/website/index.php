@@ -147,7 +147,7 @@ echo "<tr>";
 echo "<th style='background-color: white; color: black; border: 0px; line-height: 18px;' colspan='6' width='955' align='right'>";
 echo "<a style='text-decoration: none; color: #00446A; cursor: hand; cursor: pointer;' onclick=\"document.getElementById('help_div').style.display='block'; \">Help on using viewer</a>";
 echo "</th>";
-echo "</tr>";
+echo "</tr>\n";
 echo "</table>";
 
 
@@ -165,7 +165,7 @@ echo "<tr><th width='145'>Country</th>";
 echo "<th width='210'>Region</th>";
 echo "<th width='220'>Province</th>";
 echo "<th width='300'>Bathing water</th>";
-echo "<th width='75'>Visualization</th></tr>";
+echo "<th width='75'>Visualization</th></tr>\n";
 
 // FIRST DATA ROW: EU 27
 echo "<tr style='";
@@ -231,7 +231,7 @@ echo "<td style='border-bottom: 2px #3180BB solid' align='right'>";
 	// EU 27-GRAPH FRESHWATER
 	echo "<a title='Quality of freshwater bathing waters' style='cursor:pointer; cursor:hand;' onclick=\"ShowContent('graph_div','graph_img','line_jpgraph.php?Country=EU27&amp;GeoRegion=".$_GET['GeoRegion']."&amp;type=fresh','','950px','750px','10px','160px'); return true;\" ><img  src='images/SladkaVodaGraf.jpg' border='0' alt='Quality of freshwater bathing waters'/></a>";
 echo "</td>";
-echo "</tr>";
+echo "</tr>\n";
 
 
 // CREATE SQL TO GET ALL THE COUNTRY-DATA
@@ -500,7 +500,7 @@ while($myrow = mysql_fetch_array($result))  {
         }
  
     echo "</td>";
-  echo "</tr>";
+  echo "</tr>\n";
   flush();
   $counter++;
 }
