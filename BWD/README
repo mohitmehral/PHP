@@ -1,6 +1,7 @@
 The Bathing Water Directive
 
 Prerequisites:
+--------------
 
  Tested on Mysql Server version: 5.0.27 and 5.0.51
  Tested on PHP Version: 5.1.6, 5.2.0 and 5.2.6
@@ -8,7 +9,14 @@ Prerequisites:
  The PHP flag display_errors must be turned off or error_reporting must be set
  to a value that excludes E_NOTICE.
  
+Installation:
+-------------
+
+To install, first import the bwd.sql into MySQL. Then copy config-example.php to
+website/config.php and change the values.
+
 License:
+--------
 
 The contents of this package (except jpgraph) are subject to the Mozilla
 Public License Version 1.1 (the "License"); you may not use this file
