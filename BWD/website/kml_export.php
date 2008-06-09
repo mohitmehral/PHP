@@ -30,7 +30,7 @@ $array_fields = array(
 $sql = "
   SELECT 
 	UPPER(c.Country) AS Country,
-	s.numind AS Id, s.latitude AS Latitude, s.longitude AS Longitude, s.WaterType AS Type, s.Region, s.Province, s.Commune, s.Prelev AS 'Bathing water', 
+	s.numind AS numind, s.latitude AS Latitude, s.longitude AS Longitude, s.WaterType AS Type, s.Region, s.Province, s.Commune, s.Prelev AS 'Bathing water', 
 	#s.y1990, s.y1991, s.y1992, s.y1993, s.y1994, s.y1995, s.y1996, s.y1997, s.y1998, s.y1999, 
 	s.y2000, s.y2001, s.y2002, s.y2003, s.y2004, s.y2005, s.y2006, s.y2007 
   FROM bwd_stations s
@@ -45,6 +45,7 @@ if($_GET['GeoRegion'] != '')		$sql .= " AND geographic = '".$_GET['GeoRegion']."
 if($_GET['Region'] != '')			$sql .= " AND Region LIKE '".changeChars($_GET['Region'],"%")."'";
 if($_GET['Province'] != '')			$sql .= " AND Province LIKE '".changeChars($_GET['Province'],"%")."'";
 if($_GET['BathingPlace'] != '')		$sql .= " AND numind = '".$_GET['BathingPlace']."'";
+	$sql .= " ORDER BY 'Bathing water'";
 
 
 
@@ -83,11 +84,12 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
 
   // BWD places
   while ($row = @mysql_fetch_assoc($result)) {
-    echo "<Placemark id='placemark".$row['numind']."'>\n";
+    echo "<Placemark id='p_".$row['numind']."'>\n";
     echo "<name>".$row['Bathing water']."</name>\n";
     echo "<styleUrl>#bw_places</styleUrl>\n";
+    echo "<open>0</open>\n";
     echo "<description>\n";
-    echo "<center><table style='border: 1px black solid;' cellpadding='2' cellspacing='1'>\n";
+    echo "<![CDATA[<table style='border: 1px black solid;' cellpadding='2' cellspacing='1'>\n";
 
 	foreach($array_fields as $key=>$val) {
       echo "<tr>\n";
@@ -123,7 +125,7 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
       }
       echo "</tr>\n";
     }
-    echo "</table></center>\n";
+    echo "</table>]]>\n";
     echo "</description>\n";
     echo "<Point>\n";
     echo "<coordinates>".$row['Longitude'].",".$row['Latitude']."</coordinates>\n";

@@ -98,9 +98,9 @@ echo "
 	Select a <u>bathing water</u> and a small window with water quality info will pop up. Brackets indicate status for each year, each status has one colour. If the bracket is empty (white), there were no measurements or not sufficient samples for that year. Click on window to close. 
 	</p>
 	<p>
-	<span class='stolpec'>Visualization</span>
+	<span class='stolpec'>Visualisation</span>
 	<br/>
-	<img src='images/GoogleEarthMali.gif' border='0' alt='KML'/> - Download and/or open a <b>kml file</b> with bathing water placemarks. If <u>region</u>, <u>province</u> or <u>bathing water</u> is selected, file contains only bathing waters in selected region, province or bathing water. <b>Kml files</b> are best viewed with <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>Google Earth</a>.
+	<img src='images/kml.gif' width='16' height='16' border='0' alt='KML'/> - Download and/or open a <b>kml file</b> with bathing water placemarks. If <u>region</u>, <u>province</u> or <u>bathing water</u> is selected, file contains only bathing waters in selected region, province or bathing water. <b>Kml files</b> are best viewed with <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>Google Earth</a>.
 	<br/>
 
 	<!-- grafi	 -->
@@ -165,10 +165,10 @@ $eu27_stations = array();	// array to hold number of stations
 // MAIN TABLE
 echo "<table border='0' cellpadding='0' cellspacing='0'>\n";
 echo "<col style='width: 141px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
-echo "<col style='width: 206px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
-echo "<col style='width: 216px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
-echo "<col style='width: 292px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
-echo "<col style='width: 75px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
+echo "<col style='width: 198px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
+echo "<col style='width: 212px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
+echo "<col style='width: 277px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
+echo "<col style='width: 103px'/>\n"; // Add 2 times 2px padding + 1px border for real cell width
 
 // IMAGE ABOVE THE MAIN TABLE WITH DATA
 echo "<tr><td style='padding: 0px; margin: 0px;' colspan='5'><img width='955' height='80' src='images/Flash1.jpg' border='0' alt=''/></td>\n</tr>\n";
@@ -234,7 +234,7 @@ echo "  <td align='right'>";
 		$title_string = "EU 27";
 	}
 	
-	echo "<a title='Google Earth KML - ".$title_string."' onclick='document.location = \"kml_export.php?cc=EU27&amp;GeoRegion=".$_GET['GeoRegion']."\"; return false;' href=''><img src='images/GoogleEarthMali.gif' border='0'  alt='Google Earth KML - ".$title_string."'/></a>";
+	echo "<a title='Google Earth KML - ".$title_string."' href='kml_export.php?cc=EU27&amp;GeoRegion=".$_GET['GeoRegion']."'><img src='images/kml.gif' width='16' height='16' border='0'  alt='Google Earth KML - ".$title_string."'/></a>";
 	echo "&nbsp;";
 
 	// EU 27-GRAPH COASTAL
@@ -380,6 +380,10 @@ while($myrow = mysql_fetch_array($result))  {
     
     // BATHING PLACES
 	
+        if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')
+		$sum_bw = $region_coast_stations[$counter]+$region_freshwater_stations[$counter];
+        else
+		$sum_bw = $country_coast_stations[$counter]+$country_freshwater_stations[$counter]; 
 	// set graph position - shift from top 
 	if($counter < 14)		$top_shift = 190+($counter*($td_height+5));
 	else					$top_shift = ($counter*($td_height+5))-115;
@@ -389,15 +393,13 @@ while($myrow = mysql_fetch_array($result))  {
         if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '' && $_GET['Province'] != '')   echo "none";
         else                                                                                  echo "block";
       echo "; color:gray\">";
-        if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')        echo ($region_coast_stations[$counter]+$region_freshwater_stations[$counter]);
-        else                                                            echo ($country_coast_stations[$counter]+$country_freshwater_stations[$counter]); 
-      echo " bathing waters ";
+      echo "$sum_bw bathing waters ";
         if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')        echo "in selected region";
       echo "</span>";
 
       echo "<select ";
-      if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '' && $_GET['Province'] != '')   echo "style='display: block; width: 290px;' ";
-      else                                                                                  echo "style='display: none; width: 290px;' ";
+      if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '' && $_GET['Province'] != '')   echo "style='display: block; width: 100%' ";
+      else                                                                                  echo "style='display: none; width: 100%;' ";
       echo "name='".$myrow['cc']."_bplace' id='".$myrow['cc']."_bplace' ";
       
       echo "onchange=\"if(this.value != '') {HideContent('map_div','map_font'); ShowContent('graph_div','graph_font','graph_img','bar_jpgraph.php?cc=".$myrow['cc']."&amp;Country=".$myrow['Country']."&amp;GeoRegion=".$_GET['GeoRegion']."&amp;Region=".convertUTFtoHTML($_GET['Region'])."&amp;Province=".convertUTFtoHTML($_GET['Province'])."&amp;BathingPlace=' + document.getElementById('".$myrow['cc']."_bplace').value,'','550px','270px','300px','".$top_shift."px'); return true;} else {HideContent('graph_div','graph_font');}\" ";
@@ -429,12 +431,15 @@ while($myrow = mysql_fetch_array($result))  {
     // VISUALISATION BUTTONS
     echo "  <td align='right'>";
       // GENERATES KML LINK
-      $link_za_kml = "\"kml_export.php?cc=".$myrow['cc']."&amp;GeoRegion=".$_GET['GeoRegion']."\"";
-      if($_GET['Region'] != "")
-        $link_za_kml .= " + \"&amp;Region=\" + document.getElementById(\"".$myrow['cc']."_region\").value";
-      if(isset($_GET['Province']))
-        $link_za_kml .= "+ \"&amp;Province=\" + document.getElementById(\"".$myrow['cc']."_province\").value";
-        $link_za_kml .= "+ \"&amp;BathingPlace=\" + document.getElementById(\"".$myrow['cc']."_bplace\").value";
+      $link_za_kml = "kml_export.php?cc=".$myrow['cc'];
+      if($_GET['GeoRegion'] != "")
+	$link_za_kml .= "&amp;GeoRegion=".$_GET['GeoRegion'];
+      if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != "")
+        $link_za_kml .= "&amp;Region=".htmlspecialchars($_GET['Region'], ENT_NOQUOTES, UTF-8);
+      if($myrow['cc'] == $_GET['cc'] && $_GET['Province'] != "")
+        $link_za_kml .= "&amp;Province=".htmlspecialchars($_GET['Province'], ENT_NOQUOTES, UTF-8);
+      if($myrow['cc'] == $_GET['cc'] && $_GET['BathingPlace'] != "")
+        $link_za_kml .= "&amp;BathingPlace=".$_GET['BathingPlace'];
       $string_title_kml = $myrow['Country'];
       if($_GET['Region'] != "" && $_GET['cc'] == $myrow['cc']) $string_title_kml .= ", ".$_GET['Region'];
       if($_GET['Province'] != "" && $_GET['cc'] == $myrow['cc']) $string_title_kml .= ", ".$_GET['Province'];
@@ -473,8 +478,16 @@ while($myrow = mysql_fetch_array($result))  {
         if($myrow['freshwater_stations'] == 0)  $fresh_disabled = 1; 
       }
 
+	// Live Maps
+        if ($sum_bw < 200) {
+		echo "<a title='Live Maps - ".$string_title_kml."' href='http://maps.live.com?mapurl=http://".$_SERVER['SERVER_NAME']."/$link_za_kml'><img src='images/livemaps.png' border='0' alt='Live Maps - ".$string_title_kml."'/></a>";
+	}
+	// Google Maps
+        if ($sum_bw < 200) {
+		echo "<a title='Google Maps - ".$string_title_kml."' href='http://maps.google.com?q=http://".$_SERVER['SERVER_NAME']."/".str_replace("&amp;","%26",$link_za_kml)."'><img src='images/googlemaps.png' border='0' alt='Google Maps - ".$string_title_kml."'/></a>";
+	}
       // GOOGLE EARTH
-      echo "<a title='Google Earth KML - ".$string_title_kml."' onclick='document.location = ".$link_za_kml."; return false;' href=''><img src='images/GoogleEarthMali.gif' border='0' alt='Google Earth KML - ".$string_title_kml."'/></a>";
+      echo "<a title='Google Earth KML - ".$string_title_kml."' href='$link_za_kml'><img src='images/kml.gif' width='16' height='16' border='0' alt='Google Earth KML - ".$string_title_kml."'/></a>";
       echo "&nbsp;";
       
       // PDF; 20.5.2008; excluded till further
@@ -519,12 +532,13 @@ while($myrow = mysql_fetch_array($result))  {
 
 echo "</table>\n";
 
-echo "<p><img src='images/GoogleEarthMali.gif' border='0'  alt='KML icon'/>&nbsp;Don't have Google Earth? Download it here: <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>http://earth.google.com/download-earth.html</a></p>";
-//echo "<p><img src='images/PDFmala.gif' border='0' />&nbsp;Adobe Acrobat Reader - download it here: <a target='_NEW_WINDOW' href='http://www.adobe.com/products/acrobat/readstep2.html'>http://www.adobe.com/products/acrobat/readstep2.html</a></p>";
-
-//echo array_sum($country_coast_stations) + array_sum($country_freshwater_stations);
-
 ?>
+<p><img src='images/kml.gif' width='16' height='16' border='0'  alt='KML icon'/>&nbsp;Don't have Google Earth? Download it here:
+<a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>http://earth.google.com/download-earth.html</a></p>
+<?php
+//echo "<p><img src='images/PDFmala.gif' border='0' />&nbsp;Adobe Acrobat Reader - download it here: <a target='_NEW_WINDOW' href='http://www.adobe.com/products/acrobat/readstep2.html'>http://www.adobe.com/products/acrobat/readstep2.html</a></p>";
+?>
+
 
 </body>
 </html>
