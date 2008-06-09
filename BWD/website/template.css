@@ -8,13 +8,20 @@ table, input {
 	border: 1px black solid; 
 }
 
-select { 	font: 12px Arial; 
-			margin-bottom: 2px; }
+select {
+ 	font: 12px Arial; 
+	margin-bottom: 2px;
+}
 
-/* tole je za hover ko greö Ëez vrstico - da dela tudi v IE	*/ 
-tr  { behavior: url('IEfixes.htc');  }
-tr:active, tr.active	{ }/*Active styles here */
-tr:hover, tr.hover		{ background-color: #E6F7AA; }	/* sv.zelena iz EEA */
+/* tole je za hover ko gre≈° √®ez vrstico - da dela tudi v IE   */
+tr {
+	behavior: url('IEfixes.htc');
+}
+
+tr:active, tr.active	{ } /*Active styles here */
+tr:hover, tr.hover {
+	background-color: #E6F7AA;
+}	/* sv.zelena iz EEA */
 
 table th, .stolpec { 
 	background-color: #00446A; 
@@ -23,6 +30,11 @@ table th, .stolpec {
 	color: white;
 	line-height: 22px;	/* da so tud v IE stolpci height 22px */
 	font-weight: bold;
+}
+
+.stolpec {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 }
 
 .prvi_stolpec { 	
@@ -36,6 +48,15 @@ table td {
 	padding: 2px;
 }
 
+table td.country {
+	cursor:help;
+	font-weight: bold;
+}
+
+table tr#eu_row td {
+	border-bottom: 2px #3180BB solid;
+}
+
 table.pravila { 
 	font-weight: bold; 
 	border-collapse: collapse;
@@ -45,8 +66,7 @@ table.pravila td {
 	padding: 3px;
 }
 
-
-table.procedure, table.procedure td { border: 0px black solid; }
+table.procedure, table.procedure td { border: 0px solid black; }
 
 .selected { background-color: #D7F5FF;}	 /* modra, prej pastelno zelena: #D6FFCF */
 .mismatch { background-color: #FFD7D7; }
@@ -79,6 +99,11 @@ a { color: #975B0E; }
 } 
 
 /* stili za help.html */
-h1 { font: bold 16px Arial; text-decoration: none; padding: 0px; margin-top: 0px; }
+h1 {
+	font: bold 16px Arial;
+	text-decoration: none;
+	padding: 0px;
+	margin-top: 0px;
+}
 
 /*.stolpec { font-weight: bold; }*/
