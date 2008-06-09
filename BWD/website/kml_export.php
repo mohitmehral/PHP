@@ -64,6 +64,8 @@ if($_GET['BathingPlace'] != '')   $string_filename .= "-".$_GET['BathingPlace'];
 header('Content-type: application/vnd.google-earth.kml+xml');
 header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars($string_filename),"_")."_bplaces.kml");
 
+  
+  $baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
 // BEGIN **************
   // Creates an array of strings to hold the lines of the KML file.
   echo "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -77,7 +79,7 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
   echo " <IconStyle>\n";
   echo " <scale>1.1</scale>\n";
   echo " <Icon>\n";
-  echo " <href>http://maps.google.com/mapfiles/kml/shapes/swimming.png</href>\n";
+  echo " <href>".$baseurl."images/swimming.png</href>\n";
   echo " </Icon>\n";
   echo " </IconStyle>\n";
   echo " </Style>\n";

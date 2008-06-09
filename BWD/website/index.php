@@ -478,13 +478,14 @@ while($myrow = mysql_fetch_array($result))  {
         if($myrow['freshwater_stations'] == 0)  $fresh_disabled = 1; 
       }
 
+	$baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
 	// Live Maps
         if ($sum_bw < 200) {
-		echo "<a title='Live Maps - ".$string_title_kml."' href='http://maps.live.com?mapurl=http://".$_SERVER['SERVER_NAME']."/$link_za_kml'><img src='images/livemaps.png' border='0' alt='Live Maps - ".$string_title_kml."'/></a>";
+		echo "<a title='Live Maps - ".$string_title_kml."' href='http://maps.live.com?mapurl=".$baseurl."$link_za_kml'><img src='images/livemaps.png' border='0' alt='Live Maps - ".$string_title_kml."'/></a>";
 	}
 	// Google Maps
         if ($sum_bw < 200) {
-		echo "<a title='Google Maps - ".$string_title_kml."' href='http://maps.google.com?q=http://".$_SERVER['SERVER_NAME']."/".str_replace("&amp;","%26",$link_za_kml)."'><img src='images/googlemaps.png' border='0' alt='Google Maps - ".$string_title_kml."'/></a>";
+		echo "<a title='Google Maps - ".$string_title_kml."' href='http://maps.google.com?q=".$baseurl.str_replace("&amp;","%26",$link_za_kml)."'><img src='images/googlemaps.png' border='0' alt='Google Maps - ".$string_title_kml."'/></a>";
 	}
       // GOOGLE EARTH
       echo "<a title='Google Earth KML - ".$string_title_kml."' href='$link_za_kml'><img src='images/kml.gif' width='16' height='16' border='0' alt='Google Earth KML - ".$string_title_kml."'/></a>";
