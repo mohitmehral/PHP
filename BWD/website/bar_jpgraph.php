@@ -7,7 +7,12 @@ BWD water quality data/map viewer: FILE TO CREATE IMAGE WITH BAR GRAPH
 21.3.2008; first version
 
 */
-
+if (!isset($_GET['GeoRegion'])) $_GET['GeoRegion'] = '';
+if (!isset($_GET['type'])) $_GET['type'] = '';
+if (!isset($_GET['Country'])) $_GET['Country'] = '';
+if (!isset($_GET['Region'])) $_GET['Region'] = '';
+if (!isset($_GET['Province'])) $_GET['Province'] = '';
+if (!isset($_GET['BathingPlace'])) $_GET['BathingPlace'] = '';
 include('config.php');
 include('functions.php');
 include ("jpgraph-2.3/src/jpgraph.php");
@@ -208,5 +213,5 @@ $graph->Add($gbplot);
 
 $graph->Stroke();
 
-
+// vi: set ts=4 sw=4:
 ?>

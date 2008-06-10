@@ -560,6 +560,5 @@ echo "</table>\n";
 //echo "<p><img src='images/PDFmala.gif' border='0' />&nbsp;Adobe Acrobat Reader - download it here: <a target='_NEW_WINDOW' href='http://www.adobe.com/products/acrobat/readstep2.html'>http://www.adobe.com/products/acrobat/readstep2.html</a></p>";
 ?>
 
-
 </body>
 </html>
