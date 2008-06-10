@@ -435,9 +435,9 @@ while($myrow = mysql_fetch_array($result))  {
       if($_GET['GeoRegion'] != "")
 	$link_za_kml .= "&amp;GeoRegion=".$_GET['GeoRegion'];
       if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != "")
-        $link_za_kml .= "&amp;Region=".htmlspecialchars($_GET['Region'], ENT_NOQUOTES, UTF-8);
+        $link_za_kml .= "&amp;Region=".htmlspecialchars($_GET['Region'], ENT_NOQUOTES);
       if($myrow['cc'] == $_GET['cc'] && $_GET['Province'] != "")
-        $link_za_kml .= "&amp;Province=".htmlspecialchars($_GET['Province'], ENT_NOQUOTES, UTF-8);
+        $link_za_kml .= "&amp;Province=".htmlspecialchars($_GET['Province'], ENT_NOQUOTES);
       if($myrow['cc'] == $_GET['cc'] && $_GET['BathingPlace'] != "")
         $link_za_kml .= "&amp;BathingPlace=".$_GET['BathingPlace'];
       $string_title_kml = $myrow['Country'];

@@ -12,6 +12,15 @@ BWD water quality data/map viewer: EXPORT TO KML FILE
 include('config.php');
 include('functions.php');
 
+function TypeText($key) {
+    switch($key) {
+	case 1: return "SEA"; break;
+	case 2: return "RIVER"; break;
+	case 3: return "LAKE"; break;
+	case 4: return "ESTUARY"; break;
+	default:  return "N/A"; break;
+    }
+}
 
 if($_GET['cc'] != '')   {
 
@@ -23,14 +32,28 @@ mysql_query("SET NAMES 'utf8'");
 
 // array with fields to show in kml
 $array_fields = array(
-  'Id','Latitude','Longitude','Country','Region','Province','Commune','Bathing water','Type',
-  //'y1990','y1991','y1992','y1993','y1994','y1995','y1996','y1997','y1998','y1999',
-  'y2000','y2001','y2002','y2003','y2004','y2005','y2006','y2007');
+  'numind' => 'Id',
+  'latitude' => 'Latitude',
+  'longitude'=> 'Longitude',
+  'Country' => 'Country',
+  'Region' => 'Region',
+  'Province' => 'Province',
+  'Commune' => 'Commune',
+  'Prelev' => 'Bathing water',
+  'Type' => 'Type',
+  'y2000' => 'Year 2000',
+  'y2001' => 'Year 2001',
+  'y2002' => 'Year 2002',
+  'y2003' => 'Year 2003',
+  'y2004' => 'Year 2004',
+  'y2005' => 'Year 2005',
+  'y2006' => 'Year 2006',
+  'y2007' => 'Year 2007');
 
 $sql = "
   SELECT 
 	UPPER(c.Country) AS Country,
-	s.numind AS numind, s.latitude AS Latitude, s.longitude AS Longitude, s.WaterType AS Type, s.Region, s.Province, s.Commune, s.Prelev AS 'Bathing water', 
+	s.numind, s.latitude, s.longitude, s.WaterType AS Type, s.Region, s.Province, s.Commune, s.Prelev, 
 	#s.y1990, s.y1991, s.y1992, s.y1993, s.y1994, s.y1995, s.y1996, s.y1997, s.y1998, s.y1999, 
 	s.y2000, s.y2001, s.y2002, s.y2003, s.y2004, s.y2005, s.y2006, s.y2007 
   FROM bwd_stations s
@@ -45,7 +68,7 @@ if($_GET['GeoRegion'] != '')		$sql .= " AND geographic = '".$_GET['GeoRegion']."
 if($_GET['Region'] != '')			$sql .= " AND Region LIKE '".changeChars($_GET['Region'],"%")."'";
 if($_GET['Province'] != '')			$sql .= " AND Province LIKE '".changeChars($_GET['Province'],"%")."'";
 if($_GET['BathingPlace'] != '')		$sql .= " AND numind = '".$_GET['BathingPlace']."'";
-	$sql .= " ORDER BY 'Bathing water'";
+	$sql .= " ORDER BY Prelev";
 
 
 
@@ -87,9 +110,13 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
   // BWD places
   while ($row = @mysql_fetch_assoc($result)) {
     echo "<Placemark id='p_".$row['numind']."'>\n";
-    echo "<name>".$row['Bathing water']."</name>\n";
+    echo "<name>".$row['Prelev']."</name>\n";
     echo "<styleUrl>#bw_places</styleUrl>\n";
     echo "<open>0</open>\n";
+    echo "<Snippet>\n";
+    echo "Type: ".TypeText($row['Type'])."\n";
+    echo "Year 2007: ".complianceText($row['y2007'])."\n";
+    echo "</Snippet>\n";
     echo "<description>\n";
     echo "<![CDATA[<table style='border: 1px black solid;' cellpadding='2' cellspacing='1'>\n";
 
@@ -97,7 +124,7 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
       echo "<tr>\n";
       //echo "<th bgcolor='#8BD1FF' width='120'>";
       //echo "<th bgcolor='#B9E8F7' width='120'>";
-      echo "<th bgcolor='lightgray' width='120'>";
+      echo "<th bgcolor='#C0C0C0' width='120'>";
       echo htmlentities($val); 
       echo "</th>\n";
       
@@ -105,9 +132,9 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
       
       // 14.4.2008; user-friendly output of atribute WaterTypem instead of 1,2,3 outputs text:
       // 1=Sea, 2=River, 3=Lake, 4=Estuary
-      if($val == "Type") {
+      if($key == "Type") {
         echo "<td bgcolor='#F7F7F7' width='300'>";
-        switch($row[$val]) {
+        switch($row[$key]) {
             case 1: echo "SEA"; break;
             case 2: echo "RIVER"; break;
             case 3: echo "LAKE"; break;
@@ -119,18 +146,18 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
       // 14.4.2008; user-friendly output of BW status for each year
       // 1=compliant to guide values, 2=prohibited throughout the season, 3=insufficiently sampled, 
       // 4=not compliant, 5=compliant to mandatory values, 6=not sampled
-      elseif(substr($val,0,1) == "y")  {
-        echo "<td bgcolor='".complianceColor($row[$val])."' width='300'>".complianceText($row[$val])."</td>\n";
+      elseif(substr($key,0,1) == "y")  {
+        echo "<td bgcolor='".complianceColor($row[$key])."' width='300'>".complianceText($row[$key])."</td>\n";
       }
       else {
-        echo "<td bgcolor='#F7F7F7' width='300'>".$row[$val]."</td>\n";
+        echo "<td bgcolor='#F7F7F7' width='300'>".$row[$key]."</td>\n";
       }
       echo "</tr>\n";
     }
     echo "</table>]]>\n";
     echo "</description>\n";
     echo "<Point>\n";
-    echo "<coordinates>".$row['Longitude'].",".$row['Latitude']."</coordinates>\n";
+    echo "<coordinates>".$row['longitude'].",".$row['latitude']."</coordinates>\n";
     echo "</Point>\n";
     echo "</Placemark>\n";
 
