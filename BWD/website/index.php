@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/* vi: set ts=4 sw=4:
 
 BWD water quality data/map viewer: MAIN FILE WITH COUNTRY LISTING, MAPS, GRAPHS, ETC.
 
@@ -10,6 +10,11 @@ BWD water quality data/map viewer: MAIN FILE WITH COUNTRY LISTING, MAPS, GRAPHS,
 
 include('config.php');
 include('functions.php');
+if (!isset($_GET['GeoRegion'])) $_GET['GeoRegion'] = '';
+if (!isset($_GET['cc'])) $_GET['cc'] = '';
+if (!isset($_GET['Region'])) $_GET['Region'] = '';
+if (!isset($_GET['Province'])) $_GET['Province'] = '';
+if (!isset($_GET['BathingPlace'])) $_GET['BathingPlace'] = '';
 
 // MYSQL CONNECT
 $db = mysql_connect($host, $dbuser,$dbpass);
@@ -262,16 +267,31 @@ $sql .= 'GROUP BY s.cc ORDER BY c.Country';
 
 $result = mysql_query($sql) or die(mysql_error()."<br/>".$sql);
 
+// Initialise variables
+$country_coast_stations = array();
+$country_freshwater_stations = array();
+$region_freshwater_stations = array();
+$region_coast_stations = array();
+$province_coast_stations = array();
+$province_freshwater_stations = array();
+
 // LOOP THROUGH COUNTRY-DATA
 while($myrow = mysql_fetch_array($result))  {
 
-  echo "<tr id='tr_".$counter."' class='";
-  if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')  echo "selected";
-  else {
-    if($counter % 2 == 1)  echo "alternate";
-    else                    echo "";
-  }
-  echo "'>\n";
+	$country_coast_stations[$counter] = 0;
+	$country_freshwater_stations[$counter] = 0;
+	$region_freshwater_stations[$counter] = 0;
+	$region_coast_stations[$counter] = 0;
+	$province_coast_stations[$counter] = 0;
+	$province_freshwater_stations[$counter] = 0;
+
+	echo "<tr id='tr_".$counter."' class='";
+	if($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')  echo "selected";
+	else {
+		if($counter % 2 == 1)  echo "alternate";
+		else                    echo "";
+	}
+	echo "'>\n";
 
     // COUNTRY
     echo "  <td title='".$myrow['NationalName']."' class='country' height='".$td_height."'>";

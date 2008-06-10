@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/* vi: set ts=4 sw=4:
 
 BWD water quality data/map viewer: EXPORT TO KML FILE
 
@@ -11,8 +11,13 @@ BWD water quality data/map viewer: EXPORT TO KML FILE
 
 include('config.php');
 include('functions.php');
+if (!isset($_GET['GeoRegion'])) $_GET['GeoRegion'] = '';
+if (!isset($_GET['cc'])) $_GET['cc'] = '';
+if (!isset($_GET['Region'])) $_GET['Region'] = '';
+if (!isset($_GET['Province'])) $_GET['Province'] = '';
+if (!isset($_GET['BathingPlace'])) $_GET['BathingPlace'] = '';
 
-function TypeText($key) {
+function TypeAsText($key) {
     switch($key) {
 	case 1: return "SEA"; break;
 	case 2: return "RIVER"; break;
@@ -24,10 +29,10 @@ function TypeText($key) {
 
 if($_GET['cc'] != '')   {
 
-// connect ta database
+// connect to database
 $db = mysql_connect($host, $dbuser,$dbpass);
 mysql_select_db($database,$db);
-// 5.5.2008; utf8: this must be included fot utf-8 charset
+// 5.5.2008; utf8: this must be included for utf-8 charset
 mysql_query("SET NAMES 'utf8'");
 
 // array with fields to show in kml
@@ -49,6 +54,8 @@ $array_fields = array(
   'y2005' => 'Year 2005',
   'y2006' => 'Year 2006',
   'y2007' => 'Year 2007');
+
+$lastknownyear = 'y2007';
 
 $sql = "
   SELECT 
@@ -114,8 +121,8 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
     echo "<styleUrl>#bw_places</styleUrl>\n";
     echo "<open>0</open>\n";
     echo "<Snippet>\n";
-    echo "Type: ".TypeText($row['Type'])."\n";
-    echo "Year 2007: ".complianceText($row['y2007'])."\n";
+    echo $array_fields['Type'].": ".TypeAsText($row['Type'])."\n";
+    echo $array_fields[$lastknownyear].": ".complianceText($row[$lastknownyear])."\n";
     echo "</Snippet>\n";
     echo "<description>\n";
     echo "<![CDATA[<table style='border: 1px black solid;' cellpadding='2' cellspacing='1'>\n";
@@ -130,18 +137,9 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
       
       //echo "<td bgcolor='#F7F7F7' width='300'>\n";
       
-      // 14.4.2008; user-friendly output of atribute WaterTypem instead of 1,2,3 outputs text:
-      // 1=Sea, 2=River, 3=Lake, 4=Estuary
+      // 14.4.2008; user-friendly output of attribute WaterType instead of 1,2,3 output text:
       if($key == "Type") {
-        echo "<td bgcolor='#F7F7F7' width='300'>";
-        switch($row[$key]) {
-            case 1: echo "SEA"; break;
-            case 2: echo "RIVER"; break;
-            case 3: echo "LAKE"; break;
-            case 4: echo "ESTUARY"; break;
-            default:  echo "N/A"; break;
-        }
-        echo "</td>\n";
+        echo "<td bgcolor='#F7F7F7' width='300'>".TypeAsText($row[$key])."</td>\n";
       } 
       // 14.4.2008; user-friendly output of BW status for each year
       // 1=compliant to guide values, 2=prohibited throughout the season, 3=insufficiently sampled, 
