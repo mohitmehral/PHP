@@ -157,7 +157,7 @@ echo '</div>';
 echo "<table id='banner'>";
 echo "<tr>";
 echo "<th style='text-align:left; width:50%'>";
-echo "<a href='/kmllink.php'>Google Earth Network link</a>";
+echo "<a href='/kmllink.php' type='application/vnd.google-earth.kml+xml'>Google Earth Network link</a>";
 echo "</th>";
 echo "<th style='text-align:right; width:50%'>";
 echo "<a onclick=\"document.getElementById('help_div').style.display='block'; \">Help on using viewer</a>";
