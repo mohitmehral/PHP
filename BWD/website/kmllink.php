@@ -13,7 +13,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'
       <longitude>15.0</longitude>
       <latitude>51.0</latitude>
       <altitude>0</altitude>
-      <range>100000</range>
+      <range>3500000</range>
       <tilt>0</tilt>
       <heading>0.0</heading>
     </LookAt>
