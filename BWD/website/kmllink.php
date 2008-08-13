@@ -6,7 +6,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'
 <kml xmlns="http://earth.google.com/kml/2.0">
   <Document>
     <name>Bathing water</name>
-    <description><![CDATA[Shows bathing waters +/- 0.5 degrees from your view point]]></description>
+    <description><![CDATA[Shows a selection of bathing waters - zoom to see all]]></description>
     <visibility>1</visibility>
     <open>1</open>
     <LookAt>
@@ -19,7 +19,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>'
     </LookAt>
     <NetworkLink>
       <name>Bathing water locations</name>
-      <description><![CDATA[Shows bathing waters +/- 0.5 degrees from your view point]]></description>
+      <description><![CDATA[Shows a selection of bathing waters - zoom to see all]]></description>
       <Url>
         <href>http://bwd.eea.europa.eu/kmlfetch.php</href>
         <viewRefreshMode>onStop</viewRefreshMode>

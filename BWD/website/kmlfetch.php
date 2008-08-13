@@ -11,6 +11,8 @@ BWD water quality data/map viewer: EXPORT TO KML FILE
 include('config.php');
 include('functions.php');
 
+$plotted = array();
+
 $bbox="19.5,51.5,20.5,52.5";
 if (isset($_GET['BBOX'])) {
     $bbox = $_GET['BBOX'];
@@ -27,6 +29,22 @@ function TypeAsText($key) {
     }
 }
 
+/*
+ * Check if the proposed coordinate is too close too an already plotted point
+ * Avoids using square root
+ */
+function IsTooClose($lat, $long, $delta) {
+    global $plotted;
+    $delta = $delta * $delta;
+    foreach ($plotted as $coord) {
+		$diff_lat = ($coord[0] - $lat) * ($coord[0] - $lat) ;
+		$diff_long = ($coord[1] - $long) * ($coord[1] - $long) ;
+        $diff = $diff_lat + $diff_long;
+        if ($diff < $delta) return true;
+	}
+    return false;
+}
+
 header('Content-type: application/vnd.google-earth.kml+xml');
 
 $baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
@@ -40,24 +58,18 @@ echo "<Document>\n";
 // BWD places icon - swimmer
 echo " <Style id='bw_places'>\n";
 echo " <IconStyle>\n";
-echo " <scale>1.1</scale>\n";
+echo " <scale>1.0</scale>\n";
 echo " <Icon>\n";
 echo " <href>".$baseurl."images/swimming.png</href>\n";
 echo " </Icon>\n";
 echo " </IconStyle>\n";
+echo " <LabelStyle>\n";
+echo " <scale>0.7</scale>\n";
+echo " <color>ffffc8c8</color>\n";
+echo " </LabelStyle>\n";
 echo " </Style>\n";
 
-if (($maxe - $maxw) > 1) {
-    $longcenter = ($maxe + $maxw) / 2;
-    $maxe = $longcenter + 0.5;
-    $maxw = $longcenter - 0.5;
-}
-if (($maxn - $maxs) > 1) {
-    $latcenter = ($maxn + $maxs) / 2;
-    $maxn = $latcenter + 0.5;
-    $maxs = $latcenter - 0.5;
-}
-if(($maxe - $maxw) <= 1 && ($maxn - $maxs) <= 1)   {
+$maxdelta = ($maxe - $maxw) / 25;
 
 // connect to database
 $db = mysql_connect($host, $dbuser,$dbpass);
@@ -94,7 +106,6 @@ $sql = "
 	s.y2000, s.y2001, s.y2002, s.y2003, s.y2004, s.y2005, s.y2006, s.y2007 
   FROM bwd_stations s
   LEFT JOIN countrycodes_iso c ON s.cc = c.ISO2 ";
-
 $sql .= " WHERE latitude > ".$maxs." AND latitude < ".$maxn." AND longitude > ".$maxw." AND longitude < ".$maxe;
 $sql .= " ORDER BY Prelev";
 
@@ -104,6 +115,8 @@ $result = mysql_query($sql) or die($sql."<br>".mysql_error());
 
   // BWD places
   while ($row = @mysql_fetch_assoc($result)) {
+    if (IsTooClose($row['latitude'], $row['longitude'], $maxdelta)) continue;
+    $plotted[] = array($row['latitude'], $row['longitude']);
     echo "<Placemark id='p_".$row['numind']."'>\n";
     echo "<name>".$row['Prelev']."</name>\n";
     echo "<styleUrl>#bw_places</styleUrl>\n";
@@ -151,7 +164,6 @@ $result = mysql_query($sql) or die($sql."<br>".mysql_error());
   
   
 
-} // END if EXPORT
 
 // Footer XML file
 echo "</Document>\n";
