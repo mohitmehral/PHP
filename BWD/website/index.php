@@ -154,10 +154,13 @@ echo '</div>';
 
 
 // TABLE ON TOP TO SHOW HELP LINK 
-echo "<table style='border: 0px;' border='0' cellpadding='0' cellspacing='0'>";
+echo "<table id='banner'>";
 echo "<tr>";
-echo "<th style='background-color: white; color: black; border: 0px; line-height: 18px;' width='955' align='right'>";
-echo "<a style='text-decoration: none; color: #00446A; cursor: hand; cursor: pointer;' onclick=\"document.getElementById('help_div').style.display='block'; \">Help on using viewer</a>";
+echo "<th style='text-align:left; width:50%'>";
+echo "<a href='/kmllink.php'>Google Earth Network link</a>";
+echo "</th>";
+echo "<th style='text-align:right; width:50%'>";
+echo "<a onclick=\"document.getElementById('help_div').style.display='block'; \">Help on using viewer</a>";
 echo "</th>";
 echo "</tr>\n";
 echo "</table>\n";

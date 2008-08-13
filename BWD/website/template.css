@@ -3,6 +3,30 @@ body {
 	margin: 5px;
 }
 
+table#banner {
+	border: 0px;
+	width:955px;
+}
+
+table#banner th {
+	background-color: white;
+	color: black;
+	border: 0px;
+	line-height: 18px;
+	padding:0;
+	margin: 0;
+}
+table#banner a,
+table#banner a:link,
+table#banner a:visited,
+table#banner a:hover,
+table#banner a:active {
+	text-decoration: none;
+	color: #00446A;
+	cursor: hand;
+	cursor: pointer;
+}
+
 table, input { 
 	font: 12px Arial; 
 	border: 1px black solid; 
