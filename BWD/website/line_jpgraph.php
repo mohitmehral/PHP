@@ -23,7 +23,7 @@ $db = mysql_connect($host, $dbuser,$dbpass);
 mysql_select_db($database,$db);
 mysql_query("SET NAMES 'utf8'");
 
-header('Content-Type: text/html; charset=utf-8');
+//header('Content-Type: text/html; charset=utf-8');
 
 // ONLY SHOW THESE STATUSES IN GRAPH
 // 1=compliant to guide values = MODRA, 
@@ -74,7 +74,8 @@ foreach($compliance_values as $key=>$val) {
 }
 
 
-// 20.5.2008; values with 5 (c mandatory) have to include also values 1 (c guide), because if BW is compl. to mandatory than is also compl. to guide
+// 20.5.2008; values with 5 (c mandatory) have to include also values 1 (c guide),
+// because if BW is compliant to mandatory than is also compliant to guide
 foreach($data[5] as $key=>$val) 	$data[5][$key] += $data[1][$key];
 
 // CHECK THE ARRAYS
