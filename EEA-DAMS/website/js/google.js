@@ -334,18 +334,19 @@ function buildCopyright( bounds, zoom ) {
   arr = [];
   try {
     var myarr = this.getTileLayers();
-    for( lcnt = 0; lcnt < myarr.length; lcnt++ ) {
-      var obj = myarr[ lcnt ];
-      if( obj != null ) {
-        arr.push( obj.getCopyright( map.getBounds(), map.getZoom() ) );
+    for(i = 0; i < myarr.length; i++) 
+    {
+      if(myarr[i]) 
+      {
+      	cpy = myarr[i].getCopyright(map.getBounds(), map.getZoom());
+      	if(cpy) arr.push(cpy);
       }
     }
-    if( !eea_overlay.isHidden() )
-      arr.push( copyrightStringEEA );
+    if(!eea_overlay.isHidden())
+      arr.push(copyrightStringEEA);
     if( !i2k_overlay.isHidden() )
       arr.push( copyrightStringI2K ); 
-  } catch (e) {
-  }
+  } catch (e) {}
   return arr;
 }
 
