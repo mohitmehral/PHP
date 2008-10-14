@@ -1,0 +1,81 @@
+<?php
+/**
+ * EEA-DAMS index.php
+ *
+ * The contents of this file are subject to the Mozilla Public
+ * License Version 1.1 (the "License"); you may not use this file
+ * except in compliance with the License. You may obtain a copy of
+ * the License at http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS
+ * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the License for the specific language governing
+ * rights and limitations under the License.
+ *
+ * The Original Code is "EEA-DAMS version 1.0".
+ *
+ * The Initial Owner of the Original Code is European Environment
+ * Agency.  Portions created by I.O.Water are
+ * Copyright (C) European Environment Agency.  All
+ * Rights Reserved.
+ *
+ * Contributor(s):
+ *  Original Code: Søren Roug
+ *
+ *
+ * @abstract	 index.
+ * @copyright    2008
+ * @version    	 1.0
+ *
+ * 
+ */
+
+require_once ('commons/config.php');
+
+
+require_once 'DataObjects/Public_dams.php';
+require_once 'DataObjects/Public_user_dams.php';
+
+$noquote = array("int4", "int2", "float8");
+
+$baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
+
+$file->log('Download-RDF: '.$_SESSION["ID"]);
+
+
+$db =& DB::connect(DB);
+if (PEAR::isError($db)) {
+	  die($db->getMessage());
+}
+
+// Proceed with a query...
+
+$res =& $db->query('SELECT * FROM DAMS order by NOEEA');
+$file = 'Dam';
+header('Content-type: application/rdf+xml');
+//	header('Content-Disposition: attachment; filename="'.$file.'.rdf"');
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+echo "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns=\"$baseurl/dams-schema.rdf#\">\n";
+
+// Always check that result is not an error
+if (PEAR::isError($res)) {
+	 die($res->getMessage());
+}
+
+$types = $db->tableInfo($res);
+
+// there are no more rows
+$i = 0;
+while ($res->fetchInto($row, DB_FETCHMODE_ASSOC)) {
+	echo "<$file rdf:ID='". $row['noeea']."'>\n";
+	$col = 0;
+	// Assuming DB's default fetchmode is DB_FETCHMODE_ORDERED
+	foreach ($row as $k => $v) {
+		echo "  <$k>" . htmlspecialchars($v,ENT_NOQUOTES,'UTF-8') . "</$k>\n";
+		$col++;
+	}
+	$i++;
+	echo "</$file>\n";
+}
+echo "</rdf:RDF>\n";
+?>
