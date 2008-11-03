@@ -58,7 +58,7 @@ echo "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
 $types = $db->tableInfo($res);
 
 foreach ($types as $k => $v) {
-    echo "<rdfs:Property rdf:ID=\"$v[name]\" rdfs:value=\"$v[name]\">\n";
+    echo "<rdfs:Property rdf:ID=\"$v[name]\" rdfs:label=\"$v[name]\">\n";
     echo "<rdfs:domain rdf:resource=\"#Dam\"/>\n";
     echo "</rdfs:Property>\n";
 }
