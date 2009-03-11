@@ -2,7 +2,7 @@
   require_once 'config.inc.php';
   //Connect to the database server
   $db = @mysql_connect(DB_HOST, DB_USER, DB_PASSWD);
-  if (!db) {
+  if (!$db) {
     echo("<p>Cant connect to MySQL.</p>");
     exit();
   } else {
