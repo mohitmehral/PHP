@@ -1,0 +1,17 @@
+<?php
+//
+// database related options
+//
+
+//
+// These are default values for a freshly installed MySQL server
+// (from an unmanaged installation). No production server should
+// ever support this.
+//
+define('DB_HOST', 'localhost');
+define('DB_USER', 'root');
+define('DB_PASSWD', '');
+
+// The name of the database
+define('DB_DATABASE', 'pam');
+?>

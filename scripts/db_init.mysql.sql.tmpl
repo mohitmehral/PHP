@@ -1,0 +1,23 @@
+--
+-- db_init.mysql.sql
+--
+-- Author: Hanno Fietz <hanno.fietz@econemon.com>
+--
+-- This script creates a database and a local user that has all available
+-- privileges on that database.
+--
+-- It should be run against a MySQL server of version 5.0 or higher,
+-- as a database administrator with sufficient privileges.
+--
+-- !!
+-- !! IMPORTANT
+-- !!
+-- !! Database name, user and password below are placeholders that should
+-- !! be replaced before the commands are run on the database server.
+-- !! This is normally done by the installation script.
+-- !!
+
+CREATE DATABASE `<<DB_DATABASE>>`;
+CREATE USER '<<DB_USER>>'@'<<DB_USER_HOST>>';
+SET PASSWORD FOR '<<DB_USER>>'@'<<DB_USER_HOST>>' = PASSWORD('<<DB_PASSWD>>');
+GRANT ALL PRIVILEGES ON `<<DB_DATABASE>>`.* TO '<<DB_USER>>'@'<<DB_USER_HOST>>';
