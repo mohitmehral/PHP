@@ -1,6 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
-  include('conx/db_conx_open.php');
+$pos_mes = FALSE;
+include('conx/db_conx_open.php');
+require_once 'support.php';
+standard_html_header("Detailed Results")
+?>
+<?php
 	
 	$id = $_GET['id'];
 	$where_select = "where id = '$id' ";
@@ -19,42 +23,16 @@
 	include('select/select_pam_type.php');
 	include('select/select_pam_with_or_with_additional_measure.php');
 ?>
-<html>
-	<head>
-		<title>
-			European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe
-		</title>
-		<link href="frm.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<table>
-			<tr>
-				<td>
-					<img src="images/eccp.jpg" alt="ECCP">
-				</td>
-				<td style="width:100%">&nbsp;
-					
-				</td>
-				<td>
-					<img src="images/oi.jpg" alt="OEko-Institut e.V.">
-				</td>
-			</tr>
-		</table>
-		<p class="head_green">
-			European Climate Change Programme (ECCP)
-		</p>
-		<p class="head_red">
-			Database on Policies and Measures in Europe
-		</p>
-		<hr class="green"/>
-		<p class="head_green">
+		<h1>
 			Detailed Results
-		</p>
-		<table>
-			<tr><td class="section">Name of policy or measure (or group)</td><td class="details"><?php if ($name_pam) {echo $name_pam;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Internal PaM identifier</td><td class="details"><?php if ($pam_identifier) {echo $pam_identifier;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">PaM-No</td><td class="details"><?php if ($pam_no) {echo $pam_no;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Member State</td><td class="details"><?php
+		</h1>
+		<table class="datatable" style="width:95%">
+		<col style="width: 25%"/>
+		<col style="width: 75%"/>
+			<tr><th scope="row" class="scope-row">Name of policy or measure (or group)</th><td class="details"><?php if ($name_pam) {echo $name_pam;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Internal PaM identifier</th><td class="details"><?php if ($pam_identifier) {echo $pam_identifier;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">PaM-No</th><td class="details"><?php if ($pam_no) {echo $pam_no;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Member State</th><td class="details"><?php
 																			if ($pam_member_state) {
 																				while ($pam_member_state_fetch = mysql_fetch_array($pam_member_state)) {
 																					include('fetch/fetch_pam_member_state.php');
@@ -64,7 +42,7 @@
 																				echo "&nbsp;";
 																			}
 																		?></td></tr>
-			<tr><td class="section">With or with additional measure</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">With or with additional measure</th><td class="details"><?php
 																								if ($pam_with_or_with_additional_measure) {
 																									while ($pam_with_or_with_additional_measure_fetch = mysql_fetch_array($pam_with_or_with_additional_measure)) {
 																										include('fetch/fetch_pam_with_or_with_additional_measure.php');
@@ -74,9 +52,9 @@
 																									echo "&nbsp;";
 																								}
 																							?></td></tr>
-			<tr><td class="section">Objective of measure(s)</td><td class="details"><?php if ($objective_of_measure) {echo $objective_of_measure;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Description of policy or measure</td><td class="details"><?php if ($description_pam) {echo $description_pam;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Sector(s) targeted</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">Objective of measure(s)</th><td class="details"><?php if ($objective_of_measure) {echo $objective_of_measure;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Description of policy or measure</th><td class="details"><?php if ($description_pam) {echo $description_pam;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Sector(s) targeted</th><td class="details"><?php
 																					if ($pam_sector) {
 																						while ($pam_sector_fetch = mysql_fetch_array($pam_sector)) {
 																							include('fetch/fetch_pam_sector.php');
@@ -86,7 +64,7 @@
 																						echo "&nbsp;";
 																					}
 																				?></td></tr>
-			<tr><td class="section">GHG affected</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">GHG affected</th><td class="details"><?php
 																			if ($pam_ghg) {
 																				while ($pam_ghg_fetch = mysql_fetch_array($pam_ghg)) {
 																					include('fetch/fetch_pam_ghg.php');
@@ -96,7 +74,7 @@
 																				echo "&nbsp;";
 																			}
 																		?></td></tr>
-			<tr><td class="section">Type of instruments</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">Type of instruments</th><td class="details"><?php
 																					if ($pam_type) {
 																						while ($pam_type_fetch = mysql_fetch_array($pam_type)) {
 																							include('fetch/fetch_pam_type.php');
@@ -106,7 +84,7 @@
 																						echo "&nbsp;";
 																					}
 																				?></td></tr>
-			<tr><td class="section">Status of policy, measure or group</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">Status of policy, measure or group</th><td class="details"><?php
 																									if ($pam_status) {
 																										while ($pam_status_fetch = mysql_fetch_array($pam_status)) {
 																											include('fetch/fetch_pam_status.php');
@@ -116,9 +94,9 @@
 																										echo "&nbsp;";
 																									}
 																								?></td></tr>
-			<tr><td class="section">Start year of implementation</td><td class="details"><?php if ($start) {echo $start;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">End year of implementation</td><td class="details"><?php if ($ende) {echo $ende;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Implementing entity or entities</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">Start year of implementation</th><td class="details"><?php if ($start) {echo $start;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">End year of implementation</th><td class="details"><?php if ($ende) {echo $ende;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Implementing entity or entities</th><td class="details"><?php
 																								if ($pam_implementing_entity) {
 																									while ($pam_implementing_entity_fetch = mysql_fetch_array($pam_implementing_entity)) {
 																										include('fetch/fetch_pam_implementing_entity.php');
@@ -130,8 +108,12 @@
 																									echo "&nbsp;";
 																								}
 																							?></td></tr>
-			<tr><td colspan="2" class="section_head">Estimate of GHG emission reduction effect or sequestration effect in Gg CO<sub>2</sub> eq per year</td></tr>
-			<tr><td class="subsection">2005</td><td class="details"><?php
+		</table>
+		<h2>Estimate of GHG emission reduction effect or sequestration effect in Gg CO<sub>2</sub> eq per year</h2>
+		<table class="datatable" style="width:95%">
+		<col style="width: 25%"/>
+		<col style="width: 75%"/>
+			<tr><th th scope="row" class="scope-row subsection">2005</th><td class="details"><?php
 																		if (($red_2005_val == $cluster or $red_2005_text == $cluster) and $cluster and $cluster != "") {
 																			$sql = "select id, pam_identifier, cluster, red_2005_val, red_2005_text " .
 																				"from pam where pam_identifier = '$cluster'";
@@ -165,11 +147,11 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details.php?id_cluster=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2005_val and $red_2005_text) {
@@ -181,7 +163,7 @@
 																		}
 																		if (!$red_2005_val and !$red_2005_text) {echo "&nbsp;";}
 																	?></td></tr>
-			<tr><td class="subsection">2010</td><td class="details"><?php
+			<tr><th th scope="row" class="scope-row subsection">2010</th><td class="details"><?php
 																		if (($red_2010_val == $cluster or $red_2010_text == $cluster) and $cluster and $cluster != "") {
 																			$sql = "select id, pam_identifier, cluster, red_2010_val, red_2010_text " .
 																				"from pam where pam_identifier = '$cluster'";
@@ -215,11 +197,11 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details.php?id_cluster=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2010_val and $red_2010_text) {
@@ -231,7 +213,7 @@
 																		}
 																		if (!$red_2010_val and !$red_2010_text) {echo "&nbsp;";}
 																	?></td></tr>
-			<tr><td class="subsection">2015</td><td class="details"><?php
+			<tr><th th scope="row" class="scope-row subsection">2015</th><td class="details"><?php
 																		if (($red_2015_val == $cluster or $red_2015_text == $cluster) and $cluster and $cluster != "") {
 																			$sql = "select id, pam_identifier, cluster, red_2015_val, red_2015_text " .
 																				"from pam where pam_identifier = '$cluster'";
@@ -265,11 +247,11 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details.php?id_cluster=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2015_val and $red_2015_text) {
@@ -281,7 +263,7 @@
 																		}
 																		if (!$red_2015_val and !$red_2015_text) {echo "&nbsp;";}
 																	?></td></tr>
-			<tr><td class="subsection">2020</td><td class="details"><?php
+			<tr><th th scope="row" class="scope-row subsection">2020</th><td class="details"><?php
 																		if (($red_2020_val == $cluster or $red_2020_text == $cluster) and $cluster and $cluster != "") {
 																			$sql = "select id, pam_identifier, cluster, red_2020_val, red_2020_text " .
 																				"from pam where pam_identifier = '$cluster'";
@@ -315,11 +297,11 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details.php?id_cluster=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2020_val and $red_2020_text) {
@@ -331,15 +313,19 @@
 																		}
 																		if (!$red_2020_val and !$red_2020_text) {echo "&nbsp;";}
 																	?></td></tr>
-			<tr><td class="subsection">Cumulative emission reduction 2008- 2012 (Gg CO2eq)</td><td class="details"><?php if ($cumulative_2008_2012) {echo $cumulative_2008_2012;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td colspan="2" class="section_head">Explanation of emission reduction estimate</td></tr>
-			<tr><td class="subsection">Explanation of the basis for  the mitigation estimates</td><td class="details"><?php if ($explanation_basis_of_mitigation_estimates) {echo $explanation_basis_of_mitigation_estimates;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="subsection">Factors resulting in emission reduction </td><td class="details"><?php if ($factors_resulting_in_emission_reduction) {echo $factors_resulting_in_emission_reduction;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="subsection">Does the estimate include reductions related to common and coordinated policies and measures?</td><td class="details"><?php if ($include_common_reduction) {echo $include_common_reduction;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="subsection">Documentation/ Source of estimation if available</td><td class="details"><?php if ($documention_source) {echo $documention_source;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Cumulative emission reduction 2008- 2012 (Gg CO2eq)</th><td class="details"><?php if ($cumulative_2008_2012) {echo $cumulative_2008_2012;} else {echo "&nbsp;";}?></td></tr>
+		</table>
+		<h2>Explanation of emission reduction estimate</h2>
+		<table class="datatable" style="width:95%">
+		<col style="width: 25%"/>
+		<col style="width: 75%"/>
+			<tr><th th scope="row" class="scope-row subsection">Explanation of the basis for  the mitigation estimates</th><td class="details"><?php if ($explanation_basis_of_mitigation_estimates) {echo $explanation_basis_of_mitigation_estimates;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Factors resulting in emission reduction </th><td class="details"><?php if ($factors_resulting_in_emission_reduction) {echo $factors_resulting_in_emission_reduction;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Does the estimate include reductions related to common and coordinated policies and measures?</th><td class="details"><?php if ($include_common_reduction) {echo $include_common_reduction;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Documentation/ Source of estimation if available</th><td class="details"><?php if ($documention_source) {echo $documention_source;} else {echo "&nbsp;";}?></td></tr>
 			<tr><td colspan="2" class="section_head">&nbsp;</td></tr>
-			<tr><td class="section">Indicators used to monitor progress of implementation  </td><td class="details"><?php if ($indicator_monitor_implementation) {echo $indicator_monitor_implementation;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Common and coordinated policy and measure (CCPM)</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">Indicators used to monitor progress of implementation  </th><td class="details"><?php if ($indicator_monitor_implementation) {echo $indicator_monitor_implementation;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Common and coordinated policy and measure (CCPM)</th><td class="details"><?php
 																												if ($pam_related_ccpm) {
 																													while ($pam_related_ccpm_fetch = mysql_fetch_array($pam_related_ccpm)) {
 																														include('fetch/fetch_pam_related_ccpm.php');
@@ -349,10 +335,14 @@
 																													echo "&nbsp;";
 																												}
 																											?></td></tr>
-			<tr><td class="section">General Comment</td><td class="details"><?php if ($general_comment) {echo $general_comment;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="section">Reference</td><td class="details"><?php if ($reference) {echo $reference;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td colspan="2" class="section_head">Description of mitigation impact of measure on Non-Greenhouse Gases (e.g. Sox, NOx, NMVOC, Particulates)</td></tr>
-			<tr><td class="subsection">Reduces non Greenhouse Gas Emissions</td><td class="details"><?php
+			<tr><th scope="row" class="scope-row">General Comment</th><td class="details"><?php if ($general_comment) {echo $general_comment;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Reference</th><td class="details"><?php if ($reference) {echo $reference;} else {echo "&nbsp;";}?></td></tr>
+		</table>
+		<h2>Description of mitigation impact of measure on Non-Greenhouse Gases (e.g. Sox, NOx, NMVOC, Particulates)</h2>
+		<table class="datatable" style="width:95%">
+		<col style="width: 25%"/>
+		<col style="width: 75%"/>
+			<tr><th th scope="row" class="scope-row subsection">Reduces non Greenhouse Gas Emissions</th><td class="details"><?php
 																										if ($pam_reduces_non_ghg) {
 																											while ($pam_reduces_non_ghg_fetch = mysql_fetch_array($pam_reduces_non_ghg)) {
 																												include('fetch/fetch_pam_reduces_non_ghg.php');
@@ -362,12 +352,15 @@
 																											echo "&nbsp;";
 																										}
 																									?></td></tr>
-			<tr><td class="subsection">Description of Impact</td><td class="details"><?php if ($description_impact_on_non_ghg) {echo $description_impact_on_non_ghg;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td colspan="2" class="section_head">Information on costs</td></tr>
-			<tr><td class="subsection">Costs in EURO per tonne CO2eq reduced/ sequestered</td><td class="details"><?php if ($costs_per_tonne) {echo $costs_per_tonne;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="subsection">Absolute costs per year in EURO</td><td class="details"><?php if ($costs_per_year) {echo $costs_per_year;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="subsection">Description of cost estimates</td><td class="details"><?php if ($costs_description) {echo $costs_description;} else {echo "&nbsp;";}?></td></tr>
-			<tr><td class="subsection">Documentation/ Source of cost estimation</td><td class="details"><?php if ($costs_documention_source) {echo $costs_documention_source;} else {echo "&nbsp;";}?></td></tr>			
+			<tr><th th scope="row" class="scope-row subsection">Description of Impact</th><td class="details"><?php if ($description_impact_on_non_ghg) {echo $description_impact_on_non_ghg;} else {echo "&nbsp;";}?></td></tr>
 		</table>
-	</body>
-</html>
+		<h2>Information on costs</h2>
+		<table class="datatable" style="width:95%">
+		<col style="width: 25%"/>
+		<col style="width: 75%"/>
+			<tr><th th scope="row" class="scope-row subsection">Costs in EURO per tonne CO2eq reduced/ sequestered</th><td class="details"><?php if ($costs_per_tonne) {echo $costs_per_tonne;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Absolute costs per year in EURO</th><td class="details"><?php if ($costs_per_year) {echo $costs_per_year;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Description of cost estimates</th><td class="details"><?php if ($costs_description) {echo $costs_description;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th th scope="row" class="scope-row subsection">Documentation/ Source of cost estimation</th><td class="details"><?php if ($costs_documention_source) {echo $costs_documention_source;} else {echo "&nbsp;";}?></td></tr>			
+		</table>
+<?php standard_html_footer() ?>

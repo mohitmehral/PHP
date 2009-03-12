@@ -1,7 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
-  include('conx/db_conx_open.php');
-//  $pos_mes = TRUE;
+$pos_mes = FALSE;
+include('conx/db_conx_open.php');
+require_once 'support.php';
+standard_html_header("Search Results")
+?>
+<?php
 // getting Identifier from database with the user defined filter
 	
 	unset($where_select);
@@ -183,30 +186,16 @@
 //					while ($data_fetch = mysql_fetch_array($data)) {
 //						${$val_output}[$id] = ${$val_output}[$id] . $data_fetch[$val_output] . "<br/>";
 //					}
-//					${$val_output}[$id] = substr(${$val_output}[$id], 0, -4);
+//					${$val_output}[$id] = substr(${$val_output}[$id], 0, -5);
 //				}
 //			}
 //		}
 	}
 ?>
-<html>
-	<head>
-		<title>European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe</title>
-		<link href="frm.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<table>
-		  <tr>
-			<td><img src="images/eccp.jpg" alt="ECCP"></td>
-			<td style="width:100%">&nbsp;</td>
-			<td><img src="images/oi.jpg" alt="OEko-Institut e.V."></td>
-		  </tr>
-		</table>
-		<p class="head_green"> European Climate Change Programme (ECCP)</p>
-		<p class="head_red"> Database on Policies and Measures in Europe</p>
-		<hr class="green"/>
-		<p class="head_green">Search Results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php">normal search mode</a> | <a href="sector.php">expert search mode</a></p>
-		<table>
+		<h1>
+			Search Results
+		</h1>
+		<table class="sortable">
 		  <thead>
 			<?php
 				if ($identifier_num) {include('header.php');}
@@ -226,12 +215,12 @@
 					reset($$valve_name);
 					
 					foreach ($$valve_name as $key => $value) {
-						if ($green == "#eeFFdd") {
-							$green = "whith";
+						if ($green == "zebraodd") {
+							$green = "zebraeven";
 						} else {
-							$green = "#eeFFdd";
+							$green = "zebraodd";
 						}
-						echo "<tr style=\"background-color:$green\">
+						echo "<tr class=\"$green\">
 							<td class=\"output\">
 							  $member_state[$key]
 							</td>
@@ -242,7 +231,7 @@
 							  $with_or_with_additional_measure_output[$key]
 							</td>
 							<td class=\"output\">
-							  <a href=\"details.php?id=$key\" target=\"_blank\">$name_pam[$key]</a>
+							  <a href=\"details?id=$key\">$name_pam[$key]</a>
 							</td>";
 //							<td class=\"output\">
 //							  $category[$key]
@@ -258,7 +247,7 @@
 							</td>
 							<td class=\"output\" style=\"text-align:right\">";
 								if ($red_2005_val[$key] and $red_2005_text[$key]) {
-									echo "$red_2005_val[$key]<br/><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2005_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
 									if ($red_2005_val[$key]) {
 										echo "$red_2005_val[$key]";
@@ -267,7 +256,7 @@
 											if ($red_2005_text[$key] == $cluster[$key]) {
 												echo "Cluster value";
 											} else {
-												echo "<a href=\"details.php?id=$key\" target=\"_blank\">details</a>";
+												echo "<a href=\"details?id=$key\">details</a>";
 											}
 										}
 									}
@@ -275,7 +264,7 @@
 							echo "</td>
 							<td class=\"output\" style=\"text-align:right\">";
 								if ($red_2010_val[$key] and $red_2010_text[$key]) {
-									echo "$red_2010_val[$key]<br/><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2010_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
 									if ($red_2010_val[$key]) {
 										echo "$red_2010_val[$key]";
@@ -284,7 +273,7 @@
 											if ($red_2010_text[$key] == $cluster[$key]) {
 												echo "Cluster value";
 											} else {
-												echo "<a href=\"details.php?id=$key\" target=\"_blank\">details</a>";
+												echo "<a href=\"details?id=$key\">details</a>";
 											}
 										}
 									}
@@ -292,7 +281,7 @@
 							echo "</td>
 							<td class=\"output\" style=\"text-align:right\">";
 								if ($red_2020_val[$key] and $red_2020_text[$key]) {
-									echo "$red_2020_val[$key]<br/><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2020_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
 									if ($red_2020_val[$key]) {
 										echo "$red_2020_val[$key]";
@@ -301,7 +290,7 @@
 											if ($red_2020_text[$key] == $cluster[$key]) {
 												echo "Cluster value";
 											} else {
-												echo "<a href=\"details.php?id=$key\" target=\"_blank\">details</a>";
+												echo "<a href=\"details?id=$key\">details</a>";
 											}
 										}
 									}
@@ -326,12 +315,12 @@
 					
 					if (count($cluster)) {					
 						for ($i = 0; $i < 0; $i++) {
-							if ($green == "#eeFFdd") {
-								$green = "whith";
+							if ($green == "zebraodd") {
+								$green = "zebraeven";
 							} else {
-								$green = "#eeFFdd";
+								$green = "zebraodd";
 							}
-							echo "<tr style=\"background-color:$green\">
+							echo "<tr class=\"$green\">
 								<td class=\"output\">
 								  &nbsp;
 								</td>
@@ -400,7 +389,7 @@
 										while ($data_fetch = mysql_fetch_array($data)) {
 											$member_state = $member_state . $data_fetch['member_state'] . "<br/>";
 										}
-										$member_state = substr($member_state, 0, -4);
+										$member_state = substr($member_state, 0, -5);
 									}
 		
 									$sql = "SELECT sector FROM val_sector JOIN pam_sector ON val_sector.id_sector = pam_sector.id_sector WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY sector ORDER BY sector";
@@ -415,7 +404,7 @@
 										while ($data_fetch = mysql_fetch_array($data)) {
 											$sector = $sector . $data_fetch['sector'] . "<br/>";
 										}
-										$sector = substr($sector, 0, -4);
+										$sector = substr($sector, 0, -5);
 									}
 		
 									$sql = "SELECT type FROM val_type JOIN pam_type ON val_type.id_type = pam_type.id_type WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY type ORDER BY type";
@@ -430,7 +419,7 @@
 										while ($data_fetch = mysql_fetch_array($data)) {
 											$type = $type . $data_fetch['type'] . "<br/>";
 										}
-										$type = substr($type, 0, -4);
+										$type = substr($type, 0, -5);
 									}
 		
 									$sql = "SELECT ghg_output FROM val_ghg JOIN pam_ghg ON val_ghg.id_ghg = pam_ghg.id_ghg WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY ghg ORDER BY ghg";
@@ -446,7 +435,7 @@
 										while ($data_fetch = mysql_fetch_array($data)) {
 											$ghg_output = $ghg_output . $data_fetch['ghg_output'] . "<br/>";
 										}
-										$ghg_output = substr($ghg_output, 0, -4);
+										$ghg_output = substr($ghg_output, 0, -5);
 									}
 		
 									$sql = "SELECT status FROM val_status JOIN pam_status ON val_status.id_status = pam_status.id_status WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY status ORDER BY status";
@@ -461,7 +450,7 @@
 										while ($data_fetch = mysql_fetch_array($data)) {
 											$status = $status . $data_fetch['status'] . "<br/>";
 										}
-										$status = substr($status, 0, -4);
+										$status = substr($status, 0, -5);
 									}
 		
 									$sql = "SELECT pam_identifier as name_pam FROM pam WHERE cluster = '$pam_identifier' and pam_identifier != '$pam_identifier' GROUP BY pam_identifier ORDER BY pam_identifier";
@@ -476,15 +465,15 @@
 										while ($data_fetch = mysql_fetch_array($data)) {
 											$name_pam = $name_pam . $data_fetch['name_pam'] . "<br/>";
 										}
-										$name_pam = substr($name_pam, 0, -4);
+										$name_pam = substr($name_pam, 0, -5);
 									}
 									
-									if ($green == "#eeFFdd") {
-										$green = "whith";
+									if ($green == "zebraodd") {
+										$green = "zebraeven";
 									} else {
-										$green = "#eeFFdd";
+										$green = "zebraodd";
 									}
-									echo "<tr style=\"background-color:$green\">
+									echo "<tr class=\"$green\">
 										<td class=\"output\">
 										  $member_state
 										</td>
@@ -566,5 +555,4 @@
 			?>
 		  </tbody>
 		</table>
-	</body>
-</html>
+<?php standard_html_footer() ?>

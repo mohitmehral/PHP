@@ -25,14 +25,14 @@ standard_html_header("")
 		<p class="head_green">
 			Database Search
 		</p>
-		<form action="output.php" method="get">
+		<form action="output" method="get">
 			<table>
 				<tr>
 					<td class="filter" colspan="2">
-						<a class="big" href="sector.php">Switch to expert search mode</a>
+						<a class="big" href="sector">Switch to expert search mode</a>
 					</td>
 					<td class="filter" style="text-align:right">&nbsp;
-						<!--<a class="small" href="explain.htm" target="_blank">Explanation of search options</a>-->
+						<!--<a class="small" href="explain.htm">Explanation of search options</a>-->
 					</td>
 				</tr>
 				<tr>

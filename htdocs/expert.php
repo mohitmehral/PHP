@@ -1,55 +1,30 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
-	// $pos_mes = TRUE;
-	include('conx/db_conx_open.php');
+$pos_mes = FALSE;
+include('conx/db_conx_open.php');
+require_once 'support.php';
+standard_html_header("Expert search")
+?>
+<?php
 	$where_select = "where val_sector.id_sector = '" . $_GET['id_sector'] . "'";
 	include('select/select_val_sector.php');
 	$val_sector_fetch = mysql_fetch_array($val_sector);
 	include('fetch/fetch_val_sector.php');
 	unset($where_select);
 ?>
-<html>
-	<head>
-		<title>
-			European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe
-		</title>
-		<link href="frm.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<table>
-			<tr>
-				<td>
-					<img src="images/eccp.jpg" alt="ECCP">
-				</td>
-				<td style="width:100%">&nbsp;
-					
-				</td>
-				<td>
-					<img src="images/oi.jpg" alt="OEko-Institut e.V.">
-				</td>
-			</tr>
-		</table>
-		<p class="head_green">
-			European Climate Change Programme (ECCP)
-		</p>
-		<p class="head_red">
-			Database on Policies and Measures in Europe
-		</p>
-		<hr class="green"/>
-		<p class="head_green">
+		<h1>
 			Database Expert Search Mode
-		</p>
+		</h1>
 		<p class="head_red">
 			Sector: <?php echo $sector; ?>
 		</p>
-		<form action="output.php" method="get">
+		<form action="output" method="get">
 			<table>
 				<tr>
 					<td class="filter" colspan="2">
-						<a class="big" href="sector.php">Select a new sector</a>
+						<a class="big" href="sector">Select a new sector</a>
 					</td>
 					<td class="filter" style="text-align:right">&nbsp;
-						<!--<a class="small" href="explain.htm" target="_blank">Explanation of search options</a>-->
+						<!--<a class="small" href="explain.htm">Explanation of search options</a>-->
 					</td>
 				</tr>
 				<tr>
@@ -218,7 +193,6 @@
 			</table>
 		</form>
 		<p>
-			<a class="big" href="index.php">Switch to normal search mode</a>
+			<a class="big" href="index">Switch to normal search mode</a>
 		</p>
-	</body>
-</html>
+<?php standard_html_footer() ?>

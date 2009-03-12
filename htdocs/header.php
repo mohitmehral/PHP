@@ -1,5 +1,5 @@
 <tr>
-  <th rowspan="2" class="head_output"><a href="output.php?sort=member_state<?php foreach ($_GET as $valve => $value) {
+  <th rowspan="2" class="head_output"><a href="output?sort=member_state<?php foreach ($_GET as $valve => $value) {
 																					if (is_array($value)) {
 																						foreach ($value as $option) {
 																							echo "&" . $valve . "[]=" . $option;
@@ -8,7 +8,7 @@
 																						if ($valve != "sort") {echo "&" . $valve . "=" . $value;}
 																					}
 																				}?>">Member<br/>State</a></th>
-  <th rowspan="2" class="head_output"><a href="output.php?sort=sector<?php foreach ($_GET as $valve => $value) {
+  <th rowspan="2" class="head_output"><a href="output?sort=sector<?php foreach ($_GET as $valve => $value) {
 																				if (is_array($value)) {
 																					foreach ($value as $option) {
 																						echo "&" . $valve . "[]=" . $option;
@@ -19,7 +19,7 @@
 																			}?>">Sector</a></th>
   <th rowspan="2" class="head_output">Projection<br />Scenario</th>
   <th rowspan="2" class="head_output">Name</th>
-<!--  <th rowspan="2" class="head_output"><a href="output.php?sort=category
+<!--  <th rowspan="2" class="head_output"><a href="output?sort=category
 																			<?php
 //																				foreach ($_GET as $valve => $value) {
 //																					if (is_array($value)) {
@@ -36,7 +36,7 @@
   <th rowspan="2" class="head_output">GHG</th>
   <th rowspan="2" class="head_output">Status</th>
   <th colspan="3" class="head_output"><nobr>Absolute Reduction</nobr><br/><nobr>[kt CO<sub>2</sub> eq. p.a.]</nobr></th>
-  <th rowspan="2" class="head_output"><a href="output.php?sort=costs_per_tonne<?php foreach ($_GET as $valve => $value) {
+  <th rowspan="2" class="head_output"><a href="output?sort=costs_per_tonne<?php foreach ($_GET as $valve => $value) {
 																					if (is_array($value)) {
 																						foreach ($value as $option) {
 																							echo "&" . $valve . "[]=" . $option;
@@ -48,7 +48,7 @@
 </tr>
 <tr>
   <th class="head_output">2005</th>
-  <th class="head_output"><a href="output.php?sort=red_2010_val<?php foreach ($_GET as $valve => $value) {
+  <th class="head_output"><a href="output?sort=red_2010_val<?php foreach ($_GET as $valve => $value) {
 																if (is_array($value)) {
 																	foreach ($value as $option) {
 																		echo "&" . $valve . "[]=" . $option;
