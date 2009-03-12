@@ -1,4 +1,18 @@
 <?php
+function build_sortqs()
+{
+	foreach ($_GET as $valve => $value) {
+		if (is_array($value)) {
+			foreach ($value as $option) {
+				echo "&amp;" . $valve . "[]=" . $option;
+			}
+		} else {
+			if ($valve != "sort") {echo "&amp;" . $valve . "=" . $value;}
+		}
+
+	}
+}
+
 function breadcrumbs($page)
 {
   echo '<div id="portal-breadcrumbs">';

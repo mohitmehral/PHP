@@ -22,7 +22,7 @@ font.red {
 	color:red;
 	font-weight:bold;
 }
-font.green {
+span.green {
 	color:green;
 	font-weight:bold;
 	font-size:larger;
@@ -206,6 +206,7 @@ td.details {
 th.output {
   border: thin solid Silver;
 }
-table {
-  border-collapse: collapse;
+
+.number {
+	text-align:right;
 }

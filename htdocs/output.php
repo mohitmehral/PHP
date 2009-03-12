@@ -196,11 +196,27 @@ standard_html_header("Search Results")
 			Search Results
 		</h1>
 		<table class="sortable">
-		  <thead>
 			<?php
-				if ($identifier_num) {include('header.php');}
-			?>
+				if ($identifier_num) { ?>
+		  <thead>
+			<tr>
+			  <th scope="col" rowspan="2"><a href="output?sort=member_state<?php build_sortqs()?>">Member<br/>State</a></th>
+			  <th scope="col" rowspan="2"><a href="output?sort=sector<?php build_sortqs()?>">Sector</a></th>
+			  <th scope="col" rowspan="2">Projection<br />Scenario</th>
+			  <th scope="col" rowspan="2">Name</th>
+			  <th scope="col" rowspan="2">Type</th>
+			  <th scope="col" rowspan="2">GHG</th>
+			  <th scope="col" rowspan="2">Status</th>
+			  <th scope="col" colspan="3"><nobr>Absolute Reduction</nobr><br/><nobr>[kt CO<sub>2</sub> eq. p.a.]</nobr></th>
+			  <th scope="col" rowspan="2"><a href="output?sort=costs_per_tonne<?php build_sortqs()?>">Costs<br/>[EUR/t]</a></th>
+			</tr>
+			<tr>
+			  <th scope="col">2005</th>
+			  <th scope="col"><a href="output?sort=red_2010_val<?php build_sortqs()?>">2010</a></th>
+			  <th scope="col">2020</th>
+			</tr>
 		  </thead>
+			<?php } ?>
 		  <tbody>
 			<?php
 				if ($identifier_num) {
@@ -221,31 +237,31 @@ standard_html_header("Search Results")
 							$green = "zebraodd";
 						}
 						echo "<tr class=\"$green\">
-							<td class=\"output\">
+							<td>
 							  $member_state[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $sector[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $with_or_with_additional_measure_output[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  <a href=\"details?id=$key\">$name_pam[$key]</a>
 							</td>";
-//							<td class=\"output\">
+//							<td>
 //							  $category[$key]
 //							</td>
-							echo "<td class=\"output\">
+							echo "<td>
 							  $type[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $ghg_output[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $status[$key]
 							</td>
-							<td class=\"output\" style=\"text-align:right\">";
+							<td class=\"number\">";
 								if ($red_2005_val[$key] and $red_2005_text[$key]) {
 									echo "$red_2005_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
@@ -262,7 +278,7 @@ standard_html_header("Search Results")
 									}
 								}
 							echo "</td>
-							<td class=\"output\" style=\"text-align:right\">";
+							<td class=\"number\">";
 								if ($red_2010_val[$key] and $red_2010_text[$key]) {
 									echo "$red_2010_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
@@ -279,7 +295,7 @@ standard_html_header("Search Results")
 									}
 								}
 							echo "</td>
-							<td class=\"output\" style=\"text-align:right\">";
+							<td class=\"number\">";
 								if ($red_2020_val[$key] and $red_2020_text[$key]) {
 									echo "$red_2020_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
@@ -296,7 +312,7 @@ standard_html_header("Search Results")
 									}
 								}
 							echo "</td>
-							<td class=\"output\">
+							<td>
 							  $costs_per_tonne[$key]
 							</td>
 						</tr>";
@@ -321,34 +337,34 @@ standard_html_header("Search Results")
 								$green = "zebraodd";
 							}
 							echo "<tr class=\"$green\">
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
 								<td>
@@ -474,28 +490,28 @@ standard_html_header("Search Results")
 										$green = "zebraodd";
 									}
 									echo "<tr class=\"$green\">
-										<td class=\"output\">
+										<td>
 										  $member_state
 										</td>
-										<td class=\"output\">
+										<td>
 										  $sector
 										</td>
-										<td class=\"output\">
+										<td>
 										  &nbsp;
 										</td>
-										<td class=\"output\">
+										<td>
 										  Combined emission reduction of<br/>$name_pam
 										</td>
-										<td class=\"output\">
+										<td>
 										  $type
 										</td>
-										<td class=\"output\">
+										<td>
 										  $ghg_output
 										</td>
-										<td class=\"output\">
+										<td>
 										  $status
 										</td>
-										<td class=\"output\" style=\"text-align:right\">";
+										<td class=\"number\">";
 											if ($red_2005_val and $red_2005_text) {
 												echo "$red_2005_val<br/>$red_2005_text";
 											} else {
@@ -510,7 +526,7 @@ standard_html_header("Search Results")
 												}
 											}
 										echo "</td>
-										<td class=\"output\" style=\"text-align:right\">";
+										<td class=\"number\">";
 											if ($red_2010_val and $red_2010_text) {
 												echo "$red_2010_val<br/>$red_2010_text";
 											} else {
@@ -525,7 +541,7 @@ standard_html_header("Search Results")
 												}
 											}
 										echo "</td>
-										<td class=\"output\" style=\"text-align:right\">";
+										<td class=\"number\">";
 											if ($red_2020_val and $red_2020_text) {
 												echo "$red_2020_val<br/>$red_2020_text";
 											} else {
