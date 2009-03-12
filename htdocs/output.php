@@ -181,7 +181,7 @@
 //				
 //				if ($data_num) {
 //					while ($data_fetch = mysql_fetch_array($data)) {
-//						${$val_output}[$id] = ${$val_output}[$id] . $data_fetch[$val_output] . "<br>";
+//						${$val_output}[$id] = ${$val_output}[$id] . $data_fetch[$val_output] . "<br/>";
 //					}
 //					${$val_output}[$id] = substr(${$val_output}[$id], 0, -4);
 //				}
@@ -204,7 +204,7 @@
 		</table>
 		<p class="head_green"> European Climate Change Programme (ECCP)</p>
 		<p class="head_red"> Database on Policies and Measures in Europe</p>
-		<hr class="green">
+		<hr class="green"/>
 		<p class="head_green">Search Results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php">normal search mode</a> | <a href="sector.php">expert search mode</a></p>
 		<table>
 		  <thead>
@@ -215,7 +215,7 @@
 		  <tbody>
 			<?php
 				if ($identifier_num) {
-					if ($warning_len) {echo "<p><font class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</font></p>";}
+					if ($warning_len) {echo "<p><span class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</span></p>";}
 					$sort = $_GET['sort'];
 					if ($sort) {
 						$valve_name = $sort;
@@ -258,7 +258,7 @@
 							</td>
 							<td class=\"output\" style=\"text-align:right\">";
 								if ($red_2005_val[$key] and $red_2005_text[$key]) {
-									echo "$red_2005_val[$key]<br><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2005_val[$key]<br/><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
 								} else {
 									if ($red_2005_val[$key]) {
 										echo "$red_2005_val[$key]";
@@ -275,7 +275,7 @@
 							echo "</td>
 							<td class=\"output\" style=\"text-align:right\">";
 								if ($red_2010_val[$key] and $red_2010_text[$key]) {
-									echo "$red_2010_val[$key]<br><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2010_val[$key]<br/><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
 								} else {
 									if ($red_2010_val[$key]) {
 										echo "$red_2010_val[$key]";
@@ -292,7 +292,7 @@
 							echo "</td>
 							<td class=\"output\" style=\"text-align:right\">";
 								if ($red_2020_val[$key] and $red_2020_text[$key]) {
-									echo "$red_2020_val[$key]<br><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2020_val[$key]<br/><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
 								} else {
 									if ($red_2020_val[$key]) {
 										echo "$red_2020_val[$key]";
@@ -398,7 +398,7 @@
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$member_state = $member_state . $data_fetch['member_state'] . "<br>";
+											$member_state = $member_state . $data_fetch['member_state'] . "<br/>";
 										}
 										$member_state = substr($member_state, 0, -4);
 									}
@@ -413,7 +413,7 @@
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$sector = $sector . $data_fetch['sector'] . "<br>";
+											$sector = $sector . $data_fetch['sector'] . "<br/>";
 										}
 										$sector = substr($sector, 0, -4);
 									}
@@ -428,7 +428,7 @@
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$type = $type . $data_fetch['type'] . "<br>";
+											$type = $type . $data_fetch['type'] . "<br/>";
 										}
 										$type = substr($type, 0, -4);
 									}
@@ -444,7 +444,7 @@
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$ghg_output = $ghg_output . $data_fetch['ghg_output'] . "<br>";
+											$ghg_output = $ghg_output . $data_fetch['ghg_output'] . "<br/>";
 										}
 										$ghg_output = substr($ghg_output, 0, -4);
 									}
@@ -459,7 +459,7 @@
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$status = $status . $data_fetch['status'] . "<br>";
+											$status = $status . $data_fetch['status'] . "<br/>";
 										}
 										$status = substr($status, 0, -4);
 									}
@@ -474,7 +474,7 @@
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$name_pam = $name_pam . $data_fetch['name_pam'] . "<br>";
+											$name_pam = $name_pam . $data_fetch['name_pam'] . "<br/>";
 										}
 										$name_pam = substr($name_pam, 0, -4);
 									}
@@ -495,7 +495,7 @@
 										  &nbsp;
 										</td>
 										<td class=\"output\">
-										  Combined emission reduction of<br>$name_pam
+										  Combined emission reduction of<br/>$name_pam
 										</td>
 										<td class=\"output\">
 										  $type
@@ -508,7 +508,7 @@
 										</td>
 										<td class=\"output\" style=\"text-align:right\">";
 											if ($red_2005_val and $red_2005_text) {
-												echo "$red_2005_val<br>$red_2005_text";
+												echo "$red_2005_val<br/>$red_2005_text";
 											} else {
 												if ($red_2005_val) {
 													echo "$red_2005_val";
@@ -523,7 +523,7 @@
 										echo "</td>
 										<td class=\"output\" style=\"text-align:right\">";
 											if ($red_2010_val and $red_2010_text) {
-												echo "$red_2010_val<br>$red_2010_text";
+												echo "$red_2010_val<br/>$red_2010_text";
 											} else {
 												if ($red_2010_val) {
 													echo "$red_2010_val";
@@ -538,7 +538,7 @@
 										echo "</td>
 										<td class=\"output\" style=\"text-align:right\">";
 											if ($red_2020_val and $red_2020_text) {
-												echo "$red_2020_val<br>$red_2020_text";
+												echo "$red_2020_val<br/>$red_2020_text";
 											} else {
 												if ($red_2020_val) {
 													echo "$red_2020_val";
@@ -560,8 +560,8 @@
 						}
 					}
 				} else {
-					if ($warning_len) {echo "<p><font class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</font></p>";}
-					echo "<p><font class=\"red\">Your search didn't deliver any results.</font></p>";
+					if ($warning_len) {echo "<p><span class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</span></p>";}
+					echo "<p><span class=\"red\">Your search didn't deliver any results.</span></p>";
 				}
 			?>
 		  </tbody>

@@ -46,7 +46,7 @@
 		<p class="head_red">
 			Database on Policies and Measures in Europe
 		</p>
-		<hr class="green">
+		<hr class="green"/>
 		<p class="head_green">
 			Detailed Results
 		</p>
@@ -58,7 +58,7 @@
 																			if ($pam_member_state) {
 																				while ($pam_member_state_fetch = mysql_fetch_array($pam_member_state)) {
 																					include('fetch/fetch_pam_member_state.php');
-																					echo $member_state . "<br>";
+																					echo $member_state . "<br/>";
 																				}
 																			} else {
 																				echo "&nbsp;";
@@ -68,7 +68,7 @@
 																								if ($pam_with_or_with_additional_measure) {
 																									while ($pam_with_or_with_additional_measure_fetch = mysql_fetch_array($pam_with_or_with_additional_measure)) {
 																										include('fetch/fetch_pam_with_or_with_additional_measure.php');
-																										echo $with_or_with_additional_measure . "<br>";
+																										echo $with_or_with_additional_measure . "<br/>";
 																									}
 																								} else {
 																									echo "&nbsp;";
@@ -80,7 +80,7 @@
 																					if ($pam_sector) {
 																						while ($pam_sector_fetch = mysql_fetch_array($pam_sector)) {
 																							include('fetch/fetch_pam_sector.php');
-																							echo $sector . "<br>";
+																							echo $sector . "<br/>";
 																						}
 																					} else {
 																						echo "&nbsp;";
@@ -90,7 +90,7 @@
 																			if ($pam_ghg) {
 																				while ($pam_ghg_fetch = mysql_fetch_array($pam_ghg)) {
 																					include('fetch/fetch_pam_ghg.php');
-																					echo $ghg_output . "<br>";
+																					echo $ghg_output . "<br/>";
 																				}
 																			} else {
 																				echo "&nbsp;";
@@ -100,7 +100,7 @@
 																					if ($pam_type) {
 																						while ($pam_type_fetch = mysql_fetch_array($pam_type)) {
 																							include('fetch/fetch_pam_type.php');
-																							echo $type . "<br>";
+																							echo $type . "<br/>";
 																						}
 																					} else {
 																						echo "&nbsp;";
@@ -110,7 +110,7 @@
 																									if ($pam_status) {
 																										while ($pam_status_fetch = mysql_fetch_array($pam_status)) {
 																											include('fetch/fetch_pam_status.php');
-																											echo $status . "<br>";
+																											echo $status . "<br/>";
 																										}
 																									} else {
 																										echo "&nbsp;";
@@ -124,7 +124,7 @@
 																										include('fetch/fetch_pam_implementing_entity.php');
 																										echo $implementing_entity;
 																										if ($specification) {echo "(" . $specification . ")";}
-																										echo "<br>";
+																										echo "<br/>";
 																									}
 																								} else {
 																									echo "&nbsp;";
@@ -145,9 +145,9 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$red_2005_val = $pam_cluster_fetch['red_2005_val'];
 																			$red_2005_text = $pam_cluster_fetch['red_2005_text'];
-																			echo "<strong>clustered value</strong><br>";
+																			echo "<strong>clustered value</strong><br/>";
 																			if ($red_2005_val and $red_2005_text) {
-																				echo $red_2005_val . "<br>" . $red_2005_text;
+																				echo $red_2005_val . "<br/>" . $red_2005_text;
 																			} else {
 																				if ($red_2005_val) {echo $red_2005_val;}
 																				if ($red_2005_text) {echo $red_2005_text;}
@@ -165,7 +165,7 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
@@ -173,7 +173,7 @@
 																			}
 																		} else {
 																			if ($red_2005_val and $red_2005_text) {
-																				echo $red_2005_val . "<br>" . $red_2005_text;
+																				echo $red_2005_val . "<br/>" . $red_2005_text;
 																			} else {
 																				if ($red_2005_val) {echo $red_2005_val;}
 																				if ($red_2005_text) {echo $red_2005_text;}
@@ -195,9 +195,9 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$red_2010_val = $pam_cluster_fetch['red_2010_val'];
 																			$red_2010_text = $pam_cluster_fetch['red_2010_text'];
-																			echo "<strong>clustered value</strong><br>";
+																			echo "<strong>clustered value</strong><br/>";
 																			if ($red_2010_val and $red_2010_text) {
-																				echo $red_2010_val . "<br>" . $red_2010_text;
+																				echo $red_2010_val . "<br/>" . $red_2010_text;
 																			} else {
 																				if ($red_2010_val) {echo $red_2010_val;}
 																				if ($red_2010_text) {echo $red_2010_text;}
@@ -215,7 +215,7 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
@@ -223,7 +223,7 @@
 																			}
 																		} else {
 																			if ($red_2010_val and $red_2010_text) {
-																				echo $red_2010_val . "<br>" . $red_2010_text;
+																				echo $red_2010_val . "<br/>" . $red_2010_text;
 																			} else {
 																				if ($red_2010_val) {echo $red_2010_val;}
 																				if ($red_2010_text) {echo $red_2010_text;}
@@ -245,9 +245,9 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$red_2015_val = $pam_cluster_fetch['red_2015_val'];
 																			$red_2015_text = $pam_cluster_fetch['red_2015_text'];
-																			echo "<strong>clustered value</strong><br>";
+																			echo "<strong>clustered value</strong><br/>";
 																			if ($red_2015_val and $red_2015_text) {
-																				echo $red_2015_val . "<br>" . $red_2015_text;
+																				echo $red_2015_val . "<br/>" . $red_2015_text;
 																			} else {
 																				if ($red_2015_val) {echo $red_2015_val;}
 																				if ($red_2015_text) {echo $red_2015_text;}
@@ -265,7 +265,7 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
@@ -273,7 +273,7 @@
 																			}
 																		} else {
 																			if ($red_2015_val and $red_2015_text) {
-																				echo $red_2015_val . "<br>" . $red_2015_text;
+																				echo $red_2015_val . "<br/>" . $red_2015_text;
 																			} else {
 																				if ($red_2015_val) {echo $red_2015_val;}
 																				if ($red_2015_text) {echo $red_2015_text;}
@@ -295,9 +295,9 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$red_2020_val = $pam_cluster_fetch['red_2020_val'];
 																			$red_2020_text = $pam_cluster_fetch['red_2020_text'];
-																			echo "<strong>clustered value</strong><br>";
+																			echo "<strong>clustered value</strong><br/>";
 																			if ($red_2020_val and $red_2020_text) {
-																				echo $red_2020_val . "<br>" . $red_2020_text;
+																				echo $red_2020_val . "<br/>" . $red_2020_text;
 																			} else {
 																				if ($red_2020_val) {echo $red_2020_val;}
 																				if ($red_2020_text) {echo $red_2020_text;}
@@ -315,7 +315,7 @@
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details.php?id=$key\" target=\"_blank\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
@@ -323,7 +323,7 @@
 																			}
 																		} else {
 																			if ($red_2020_val and $red_2020_text) {
-																				echo $red_2020_val . "<br>" . $red_2020_text;
+																				echo $red_2020_val . "<br/>" . $red_2020_text;
 																			} else {
 																				if ($red_2020_val) {echo $red_2020_val;}
 																				if ($red_2020_text) {echo $red_2020_text;}
@@ -343,7 +343,7 @@
 																												if ($pam_related_ccpm) {
 																													while ($pam_related_ccpm_fetch = mysql_fetch_array($pam_related_ccpm)) {
 																														include('fetch/fetch_pam_related_ccpm.php');
-																														echo $related_ccpm . "<br>";
+																														echo $related_ccpm . "<br/>";
 																													}
 																												} else {
 																													echo "&nbsp;";
@@ -356,7 +356,7 @@
 																										if ($pam_reduces_non_ghg) {
 																											while ($pam_reduces_non_ghg_fetch = mysql_fetch_array($pam_reduces_non_ghg)) {
 																												include('fetch/fetch_pam_reduces_non_ghg.php');
-																												echo $reduces_non_ghg . "<br>";
+																												echo $reduces_non_ghg . "<br/>";
 																											}
 																										} else {
 																											echo "&nbsp;";

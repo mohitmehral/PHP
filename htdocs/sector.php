@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
+	$pos_mes = FALSE;
 	include('conx/db_conx_open.php');
 ?>
 <html>
@@ -32,24 +33,24 @@
 		<p>
 			In the expert search mode, the user can choose additional selections for each sector: the status of implementation, the category of policy and measures, related common and coordinated policies and measures at European level, keywords and related quantitative indicator. First a sector has to be chosen, then the additional search options appear.
 		</p>
-		<hr class="green">
+		<hr class="green"/>
 		<p class="head_green">
 			Database Expert Search Mode
 		</p>
 		<p>
-			<font class="green">Sector</font><br>
+			<span class="green">Sector</span><br/>
 			<?php
 				include('select/select_val_sector.php');
 				if ($val_sector_num) {
 					while ($val_sector_fetch = mysql_fetch_array($val_sector)) {
 						include('fetch/fetch_val_sector.php');
-						echo "&nbsp;&nbsp;&bull;<a class=\"sector\" href=\"expert.php?id_sector=$id_sector\">$sector</a><br>";
+						echo "&nbsp;&nbsp;&bull;<a class=\"sector\" href=\"expert.php?id_sector=$id_sector\">$sector</a><br/>";
 					}
 				}
 			?>
 		</p>
 		<p>
-			<font class="red" style="font-size:larger;">Please select only one sector in this search mode, after the selection you will be automatically guided to further search options for this sector</font>
+			<span class="red" style="font-size:larger;">Please select only one sector in this search mode, after the selection you will be automatically guided to further search options for this sector</span>
 		</p>
 		<p>
 			<a class="big" href="index.php">Switch to normal search mode</a>

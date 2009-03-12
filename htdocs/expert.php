@@ -35,7 +35,7 @@
 		<p class="head_red">
 			Database on Policies and Measures in Europe
 		</p>
-		<hr class="green">
+		<hr class="green"/>
 		<p class="head_green">
 			Database Expert Search Mode
 		</p>
@@ -54,8 +54,8 @@
 				</tr>
 				<tr>
 					<td class="filter">
-						<font class="green">Member State</font><br>
-						<select size="10" name="id_member_state[]" multiple>
+						<span class="green">Member State</span><br/>
+						<select size="10" name="id_member_state[]" multiple="multiple">
 							<option value="select_all">
 								All
 							</option>
@@ -70,27 +70,27 @@
 									}
 								}
 							?>
-						</select><br>
-						Ctrl+click for<br>multiple selection
+						</select><br/>
+						Ctrl+click for<br/>multiple selection
 					</td>
 					<td class="filter">
-						<font class="green">Policy Type</font><br>
-						<input type="checkbox" name="id_type[]" value="select_all"><font class="red">Select all</font><br>
+						<span class="green">Policy Type</span><br/>
+						<input type="checkbox" name="id_type[]" value="select_all"><span class="red">Select all</span><br/>
 						<?php
 							
 							include('select/select_val_type.php');
 							if ($val_type_num) {
 								while ($val_type_fetch = mysql_fetch_array($val_type)) {
 									include('fetch/fetch_val_type.php');
-									echo "<input type=\"checkbox\" name=\"id_type[]\" value=\"$id_type\">$type<br>";
+									echo "<input type=\"checkbox\" name=\"id_type[]\" value=\"$id_type\">$type<br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
 						&nbsp;
-<!--						<font class="green">Category</font><br>
-						<select size="10" name="id_category[]" multiple>
+<!--						<span class="green">Category</span><br/>
+						<select size="10" name="id_category[]" multiple="multiple">
 							<option value="select_all">
 								All
 							</option>-->
@@ -107,52 +107,52 @@
 //								}	
 //								unset($where_select);
 							?>
-<!--						</select><br>
-						Ctrl+click for<br>multiple selection-->
+<!--						</select><br/>
+						Ctrl+click for<br/>multiple selection-->
 					</td>
 				</tr>
 				<tr>
 					<td class="filter">
-						<font class="green">GHG affected</font><br>
-						<input type="checkbox" name="id_ghg[]" value="select_all"><font class="red">Select all</font><br>
+						<span class="green">GHG affected</span><br/>
+						<input type="checkbox" name="id_ghg[]" value="select_all"><span class="red">Select all</span><br/>
 						<?php
 							include('select/select_val_ghg.php');
 							if ($val_ghg_num) {
 								while ($val_ghg_fetch = mysql_fetch_array($val_ghg)) {
 									include('fetch/fetch_val_ghg.php');
-									echo "<input type=\"checkbox\" name=\"id_ghg[]\" value=\"$id_ghg\">$ghg_output<br>";
+									echo "<input type=\"checkbox\" name=\"id_ghg[]\" value=\"$id_ghg\">$ghg_output<br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
-						<font class="green">Status</font><br>
-						<input type="checkbox" name="id_status[]" value="select_all"><font class="red">Select all</font><br>
-						<input type="checkbox" name="id_status[]" value="no_value"><font class="red">no value</font><br>
+						<span class="green">Status</span><br/>
+						<input type="checkbox" name="id_status[]" value="select_all"><span class="red">Select all</span><br/>
+						<input type="checkbox" name="id_status[]" value="no_value"><span class="red">no value</span><br/>
 						<?php
 							include('select/select_val_status.php');
 							if ($val_status_num) {
 								while ($val_status_fetch = mysql_fetch_array($val_status)) {
 									include('fetch/fetch_val_status.php');
-									echo "<input type=\"checkbox\" name=\"id_status[]\" value=\"$id_status\">$status<br>";
+									echo "<input type=\"checkbox\" name=\"id_status[]\" value=\"$id_status\">$status<br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
-						<font class="green">Scenario</font><br>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"><font class="red">Select all</font><br>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"><font class="red">no value</font><br>
+						<span class="green">Scenario</span><br/>
+						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"><span class="red">Select all</span><br/>
+						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"><span class="red">no value</span><br/>
 						<?php
 							include('select/select_val_with_or_with_additional_measure.php');
 							if ($val_with_or_with_additional_measure_num) {
 								while ($val_with_or_with_additional_measure_fetch = mysql_fetch_array($val_with_or_with_additional_measure)) {
 									include('fetch/fetch_val_with_or_with_additional_measure.php');
-									echo "<input type=\"checkbox\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\">$with_or_with_additional_measure<br>";
+									echo "<input type=\"checkbox\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\">$with_or_with_additional_measure<br/>";
 								}
 							}
 						?>
-<!--						<font class="green">Key words</font><br>
+<!--						<span class="green">Key words</span><br/>
 						<select size="6" name="id_keywords[]" multiple>
 							<option value="select_all">
 								All
@@ -170,20 +170,20 @@
 //								}	
 //								unset($where_select);
 							?>
-<!--						</select><br>
-						Ctrl+click for<br>multiple selection-->
+<!--						</select><br/>
+						Ctrl+click for<br/>multiple selection-->
 					</td>
 				</tr>
 <!--				<tr>
 					<td class="filter" colspan="3">
-						<input type="checkbox" name="quantified_emission_reduction_effect_only">only PAMs with quantified emission reduction effects<br>
+						<input type="checkbox" name="quantified_emission_reduction_effect_only">only PAMs with quantified emission reduction effects<br/>
 						<input type="checkbox" name="cost_data_only">only PAMs for which cost data is available 
 					</td>
 				</tr>-->
 				<tr>
 					<td class="filter" colspan="3">
-						<font class="green">Related CCPM</font><br>
-						<select style="width:600px" size="6" name="id_related_ccpm[]" multiple>
+						<span class="green">Related CCPM</span><br/>
+						<select style="width:600px" size="6" name="id_related_ccpm[]" multiple="multiple">
 							<option value="select_all">
 								All
 							</option>
@@ -200,13 +200,13 @@
 								}	
 								unset($where_select);
 							?>
-						</select><br>
-						Ctrl+click for<br>multiple selection
+						</select><br/>
+						Ctrl+click for<br/>multiple selection
 					</td>
 				</tr>
 				<tr>	
 					<td class="filter">
-						<font class="green">Any word</font><br>
+						<span class="green">Any word</span><br/>
 						<input name="any_word">
 					</td>
 					<td class="filter" colspan="2" style="vertical-align:bottom; text-align:right;">
