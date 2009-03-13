@@ -83,7 +83,7 @@ function standard_html_header($page)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-<?php include('getRequiredHead.php'); ?>
+<?php include('template/getRequiredHead.txt'); ?>
 		<title>
 			European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe
 		</title>
@@ -91,7 +91,7 @@ function standard_html_header($page)
 	</head>
 	<body>
 		<div id="visual-portal-wrapper">
-<?php include('getHeader.php'); ?>
+<?php include('template/getHeader.txt'); ?>
                 <!-- The wrapper div. It contains the three columns. -->
                         <div id="portal-columns" class="visualColumnHideTwo">
                         <!-- start of the main and left columns -->
@@ -142,7 +142,7 @@ function standard_html_footer()
         <div class="visualClear"><!-- --></div>
       </div>
       <!-- end column wrapper -->
-      <?php include('getFooter.php'); ?>
+      <?php include('template/getFooter.txt'); ?>
     </div>
   </body>
 </html>
