@@ -8,7 +8,7 @@
 	$pam_type = @mysql_query($sql);
 	$pam_type_num = @mysql_num_rows($pam_type);
 	if (!$pam_type) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_type\".</p><p>$sql</p>");
+		sql_error('pam_type', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_type");}
 	}

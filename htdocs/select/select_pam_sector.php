@@ -8,7 +8,7 @@
 	$pam_sector = @mysql_query($sql);
 	$pam_sector_num = @mysql_num_rows($pam_sector);
 	if (!$pam_sector) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_sector\".</p><p>$sql</p>");
+		sql_error('pam_sector', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_sector");}
 	}

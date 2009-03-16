@@ -120,7 +120,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -140,7 +140,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -170,7 +170,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -190,7 +190,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -220,7 +220,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -240,7 +240,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -270,7 +270,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}
@@ -290,7 +290,7 @@ standard_html_header("Detailed Results")
 																			$pam_cluster = @mysql_query($sql);
 																			$pam_cluster_num = @mysql_num_rows($pam_cluster);
 																			if (!$pam_cluster) {
-																				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_cluster\".</p><p>$sql</p>");
+																				sql_error('pam_cluster', $sql);
 																			} else {
 																				if ($pos_mes) {echo(" ... pam_cluster");}
 																			}

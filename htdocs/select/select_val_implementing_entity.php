@@ -8,7 +8,7 @@
 	$val_implementing_entity = @mysql_query($sql);
 	$val_implementing_entity_num = @mysql_num_rows($val_implementing_entity);
 	if (!$val_implementing_entity) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_implementing_entity\".</p><p>$sql</p>");
+		sql_error('val_implementing_entity', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_implementing_entity");}
 	}

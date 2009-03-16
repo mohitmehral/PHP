@@ -8,7 +8,7 @@
 	$val_status = @mysql_query($sql);
 	$val_status_num = @mysql_num_rows($val_status);
 	if (!$val_status) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_status\".</p><p>$sql</p>");
+		sql_error('val_status', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_status");}
 	}

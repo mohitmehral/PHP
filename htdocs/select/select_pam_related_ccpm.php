@@ -10,7 +10,7 @@
 	$pam_related_ccpm = @mysql_query($sql);
 	$pam_related_ccpm_num = @mysql_num_rows($pam_related_ccpm);
 	if (!$pam_related_ccpm) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_related_ccpm\".</p><p>$sql</p>");
+		sql_error('pam_related_ccpm', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_related_ccpm");}
 	}

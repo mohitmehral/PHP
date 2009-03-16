@@ -8,7 +8,7 @@
 	$pam_implementing_entity = @mysql_query($sql);
 	$pam_implementing_entity_num = @mysql_num_rows($pam_implementing_entity);
 	if (!$pam_implementing_entity) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_implementing_entity\".</p><p>$sql</p>");
+		sql_error('pam_implementing_entity', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_implementing_entity");}
 	}

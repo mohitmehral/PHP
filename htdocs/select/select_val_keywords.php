@@ -10,7 +10,7 @@
 	$val_keywords = @mysql_query($sql);
 	$val_keywords_num = @mysql_num_rows($val_keywords);
 	if (!$val_keywords) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_keywords\".</p><p>$sql</p>");
+		sql_error('val_keywords', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_keywords");}
 	}

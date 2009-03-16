@@ -8,7 +8,7 @@
 	$pam_with_or_with_additional_measure = @mysql_query($sql);
 	$pam_with_or_with_additional_measure_num = @mysql_num_rows($pam_with_or_with_additional_measure);
 	if (!$pam_with_or_with_additional_measure) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_with_or_with_additional_measure\".</p><p>$sql</p>");
+		sql_error('pam_with_or_with_additional_measure', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_with_or_with_additional_measure");}
 	}

@@ -10,7 +10,7 @@
 	$pam_member_state = @mysql_query($sql);
 	$pam_member_state_num = @mysql_num_rows($pam_member_state);
 	if (!$pam_member_state) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_member_state\".</p><p>$sql</p>");
+		sql_error('pam_member_state', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_member_state");}
 	}

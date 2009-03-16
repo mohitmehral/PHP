@@ -210,3 +210,14 @@ th.output {
 .number {
 	text-align:right;
 }
+
+.error-msg {
+	padding: 0.5em;
+	margin: 0.5em 2em;
+	font-weight: bold;
+	font-size: 110%;
+	border: 2px dashed red;
+	color: #800000;
+	background: white;
+}
+

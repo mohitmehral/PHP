@@ -10,7 +10,7 @@
 	$pam_category = @mysql_query($sql);
 	$pam_category_num = @mysql_num_rows($pam_category);
 	if (!$pam_category) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_category\".</p><p>$sql</p>");
+		sql_error('pam_category', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_category");}
 	}

@@ -149,4 +149,17 @@ function standard_html_footer()
 
 <?php
 }
+
+function sql_error($table, $sql)
+{
+    echo("<div class=\"error-msg\"><p>Error in querying table: \"$table\".</p><p>$sql</p></div>");
+}
+
+function spaces($spaces)
+{
+	$spaces = trim($spaces);
+	$spaces = htmlentities($spaces,ENT_NOQUOTES,ISO-8859-1);
+        return $spaces;
+}
+
 ?>

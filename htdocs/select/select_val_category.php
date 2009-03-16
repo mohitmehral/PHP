@@ -10,7 +10,7 @@
 	$val_category = @mysql_query($sql);
 	$val_category_num = @mysql_num_rows($val_category);
 	if (!$val_category) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_category\".</p><p>$sql</p>");
+		sql_error('val_category', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_category");}
 	}

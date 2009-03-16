@@ -8,7 +8,7 @@
 	$val_with_or_with_additional_measure = @mysql_query($sql);
 	$val_with_or_with_additional_measure_num = @mysql_num_rows($val_with_or_with_additional_measure);
 	if (!$val_with_or_with_additional_measure) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_with_or_with_additional_measure\".</p><p>$sql</p>");
+		sql_error('val_with_or_with_additional_measure', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_with_or_with_additional_measure");}
 	}

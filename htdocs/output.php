@@ -112,7 +112,7 @@ standard_html_header("Search Results")
 	$identifier = @mysql_query($sql);
 	$identifier_num = @mysql_num_rows($identifier);
 	if (!$identifier) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+		sql_error('pam', $sql);
 	} else {
 		if ($pos_mes) {echo("<p>identifier</p><p>$sql</p>");}
 	}
@@ -135,7 +135,7 @@ standard_html_header("Search Results")
 			$data = @mysql_query($sql);
 			$data_num = @mysql_num_rows($data);
 			if (!$data) {
-				echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+				sql_error('pam', $sql);
 			} else {
 				if ($pos_mes) {echo("<p>data</p><p>$sql</p>");}
 			}
@@ -177,7 +177,7 @@ standard_html_header("Search Results")
 //				$data = @mysql_query($sql);
 //				$data_num = @mysql_num_rows($data);
 //				if (!$data) {
-//					echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql $data $data_num</p>");
+//					sql_error($val_val, $sql);
 //				} else {
 //					if ($pos_mes) {echo("<p>$val_output</p><p>$sql</p>");}
 //				}
@@ -312,7 +312,7 @@ standard_html_header("Search Results")
 									}
 								}
 							echo "</td>
-							<td>
+							<td class=\"number\">
 							  $costs_per_tonne[$key]
 							</td>
 						</tr>";
@@ -379,7 +379,7 @@ standard_html_header("Search Results")
 							$clusters = @mysql_query($sql);
 							$clusters_num = @mysql_num_rows($clusters);
 							if (!$clusters) {
-								echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+								sql_error('pam', $sql);
 							} else {
 								if ($pos_mes) {echo("<p>clusters</p><p>$sql</p>");}
 							}
@@ -397,7 +397,7 @@ standard_html_header("Search Results")
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_member_state', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>member_state</p><p>$sql</p>");}
 									}
@@ -412,7 +412,7 @@ standard_html_header("Search Results")
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_sector', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>sector</p><p>$sql</p>");}
 									}
@@ -427,7 +427,7 @@ standard_html_header("Search Results")
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_type', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>type</p><p>$sql</p>");}
 									}
@@ -443,7 +443,7 @@ standard_html_header("Search Results")
 
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('ghg_outut', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>ghg</p><p>$sql</p>");}
 									}
@@ -458,7 +458,7 @@ standard_html_header("Search Results")
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_status', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>status</p><p>$sql</p>");}
 									}
@@ -473,7 +473,7 @@ standard_html_header("Search Results")
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('pam', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>pam_identifier</p><p>$sql</p>");}
 									}
