@@ -1,7 +1,13 @@
 <?php
 	include('conx/db_conx_open.php');
-	require_once 'support.php';
-	
+
+function spaces($spaces)
+{
+	$spaces = trim($spaces);
+	$spaces = htmlentities($spaces,ENT_NOQUOTES,ISO-8859-1);
+        return $spaces;
+}
+
 	$sql = "select * from tabelle1";
 	$tabelle1 = @mysql_query($sql);
 	$tabelle1_num = @mysql_num_rows($tabelle1);
