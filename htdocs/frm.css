@@ -18,7 +18,7 @@ p.head_red {
 	margin-bottom:30px;
 	margin-left:10px;
 }
-font.red {
+span.red {
 	color:red;
 	font-weight:bold;
 }
@@ -221,3 +221,13 @@ th.output {
 	background: white;
 }
 
+.specialval {
+	color:red;
+	font-weight:bold;
+}
+
+.question {
+	color:green;
+	font-weight:bold;
+	font-size:larger;
+}

@@ -51,7 +51,7 @@ or for which cost estimates are provided.
 				</tr>
 				<tr>
 					<td class="filter">
-						<span class="green">Member State</span><br/>
+						<label class="question">Member State</label><br/>
 						<select size="10" name="id_member_state[]" multiple="multiple">
 							<option value="select_all">
 								All
@@ -71,8 +71,8 @@ or for which cost estimates are provided.
 						Ctrl+click for<br/>multiple selection
 					</td>
 					<td class="filter">
-						<span class="green">Sector</span><br/>
-						<input type="checkbox" name="id_sector[]" value="select_all"/><span class="red">Select all</span><br/>
+						<label class="question">Sector</label><br/>
+						<input type="checkbox" name="id_sector[]" value="select_all"/><label class="specialval">Select all</label><br/>
 						<?php
 							include('select/select_val_sector.php');
 							if ($val_sector_num) {
@@ -84,8 +84,8 @@ or for which cost estimates are provided.
 						?>
 					</td>
 					<td class="filter">
-						<span class="green">Policy Type</span><br/>
-						<input type="checkbox" name="id_type[]" value="select_all"/><span class="red">Select all</span><br/>
+						<label class="question">Policy Type</label><br/>
+						<input type="checkbox" name="id_type[]" value="select_all"/><label class="specialval">Select all</label><br/>
 						<?php
 							include('select/select_val_type.php');
 							if ($val_type_num) {
@@ -99,8 +99,8 @@ or for which cost estimates are provided.
 				</tr>
 				<tr>
 					<td class="filter">
-						<span class="green">GHG affected</span><br/>
-						<input type="checkbox" name="id_ghg[]" value="select_all"/><span class="red">Select all</span><br/>
+						<label class="question">GHG affected</label><br/>
+						<input type="checkbox" name="id_ghg[]" value="select_all"/><label class="specialval">Select all</label><br/>
 						<?php
 							include('select/select_val_ghg.php');
 							if ($val_ghg_num) {
@@ -112,9 +112,9 @@ or for which cost estimates are provided.
 						?>
 					</td>
 					<td class="filter">
-						<span class="green">Status</span><br/>
-						<input type="checkbox" name="id_status[]" value="select_all"/><span class="red">Select all</span><br/>
-						<input type="checkbox" name="id_status[]" value="no_value"/><span class="red">no value</span><br/>
+						<label class="question">Status</label><br/>
+						<input type="checkbox" name="id_status[]" value="select_all"/><label class="specialval">Select all</label><br/>
+						<input type="checkbox" name="id_status[]" value="no_value"/><label class="specialval">no value</label><br/>
 						<?php
 							include('select/select_val_status.php');
 							if ($val_status_num) {
@@ -126,9 +126,9 @@ or for which cost estimates are provided.
 						?>
 					</td>
 					<td class="filter">
-						<span class="green">Scenario</span><br/>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"/><span class="red">Select all</span><br/>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"/><span class="red">no value</span><br/>
+						<label class="question">Scenario</label><br/>
+						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"/><label class="specialval">Select all</label><br/>
+						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"/><label class="specialval">no value</label><br/>
 						<?php
 							include('select/select_val_with_or_with_additional_measure.php');
 							if ($val_with_or_with_additional_measure_num) {
@@ -138,7 +138,7 @@ or for which cost estimates are provided.
 								}
 							}
 						?>
-<!--						<span class="green">Key words</span><br/>
+<!--						<label class="question">Key words</label><br/>
 						<select size="6" name="id_keywords[]" multiple>
 							<option value="select_all">
 								All
@@ -162,7 +162,7 @@ or for which cost estimates are provided.
 				</tr>
 				<tr>
 					<td colspan="2" class="filter">
-						<span class="green">Any word</span><br/>
+						<label class="question">Any word</label><br/>
 						<input name="any_word"/>
 					</td>
 					<td class="filter" style="vertical-align:bottom">

@@ -29,7 +29,7 @@ standard_html_header("Expert search")
 				</tr>
 				<tr>
 					<td class="filter">
-						<span class="green">Member State</span><br/>
+						<label class="question">Member State</label><br/>
 						<select size="10" name="id_member_state[]" multiple="multiple">
 							<option value="select_all">
 								All
@@ -40,8 +40,7 @@ standard_html_header("Expert search")
 									while ($val_member_state_fetch = mysql_fetch_array($val_member_state)) {
 										include('fetch/fetch_val_member_state.php');
 										echo "<option value=\"$id_member_state\">" .
-											$member_state . "
-										</option>";
+											$member_state . "</option>";
 									}
 								}
 							?>
@@ -49,22 +48,22 @@ standard_html_header("Expert search")
 						Ctrl+click for<br/>multiple selection
 					</td>
 					<td class="filter">
-						<span class="green">Policy Type</span><br/>
-						<input type="checkbox" name="id_type[]" value="select_all"><span class="red">Select all</span><br/>
+						<label class="question">Policy Type</label><br/>
+						<input type="checkbox" name="id_type[]" value="select_all"/><label class="specialval">Select all</label><br/>
 						<?php
 							
 							include('select/select_val_type.php');
 							if ($val_type_num) {
 								while ($val_type_fetch = mysql_fetch_array($val_type)) {
 									include('fetch/fetch_val_type.php');
-									echo "<input type=\"checkbox\" name=\"id_type[]\" value=\"$id_type\">$type<br/>";
+									echo "<input type=\"checkbox\" id=\"id_type$id_type\" name=\"id_type[]\" value=\"$id_type\"/><label for=\"id_type$id_type\">$type</label><br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
 						&nbsp;
-<!--						<span class="green">Category</span><br/>
+<!--						<label class="question">Category</label><br/>
 						<select size="10" name="id_category[]" multiple="multiple">
 							<option value="select_all">
 								All
@@ -88,46 +87,46 @@ standard_html_header("Expert search")
 				</tr>
 				<tr>
 					<td class="filter">
-						<span class="green">GHG affected</span><br/>
-						<input type="checkbox" name="id_ghg[]" value="select_all"><span class="red">Select all</span><br/>
+						<label class="question">GHG affected</label><br/>
+						<input type="checkbox" name="id_ghg[]" value="select_all"/><label class="specialval">Select all</label><br/>
 						<?php
 							include('select/select_val_ghg.php');
 							if ($val_ghg_num) {
 								while ($val_ghg_fetch = mysql_fetch_array($val_ghg)) {
 									include('fetch/fetch_val_ghg.php');
-									echo "<input type=\"checkbox\" name=\"id_ghg[]\" value=\"$id_ghg\">$ghg_output<br/>";
+									echo "<input type=\"checkbox\" name=\"id_ghg[]\" value=\"$id_ghg\"/>$ghg_output<br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
-						<span class="green">Status</span><br/>
-						<input type="checkbox" name="id_status[]" value="select_all"><span class="red">Select all</span><br/>
-						<input type="checkbox" name="id_status[]" value="no_value"><span class="red">no value</span><br/>
+						<label class="question">Status</label><br/>
+						<input type="checkbox" name="id_status[]" value="select_all"/><label class="specialval">Select all</label><br/>
+						<input type="checkbox" name="id_status[]" value="no_value"/><label class="specialval">no value</label><br/>
 						<?php
 							include('select/select_val_status.php');
 							if ($val_status_num) {
 								while ($val_status_fetch = mysql_fetch_array($val_status)) {
 									include('fetch/fetch_val_status.php');
-									echo "<input type=\"checkbox\" name=\"id_status[]\" value=\"$id_status\">$status<br/>";
+									echo "<input type=\"checkbox\" name=\"id_status[]\" value=\"$id_status\"/>$status<br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
-						<span class="green">Scenario</span><br/>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"><span class="red">Select all</span><br/>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"><span class="red">no value</span><br/>
+						<label class="question">Scenario</label><br/>
+						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"/><label class="specialval">Select all</label><br/>
+						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"/><label class="specialval">no value</label><br/>
 						<?php
 							include('select/select_val_with_or_with_additional_measure.php');
 							if ($val_with_or_with_additional_measure_num) {
 								while ($val_with_or_with_additional_measure_fetch = mysql_fetch_array($val_with_or_with_additional_measure)) {
 									include('fetch/fetch_val_with_or_with_additional_measure.php');
-									echo "<input type=\"checkbox\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\">$with_or_with_additional_measure<br/>";
+									echo "<input type=\"checkbox\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\"/>$with_or_with_additional_measure<br/>";
 								}
 							}
 						?>
-<!--						<span class="green">Key words</span><br/>
+<!--						<label class="question">Key words</label><br/>
 						<select size="6" name="id_keywords[]" multiple>
 							<option value="select_all">
 								All
@@ -151,13 +150,13 @@ standard_html_header("Expert search")
 				</tr>
 <!--				<tr>
 					<td class="filter" colspan="3">
-						<input type="checkbox" name="quantified_emission_reduction_effect_only">only PAMs with quantified emission reduction effects<br/>
-						<input type="checkbox" name="cost_data_only">only PAMs for which cost data is available 
+						<input type="checkbox" name="quantified_emission_reduction_effect_only"/>only PAMs with quantified emission reduction effects<br/>
+						<input type="checkbox" name="cost_data_only"/>only PAMs for which cost data is available 
 					</td>
 				</tr>-->
 				<tr>
 					<td class="filter" colspan="3">
-						<span class="green">Related CCPM</span><br/>
+						<label class="question">Related CCPM</label><br/>
 						<select style="width:600px" size="6" name="id_related_ccpm[]" multiple="multiple">
 							<option value="select_all">
 								All
@@ -181,13 +180,13 @@ standard_html_header("Expert search")
 				</tr>
 				<tr>	
 					<td class="filter">
-						<span class="green">Any word</span><br/>
-						<input name="any_word">
+						<label class="question">Any word</label><br/>
+						<input name="any_word" type="text"/>
 					</td>
 					<td class="filter" colspan="2" style="vertical-align:bottom; text-align:right;">
-						<input type="hidden" value="<?php echo $id_sector; ?>" name="id_sector[]">
-						<input type="submit" value="SEARCH" name="expert">
-						<input type="reset" value="RESET" name="reset">
+						<input type="hidden" value="<?php echo $id_sector; ?>" name="id_sector[]"/>
+						<input type="submit" value="SEARCH" name="expert"/>
+						<input type="reset" value="RESET" name="reset"/>
 					</td>
 				</tr>
 			</table>
