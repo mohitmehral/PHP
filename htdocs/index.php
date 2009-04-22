@@ -53,17 +53,14 @@ or for which cost estimates are provided.
 					<td class="filter">
 						<label class="question">Member State</label><br/>
 						<select size="10" name="id_member_state[]" multiple="multiple">
-							<option value="select_all">
-								All
-							</option>
+							<option value="select_all">All</option>
 							<?php
 								include('select/select_val_member_state.php');
 								if ($val_member_state_num) {
 									while ($val_member_state_fetch = mysql_fetch_array($val_member_state)) {
 										include('fetch/fetch_val_member_state.php');
 										echo "<option value=\"$id_member_state\">" .
-											$member_state . "
-										</option>";
+											$member_state . "</option>";
 									}
 								}
 							?>
@@ -78,20 +75,20 @@ or for which cost estimates are provided.
 							if ($val_sector_num) {
 								while ($val_sector_fetch = mysql_fetch_array($val_sector)) {
 									include('fetch/fetch_val_sector.php');
-									echo "<input type=\"checkbox\" name=\"id_sector[]\" value=\"$id_sector\"/>$sector<br/>";
+									echo "<input type=\"checkbox\" id=\"id_sector$id_sector\" name=\"id_sector[]\" value=\"$id_sector\"/><label for=\"id_sector$id_sector\">$sector</label><br/>";
 								}
 							}
 						?>
 					</td>
 					<td class="filter">
 						<label class="question">Policy Type</label><br/>
-						<input type="checkbox" name="id_type[]" value="select_all"/><label class="specialval">Select all</label><br/>
+						<input type="checkbox" name="id_type[]" id="id_type_all" value="select_all"/><label for="id_type_all" class="specialval">Select all</label><br/>
 						<?php
 							include('select/select_val_type.php');
 							if ($val_type_num) {
 								while ($val_type_fetch = mysql_fetch_array($val_type)) {
 									include('fetch/fetch_val_type.php');
-									echo "<input type=\"checkbox\" name=\"id_type[]\" value=\"$id_type\"/>$type<br/>";
+									echo "<input type=\"checkbox\" id=\"id_type$id_type\" name=\"id_type[]\" value=\"$id_type\"/><label for=\"id_type$id_type\">$type</label><br/>";
 								}
 							}
 						?>
@@ -106,7 +103,7 @@ or for which cost estimates are provided.
 							if ($val_ghg_num) {
 								while ($val_ghg_fetch = mysql_fetch_array($val_ghg)) {
 									include('fetch/fetch_val_ghg.php');
-									echo "<input type=\"checkbox\" name=\"id_ghg[]\" value=\"$id_ghg\"/>$ghg_output<br/>";
+									echo "<input type=\"checkbox\" id=\"id_ghg$id_ghg\" name=\"id_ghg[]\" value=\"$id_ghg\"/><label for=\"id_ghg$id_ghg\">$ghg_output</label><br/>";
 								}
 							}
 						?>
@@ -120,7 +117,7 @@ or for which cost estimates are provided.
 							if ($val_status_num) {
 								while ($val_status_fetch = mysql_fetch_array($val_status)) {
 									include('fetch/fetch_val_status.php');
-									echo "<input type=\"checkbox\" name=\"id_status[]\" value=\"$id_status\"/>$status<br/>";
+									echo "<input type=\"checkbox\" id=\"id_status$id_status\" name=\"id_status[]\" value=\"$id_status\"/><label for=\"id_status$id_status\">$status</label><br/>";
 								}
 							}
 						?>
@@ -134,7 +131,7 @@ or for which cost estimates are provided.
 							if ($val_with_or_with_additional_measure_num) {
 								while ($val_with_or_with_additional_measure_fetch = mysql_fetch_array($val_with_or_with_additional_measure)) {
 									include('fetch/fetch_val_with_or_with_additional_measure.php');
-									echo "<input type=\"checkbox\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\"/>$with_or_with_additional_measure<br/>";
+									echo "<input type=\"checkbox\" id=\"id_scenario$id_with_or_with_additional_measure\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\"/><label for=\"id_scenario$id_with_or_with_additional_measure\">$with_or_with_additional_measure</label><br/>";
 								}
 							}
 						?>
@@ -150,8 +147,7 @@ or for which cost estimates are provided.
 //									while ($val_keywords_fetch = mysql_fetch_array($val_keywords)) {
 //										include('fetch/fetch_val_keywords.php');
 //										echo "<option value=\"$id_keywords\">" .
-//											$keywords . "
-//										</option>";
+//											$keywords . "</option>";
 //									}
 //								}	
 //								unset($where_select);
@@ -162,8 +158,8 @@ or for which cost estimates are provided.
 				</tr>
 				<tr>
 					<td colspan="2" class="filter">
-						<label class="question">Any word</label><br/>
-						<input name="any_word"/>
+						<label for="any_word" class="question">Any word</label><br/>
+						<input type="text" name="any_word" id="any_word"/>
 					</td>
 					<td class="filter" style="vertical-align:bottom">
 						<input type="submit" value="SEARCH" name="normal"/>

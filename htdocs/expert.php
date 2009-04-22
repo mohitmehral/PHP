@@ -94,7 +94,7 @@ standard_html_header("Expert search")
 							if ($val_ghg_num) {
 								while ($val_ghg_fetch = mysql_fetch_array($val_ghg)) {
 									include('fetch/fetch_val_ghg.php');
-									echo "<input type=\"checkbox\" name=\"id_ghg[]\" value=\"$id_ghg\"/>$ghg_output<br/>";
+									echo "<input type=\"checkbox\" id=\"id_ghg$id_ghg\" name=\"id_ghg[]\" value=\"$id_ghg\"/><label for=\"id_ghg$id_ghg\">$ghg_output</label><br/>";
 								}
 							}
 						?>
@@ -108,7 +108,7 @@ standard_html_header("Expert search")
 							if ($val_status_num) {
 								while ($val_status_fetch = mysql_fetch_array($val_status)) {
 									include('fetch/fetch_val_status.php');
-									echo "<input type=\"checkbox\" name=\"id_status[]\" value=\"$id_status\"/>$status<br/>";
+									echo "<input type=\"checkbox\" id=\"id_status$id_status\" name=\"id_status[]\" value=\"$id_status\"/><label for=\"id_status$id_status\">$status</label><br/>";
 								}
 							}
 						?>
@@ -122,7 +122,7 @@ standard_html_header("Expert search")
 							if ($val_with_or_with_additional_measure_num) {
 								while ($val_with_or_with_additional_measure_fetch = mysql_fetch_array($val_with_or_with_additional_measure)) {
 									include('fetch/fetch_val_with_or_with_additional_measure.php');
-									echo "<input type=\"checkbox\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\"/>$with_or_with_additional_measure<br/>";
+									echo "<input type=\"checkbox\" id=\"id_scenario$id_with_or_with_additional_measure\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\"/><label for=\"id_scenario$id_with_or_with_additional_measure\">$with_or_with_additional_measure</label><br/>";
 								}
 							}
 						?>
