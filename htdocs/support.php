@@ -85,7 +85,7 @@ function standard_html_header($page)
 	<head>
 <?php include('template/getRequiredHead.txt'); ?>
 		<title>
-			European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe
+			<?echo $page ?> - Policies and Measures in Europe - ECCP
 		</title>
 		<link href="frm.css" rel="stylesheet" type="text/css"/>
 	</head>

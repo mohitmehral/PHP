@@ -2,9 +2,6 @@
 $pos_mes = FALSE;
 include('conx/db_conx_open.php');
 require_once 'support.php';
-standard_html_header("Detailed Results")
-?>
-<?php
 	
 	$id = $_GET['id'];
 	$where_select = "where id = '$id' ";
@@ -22,9 +19,11 @@ standard_html_header("Detailed Results")
 	include('select/select_pam_status.php');
 	include('select/select_pam_type.php');
 	include('select/select_pam_with_or_with_additional_measure.php');
+if ($name_pam) standard_html_header($name_pam);
+else standard_html_header("Detailed Results");
 ?>
 		<h1>
-			Detailed Results
+			Detailed Results<?php if ($name_pam) {echo " for ". $name_pam;}?>
 		</h1>
 		<table class="datatable" style="width:95%">
 		<col style="width: 25%"/>
@@ -35,8 +34,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">Member State</th><td class="details"><?php
 																			if ($pam_member_state) {
 																				while ($pam_member_state_fetch = mysql_fetch_array($pam_member_state)) {
-																					include('fetch/fetch_pam_member_state.php');
-																					echo $member_state . "<br/>";
+																					echo $pam_member_state_fetch["member_state"] . "<br/>";
 																				}
 																			} else {
 																				echo "&nbsp;";
@@ -45,8 +43,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">With or with additional measure</th><td class="details"><?php
 																								if ($pam_with_or_with_additional_measure) {
 																									while ($pam_with_or_with_additional_measure_fetch = mysql_fetch_array($pam_with_or_with_additional_measure)) {
-																										include('fetch/fetch_pam_with_or_with_additional_measure.php');
-																										echo $with_or_with_additional_measure . "<br/>";
+																										echo $pam_with_or_with_additional_measure_fetch["with_or_with_additional_measure"] . "<br/>";
 																									}
 																								} else {
 																									echo "&nbsp;";
@@ -57,8 +54,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">Sector(s) targeted</th><td class="details"><?php
 																					if ($pam_sector) {
 																						while ($pam_sector_fetch = mysql_fetch_array($pam_sector)) {
-																							include('fetch/fetch_pam_sector.php');
-																							echo $sector . "<br/>";
+																							echo $pam_sector_fetch["sector"] . "<br/>";
 																						}
 																					} else {
 																						echo "&nbsp;";
@@ -67,8 +63,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">GHG affected</th><td class="details"><?php
 																			if ($pam_ghg) {
 																				while ($pam_ghg_fetch = mysql_fetch_array($pam_ghg)) {
-																					include('fetch/fetch_pam_ghg.php');
-																					echo $ghg_output . "<br/>";
+																					echo $pam_ghg_fetch["ghg_output"]. "<br/>";
 																				}
 																			} else {
 																				echo "&nbsp;";
@@ -77,8 +72,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">Type of instruments</th><td class="details"><?php
 																					if ($pam_type) {
 																						while ($pam_type_fetch = mysql_fetch_array($pam_type)) {
-																							include('fetch/fetch_pam_type.php');
-																							echo $type . "<br/>";
+																							echo $pam_type_fetch["type"] . "<br/>";
 																						}
 																					} else {
 																						echo "&nbsp;";
@@ -87,8 +81,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">Status of policy, measure or group</th><td class="details"><?php
 																									if ($pam_status) {
 																										while ($pam_status_fetch = mysql_fetch_array($pam_status)) {
-																											include('fetch/fetch_pam_status.php');
-																											echo $status . "<br/>";
+																											echo $pam_status_fetch["status"] . "<br/>";
 																										}
 																									} else {
 																										echo "&nbsp;";
@@ -99,8 +92,8 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">Implementing entity or entities</th><td class="details"><?php
 																								if ($pam_implementing_entity) {
 																									while ($pam_implementing_entity_fetch = mysql_fetch_array($pam_implementing_entity)) {
-																										include('fetch/fetch_pam_implementing_entity.php');
-																										echo $implementing_entity;
+																										$specification = $pam_implementing_entity_fetch["specification"];
+																										echo $pam_implementing_entity_fetch["implementing_entity"];
 																										if ($specification) {echo "(" . $specification . ")";}
 																										echo "<br/>";
 																									}
@@ -147,11 +140,11 @@ standard_html_header("Detailed Results")
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2005_val and $red_2005_text) {
@@ -197,11 +190,11 @@ standard_html_header("Detailed Results")
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2010_val and $red_2010_text) {
@@ -247,11 +240,11 @@ standard_html_header("Detailed Results")
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2015_val and $red_2015_text) {
@@ -297,11 +290,11 @@ standard_html_header("Detailed Results")
 																			$pam_cluster_fetch = mysql_fetch_array($pam_cluster);
 																			$id_cluster = $pam_cluster_fetch['id'];
 																			$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$key\">$pam_identifier_cluster</a>";
+																			echo "<br/>cluster contains following PaM: <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			while ($pam_cluster_fetch = mysql_fetch_array($pam_cluster)) {
 																				$id_cluster = $pam_cluster_fetch['id'];
 																				$pam_identifier_cluster = $pam_cluster_fetch['pam_identifier'];
-																				echo ", <a href=\"details?id_cluster=$key\">$pam_identifier_cluster</a>";
+																				echo ", <a href=\"details?id=$id_cluster\">$pam_identifier_cluster</a>";
 																			}
 																		} else {
 																			if ($red_2020_val and $red_2020_text) {
@@ -328,8 +321,7 @@ standard_html_header("Detailed Results")
 			<tr><th scope="row" class="scope-row">Common and coordinated policy and measure (CCPM)</th><td class="details"><?php
 																												if ($pam_related_ccpm) {
 																													while ($pam_related_ccpm_fetch = mysql_fetch_array($pam_related_ccpm)) {
-																														include('fetch/fetch_pam_related_ccpm.php');
-																														echo $related_ccpm . "<br/>";
+																														echo $pam_related_ccpm_fetch["related_ccpm"] . "<br/>";
 																													}
 																												} else {
 																													echo "&nbsp;";
@@ -345,8 +337,7 @@ standard_html_header("Detailed Results")
 			<tr><th th scope="row" class="scope-row subsection">Reduces non Greenhouse Gas Emissions</th><td class="details"><?php
 																										if ($pam_reduces_non_ghg) {
 																											while ($pam_reduces_non_ghg_fetch = mysql_fetch_array($pam_reduces_non_ghg)) {
-																												include('fetch/fetch_pam_reduces_non_ghg.php');
-																												echo $reduces_non_ghg . "<br/>";
+																												echo $pam_reduces_non_ghg_fetch["reduces_non_ghg"] . "<br/>";
 																											}
 																										} else {
 																											echo "&nbsp;";
