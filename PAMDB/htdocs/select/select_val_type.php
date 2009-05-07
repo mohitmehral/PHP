@@ -8,7 +8,7 @@
 	$val_type = @mysql_query($sql);
 	$val_type_num = @mysql_num_rows($val_type);
 	if (!$val_type) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_type\".</p><p>$sql</p>");
+		sql_error('val_type', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_type");}
 	}

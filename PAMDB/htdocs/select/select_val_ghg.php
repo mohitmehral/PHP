@@ -8,7 +8,7 @@
 	$val_ghg = @mysql_query($sql);
 	$val_ghg_num = @mysql_num_rows($val_ghg);
 	if (!$val_ghg) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_ghg\".</p><p>$sql</p>");
+		sql_error('val_ghg', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_ghg");}
 	}

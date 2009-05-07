@@ -1,11 +1,18 @@
 <?php
 	include('conx/db_conx_open.php');
-	
+
+function spaces($spaces)
+{
+	$spaces = trim($spaces);
+	$spaces = htmlentities($spaces,ENT_NOQUOTES,ISO-8859-1);
+        return $spaces;
+}
+
 	$sql = "select * from tabelle1";
 	$tabelle1 = @mysql_query($sql);
 	$tabelle1_num = @mysql_num_rows($tabelle1);
 	if (!$tabelle1) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"tabelle1\".</p><p>$sql</p>");
+		sql_error('tabelle1', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... tabelle1");}
 	} 
@@ -75,69 +82,69 @@
 		$costs_description = $tabelle1_fetch['costs_description'];
 		$costs_documention_source = $tabelle1_fetch['costs_documention_source'];
 		
-		if ($pam_identifier) {$spaces=$pam_identifier; include('spaces.php'); $pam_identifier=$spaces;}
-		if ($cluster) {$spaces=$cluster; include('spaces.php'); $cluster=$spaces;}
-		if ($pam_no) {$spaces=$pam_no; include('spaces.php'); $pam_no=$spaces;}
-		if ($with_or_with_additional_measure) {$spaces=$with_or_with_additional_measure; include('spaces.php'); $with_or_with_additional_measure=$spaces;}
-		if ($name_pam) {$spaces=$name_pam; include('spaces.php'); $name_pam=$spaces;}
-		if ($objective_of_measure) {$spaces=$objective_of_measure; include('spaces.php'); $objective_of_measure=$spaces;}
-		if ($description_pam) {$spaces=$description_pam; include('spaces.php'); $description_pam=$spaces;}
-		if ($Cross_cutting) {$spaces=$Cross_cutting; include('spaces.php'); $Cross_cutting=$spaces;}
-		if ($Energy_supply) {$spaces=$Energy_supply; include('spaces.php'); $Energy_supply=$spaces;}
-		if ($Energy_consumption) {$spaces=$Energy_consumption; include('spaces.php'); $Energy_consumption=$spaces;}
-		if ($Transport) {$spaces=$Transport; include('spaces.php'); $Transport=$spaces;}
-		if ($Industrial_Processes) {$spaces=$Industrial_Processes; include('spaces.php'); $Industrial_Processes=$spaces;}
-		if ($Agriculture) {$spaces=$Agriculture; include('spaces.php'); $Agriculture=$spaces;}
-		if ($Forestry) {$spaces=$Forestry; include('spaces.php'); $Forestry=$spaces;}
-		if ($Waste) {$spaces=$Waste; include('spaces.php'); $Waste=$spaces;}
-		if ($co2) {$spaces=$co2; include('spaces.php'); $co2=$spaces;}
-		if ($ch4) {$spaces=$ch4; include('spaces.php'); $ch4=$spaces;}
-		if ($n2o) {$spaces=$n2o; include('spaces.php'); $n2o=$spaces;}
-		if ($hfc) {$spaces=$hfc; include('spaces.php'); $hfc=$spaces;}
-		if ($pfc) {$spaces=$pfc; include('spaces.php'); $pfc=$spaces;}
-		if ($sf6) {$spaces=$sf6; include('spaces.php'); $sf6=$spaces;}
-		if ($Economic) {$spaces=$Economic; include('spaces.php'); $Economic=$spaces;}
-		if ($Fiscal) {$spaces=$Fiscal; include('spaces.php'); $Fiscal=$spaces;}
-		if ($Voluntary_negotiated_agreement) {$spaces=$Voluntary_negotiated_agreement; include('spaces.php'); $Voluntary_negotiated_agreement=$spaces;}
-		if ($Regulatory) {$spaces=$Regulatory; include('spaces.php'); $Regulatory=$spaces;}
-		if ($Information) {$spaces=$Information; include('spaces.php'); $Information=$spaces;}
-		if ($Education) {$spaces=$Education; include('spaces.php'); $Education=$spaces;}
-		if ($Research) {$spaces=$Research; include('spaces.php'); $Research=$spaces;}
-		if ($Planning) {$spaces=$Planning; include('spaces.php'); $Planning=$spaces;}
-		if ($Other) {$spaces=$Other; include('spaces.php'); $Other=$spaces;}
-		if ($status) {$spaces=$status; include('spaces.php'); $status=$spaces;}
-		if ($start) {$spaces=$start; include('spaces.php'); $start=$spaces;}
-		if ($ende) {$spaces=$ende; include('spaces.php'); $ende=$spaces;}
-		if ($National_Government) {$spaces=$National_Government; include('spaces.php'); $National_Government=$spaces;}
-		if ($Regional_Entities) {$spaces=$Regional_Entities; include('spaces.php'); $Regional_Entities=$spaces;}
-		if ($Municipalities_local_governments) {$spaces=$Municipalities_local_governments; include('spaces.php'); $Municipalities_local_governments=$spaces;}
-		if ($Companies_Businesses_industrial_associations) {$spaces=$Companies_Businesses_industrial_associations; include('spaces.php'); $Companies_Businesses_industrial_associations=$spaces;}
-		if ($Research_institutions) {$spaces=$Research_institutions; include('spaces.php'); $Research_institutions=$spaces;}
-		if ($Others) {$spaces=$Others; include('spaces.php'); $Others=$spaces;}
-		if ($red_2005_val) {$spaces=$red_2005_val; include('spaces.php'); $red_2005_val=$spaces;}
-		if ($red_2005_text) {$spaces=$red_2005_text; include('spaces.php'); $red_2005_text=$spaces;}
-		if ($red_2010_val) {$spaces=$red_2010_val; include('spaces.php'); $red_2010_val=$spaces;}
-		if ($red_2010_text) {$spaces=$red_2010_text; include('spaces.php'); $red_2010_text=$spaces;}
-		if ($red_2015_val) {$spaces=$red_2015_val; include('spaces.php'); $red_2015_val=$spaces;}
-		if ($red_2015_text) {$spaces=$red_2015_text; include('spaces.php'); $red_2015_text=$spaces;}
-		if ($red_2020_val) {$spaces=$red_2020_val; include('spaces.php'); $red_2020_val=$spaces;}
-		if ($red_2020_text) {$spaces=$red_2020_text; include('spaces.php'); $red_2020_text=$spaces;}
-		if ($cumulative_2008_2012) {$spaces=$cumulative_2008_2012; include('spaces.php'); $cumulative_2008_2012=$spaces;}
-		if ($explanation_basis_of_mitigation_estimates) {$spaces=$explanation_basis_of_mitigation_estimates; include('spaces.php'); $explanation_basis_of_mitigation_estimates=$spaces;}
-		if ($factors_resulting_in_emission_reduction) {$spaces=$factors_resulting_in_emission_reduction; include('spaces.php'); $factors_resulting_in_emission_reduction=$spaces;}
-		if ($include_common_reduction) {$spaces=$include_common_reduction; include('spaces.php'); $include_common_reduction=$spaces;}
-		if ($documention_source) {$spaces=$documention_source; include('spaces.php'); $documention_source=$spaces;}
-		if ($indicator_monitor_implementation) {$spaces=$indicator_monitor_implementation; include('spaces.php'); $indicator_monitor_implementation=$spaces;}
-		if ($related_ccpm) {$spaces=$related_ccpm; include('spaces.php'); $related_ccpm=$spaces;}
-		if ($related_ccpm_1) {$spaces=$related_ccpm_1; include('spaces.php'); $related_ccpm_1=$spaces;}
-		if ($general_comment) {$spaces=$general_comment; include('spaces.php'); $general_comment=$spaces;}
-		if ($reference) {$spaces=$reference; include('spaces.php'); $reference=$spaces;}
-		if ($reduces_non_ghg) {$spaces=$reduces_non_ghg; include('spaces.php'); $reduces_non_ghg=$spaces;}
-		if ($description_impact_on_non_ghg) {$spaces=$description_impact_on_non_ghg; include('spaces.php'); $description_impact_on_non_ghg=$spaces;}
-		if ($costs_per_tonne) {$spaces=$costs_per_tonne; include('spaces.php'); $costs_per_tonne=$spaces;}
-		if ($costs_per_year) {$spaces=$costs_per_year; include('spaces.php'); $costs_per_year=$spaces;}
-		if ($costs_description) {$spaces=$costs_description; include('spaces.php'); $costs_description=$spaces;}
-		if ($costs_documention_source) {$spaces=$costs_documention_source; include('spaces.php'); $costs_documention_source=$spaces;}
+		if ($pam_identifier) {$pam_identifier=spaces($pam_identifier);}
+		if ($cluster) {$cluster=spaces($cluster);}
+		if ($pam_no) {$pam_no=spaces($pam_no);}
+		if ($with_or_with_additional_measure) {$with_or_with_additional_measure=spaces($with_or_with_additional_measure);}
+		if ($name_pam) {$name_pam=spaces($name_pam);}
+		if ($objective_of_measure) {$objective_of_measure=spaces($objective_of_measure)}
+		if ($description_pam) {$description_pam=spaces($description_pam);}
+		if ($Cross_cutting) {$Cross_cutting=spaces($Cross_cutting);}
+		if ($Energy_supply) {$Energy_supply=spaces($Energy_supply);}
+		if ($Energy_consumption) {$Energy_consumption=spaces($Energy_consumption);}
+		if ($Transport) {$Transport=spaces($Transport);}
+		if ($Industrial_Processes) {$Industrial_Processes=spaces($Industrial_Processes);}
+		if ($Agriculture) {$Agriculture=spaces($Agriculture);}
+		if ($Forestry) {$Forestry=spaces($Forestry);}
+		if ($Waste) {$Waste=spaces($Waste);}
+		if ($co2) {$co2=spaces($co2);}
+		if ($ch4) {$ch4=spaces($ch4);}
+		if ($n2o) {$n2o=spaces($n2o);}
+		if ($hfc) {$hfc=spaces($hfc);}
+		if ($pfc) {$pfc=spaces($pfc);}
+		if ($sf6) {$sf6=spaces($sf6);}
+		if ($Economic) {$Economic=spaces($Economic);}
+		if ($Fiscal) {$Fiscal=spaces($Fiscal);}
+		if ($Voluntary_negotiated_agreement) {$Voluntary_negotiated_agreement=spaces($Voluntary_negotiated_agreement);}
+		if ($Regulatory) {$Regulatory=spaces($Regulatory);}
+		if ($Information) {$Information=spaces($Information);}
+		if ($Education) {$Education=spaces($Education);}
+		if ($Research) {$Research=spaces($Research);}
+		if ($Planning) {$Planning=spaces($Planning);}
+		if ($Other) {$Other=spaces($Other);}
+		if ($status) {$status=spaces($status);}
+		if ($start) {$start=spaces($start);}
+		if ($ende) {$ende=spaces($ende);}
+		if ($National_Government) {$National_Government=spaces($National_Government);}
+		if ($Regional_Entities) {$Regional_Entities=spaces($Regional_Entities);}
+		if ($Municipalities_local_governments) {$Municipalities_local_governments=spaces($Municipalities_local_governments);}
+		if ($Companies_Businesses_industrial_associations) {$Companies_Businesses_industrial_associations=spaces($Companies_Businesses_industrial_associations);}
+		if ($Research_institutions) {$Research_institutions=spaces($Research_institutions);}
+		if ($Others) {$Others=spaces($Others);}
+		if ($red_2005_val) {$red_2005_val=spaces($red_2005_val);}
+		if ($red_2005_text) {$red_2005_text=spaces($red_2005_text);}
+		if ($red_2010_val) {$red_2010_val=spaces($red_2010_val);}
+		if ($red_2010_text) {$red_2010_text=spaces($red_2010_text);}
+		if ($red_2015_val) {$red_2015_val=spaces($red_2015_val);}
+		if ($red_2015_text) {$red_2015_text=spaces($red_2015_text);}
+		if ($red_2020_val) {$red_2020_val=spaces($red_2020_val);}
+		if ($red_2020_text) {$red_2020_text=spaces($red_2020_text);}
+		if ($cumulative_2008_2012) {$cumulative_2008_2012=spaces($cumulative_2008_2012);}
+		if ($explanation_basis_of_mitigation_estimates) {$explanation_basis_of_mitigation_estimates=spaces($explanation_basis_of_mitigation_estimates);}
+		if ($factors_resulting_in_emission_reduction) {$factors_resulting_in_emission_reduction=spaces($factors_resulting_in_emission_reduction);}
+		if ($include_common_reduction) {$include_common_reduction=spaces($include_common_reduction);}
+		if ($documention_source) {$documention_source=spaces($documention_source);}
+		if ($indicator_monitor_implementation) {$indicator_monitor_implementation=spaces($indicator_monitor_implementation);}
+		if ($related_ccpm) {$related_ccpm=spaces($related_ccpm);}
+		if ($related_ccpm_1) {$related_ccpm_1=spaces($related_ccpm_1);}
+		if ($general_comment) {$general_comment=spaces($general_comment);}
+		if ($reference) {$reference=spaces($reference);}
+		if ($reduces_non_ghg) {$reduces_non_ghg=spaces($reduces_non_ghg);}
+		if ($description_impact_on_non_ghg) {$description_impact_on_non_ghg=spaces($description_impact_on_non_ghg);}
+		if ($costs_per_tonne) {$costs_per_tonne=spaces($costs_per_tonne);}
+		if ($costs_per_year) {$costs_per_year=spaces($costs_per_year);}
+		if ($costs_description) {$costs_description=spaces($costs_description);}
+		if ($costs_documention_source) {$costs_documention_source=spaces($costs_documention_source);}
 
 		$sql = "insert into pam set ";
 			if ($cluster and $cluster != "") {$sql = $sql . "cluster = '$cluster', ";} else {$sql = $sql . "cluster = null, ";}
@@ -205,7 +212,7 @@
 			$val_member_state = @mysql_query($sql);
 			$val_member_state_num = @mysql_num_rows($val_member_state);
 			if (!$val_member_state) {
-				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_member_state\".</p><p>$sql</p>");
+				sql_error('val_member_state', $sql);
 			} else {
 				if ($pos_mes) {echo(" ... val_member_state");}
 			} 
@@ -642,7 +649,7 @@
 			$val_related_ccpm = @mysql_query($sql);
 			$val_related_ccpm_num = @mysql_num_rows($val_related_ccpm);
 			if (!$val_related_ccpm) {
-				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_related_ccpm\".</p><p>$sql</p>");
+				sql_error('val_related_ccpm', $sql);
 			} else {
 				if ($pos_mes) {echo(" ... val_related_ccpm");}
 			} 
@@ -684,7 +691,7 @@
 			$val_related_ccpm = @mysql_query($sql);
 			$val_related_ccpm_num = @mysql_num_rows($val_related_ccpm);
 			if (!$val_related_ccpm) {
-				echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_related_ccpm\".</p><p>$sql</p>");
+				sql_error('val_related_ccpm', $sql);
 			} else {
 				if ($pos_mes) {echo(" ... val_related_ccpm");}
 			} 

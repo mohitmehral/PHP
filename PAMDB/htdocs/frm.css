@@ -18,11 +18,11 @@ p.head_red {
 	margin-bottom:30px;
 	margin-left:10px;
 }
-font.red {
+span.red {
 	color:red;
 	font-weight:bold;
 }
-font.green {
+span.green {
 	color:green;
 	font-weight:bold;
 	font-size:larger;
@@ -206,6 +206,33 @@ td.details {
 th.output {
   border: thin solid Silver;
 }
-table {
-  border-collapse: collapse;
+
+.number {
+	text-align:right;
 }
+
+.error-msg {
+	padding: 0.5em;
+	margin: 0.5em 2em;
+	font-weight: bold;
+	font-size: 110%;
+	border: 2px dashed red;
+	color: #800000;
+	background: white;
+}
+
+.specialval {
+	color:red;
+	font-weight:bold;
+}
+
+.question {
+	color:green;
+	font-weight:bold;
+	font-size:larger;
+}
+/*
+div#content {
+        background-image: url(images/180px-Watermark_draft.png);
+}
+*/

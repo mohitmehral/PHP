@@ -8,7 +8,7 @@
 	$val_reduces_non_ghg = @mysql_query($sql);
 	$val_reduces_non_ghg_num = @mysql_num_rows($val_reduces_non_ghg);
 	if (!$val_reduces_non_ghg) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_reduces_non_ghg\".</p><p>$sql</p>");
+		sql_error('val_reduces_non_ghg', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_reduces_non_ghg");}
 	}

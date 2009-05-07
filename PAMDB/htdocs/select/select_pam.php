@@ -8,7 +8,7 @@
 	$pam = @mysql_query($sql);
 	$pam_num = @mysql_num_rows($pam);
 	if (!$pam) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam\".</p><p>$sql</p>");
+		sql_error('pam', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam");}
 	}

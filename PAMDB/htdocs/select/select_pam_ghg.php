@@ -8,7 +8,7 @@
 	$pam_ghg = @mysql_query($sql);
 	$pam_ghg_num = @mysql_num_rows($pam_ghg);
 	if (!$pam_ghg) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_ghg\".</p><p>$sql</p>");
+		sql_error('pam_ghg', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_ghg");}
 	}

@@ -10,7 +10,7 @@
 	$val_member_state = @mysql_query($sql);
 	$val_member_state_num = @mysql_num_rows($val_member_state);
 	if (!$val_member_state) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_member_state\".</p><p>$sql</p>");
+		sql_error('val_member_state', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_member_state");}
 	}

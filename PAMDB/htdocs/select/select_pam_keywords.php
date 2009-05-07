@@ -10,7 +10,7 @@
 	$pam_keywords = @mysql_query($sql);
 	$pam_keywords_num = @mysql_num_rows($pam_keywords);
 	if (!$pam_keywords) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_keywords\".</p><p>$sql</p>");
+		sql_error('pam_keywords', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_keywords");}
 	}

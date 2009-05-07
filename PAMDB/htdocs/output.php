@@ -1,7 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <?php
-  include('conx/db_conx_open.php');
-//  $pos_mes = TRUE;
+$pos_mes = FALSE;
+include('conx/db_conx_open.php');
+require_once 'support.php';
+standard_html_header("Search Results")
+?>
+<?php
 // getting Identifier from database with the user defined filter
 	
 	unset($where_select);
@@ -109,7 +112,7 @@
 	$identifier = @mysql_query($sql);
 	$identifier_num = @mysql_num_rows($identifier);
 	if (!$identifier) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+		sql_error('pam', $sql);
 	} else {
 		if ($pos_mes) {echo("<p>identifier</p><p>$sql</p>");}
 	}
@@ -132,7 +135,7 @@
 			$data = @mysql_query($sql);
 			$data_num = @mysql_num_rows($data);
 			if (!$data) {
-				echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+				sql_error('pam', $sql);
 			} else {
 				if ($pos_mes) {echo("<p>data</p><p>$sql</p>");}
 			}
@@ -174,48 +177,50 @@
 //				$data = @mysql_query($sql);
 //				$data_num = @mysql_num_rows($data);
 //				if (!$data) {
-//					echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql $data $data_num</p>");
+//					sql_error($val_val, $sql);
 //				} else {
 //					if ($pos_mes) {echo("<p>$val_output</p><p>$sql</p>");}
 //				}
 //				
 //				if ($data_num) {
 //					while ($data_fetch = mysql_fetch_array($data)) {
-//						${$val_output}[$id] = ${$val_output}[$id] . $data_fetch[$val_output] . "<br>";
+//						${$val_output}[$id] = ${$val_output}[$id] . $data_fetch[$val_output] . "<br/>";
 //					}
-//					${$val_output}[$id] = substr(${$val_output}[$id], 0, -4);
+//					${$val_output}[$id] = substr(${$val_output}[$id], 0, -5);
 //				}
 //			}
 //		}
 	}
 ?>
-<html>
-	<head>
-		<title>European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe</title>
-		<link href="frm.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<table>
-		  <tr>
-			<td><img src="images/eccp.jpg" alt="ECCP"></td>
-			<td style="width:100%">&nbsp;</td>
-			<td><img src="images/oi.jpg" alt="OEko-Institut e.V."></td>
-		  </tr>
-		</table>
-		<p class="head_green"> European Climate Change Programme (ECCP)</p>
-		<p class="head_red"> Database on Policies and Measures in Europe</p>
-		<hr class="green">
-		<p class="head_green">Search Results&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="index.php">normal search mode</a> | <a href="sector.php">expert search mode</a></p>
-		<table>
-		  <thead>
+		<h1>
+			Search Results
+		</h1>
+		<table class="sortable">
 			<?php
-				if ($identifier_num) {include('header.php');}
-			?>
+				if ($identifier_num) { ?>
+		  <thead>
+			<tr>
+			  <th scope="col" rowspan="2"><a href="output?sort=member_state<?php build_sortqs()?>">Member<br/>State</a></th>
+			  <th scope="col" rowspan="2"><a href="output?sort=sector<?php build_sortqs()?>">Sector</a></th>
+			  <th scope="col" rowspan="2">Projection<br />Scenario</th>
+			  <th scope="col" rowspan="2">Name</th>
+			  <th scope="col" rowspan="2">Type</th>
+			  <th scope="col" rowspan="2">GHG</th>
+			  <th scope="col" rowspan="2">Status</th>
+			  <th scope="col" colspan="3"><nobr>Absolute Reduction</nobr><br/><nobr>[kt CO<sub>2</sub> eq. p.a.]</nobr></th>
+			  <th scope="col" rowspan="2"><a href="output?sort=costs_per_tonne<?php build_sortqs()?>">Costs<br/>[EUR/t]</a></th>
+			</tr>
+			<tr>
+			  <th scope="col">2005</th>
+			  <th scope="col"><a href="output?sort=red_2010_val<?php build_sortqs()?>">2010</a></th>
+			  <th scope="col">2020</th>
+			</tr>
 		  </thead>
+			<?php } ?>
 		  <tbody>
 			<?php
 				if ($identifier_num) {
-					if ($warning_len) {echo "<p><font class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</font></p>";}
+					if ($warning_len) {echo "<p><span class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</span></p>";}
 					$sort = $_GET['sort'];
 					if ($sort) {
 						$valve_name = $sort;
@@ -226,39 +231,39 @@
 					reset($$valve_name);
 					
 					foreach ($$valve_name as $key => $value) {
-						if ($green == "#eeFFdd") {
-							$green = "whith";
+						if ($green == "zebraodd") {
+							$green = "zebraeven";
 						} else {
-							$green = "#eeFFdd";
+							$green = "zebraodd";
 						}
-						echo "<tr style=\"background-color:$green\">
-							<td class=\"output\">
+						echo "<tr class=\"$green\">
+							<td>
 							  $member_state[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $sector[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $with_or_with_additional_measure_output[$key]
 							</td>
-							<td class=\"output\">
-							  <a href=\"details.php?id=$key\" target=\"_blank\">$name_pam[$key]</a>
+							<td>
+							  <a href=\"details?id=$key\">$name_pam[$key]</a>
 							</td>";
-//							<td class=\"output\">
+//							<td>
 //							  $category[$key]
 //							</td>
-							echo "<td class=\"output\">
+							echo "<td>
 							  $type[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $ghg_output[$key]
 							</td>
-							<td class=\"output\">
+							<td>
 							  $status[$key]
 							</td>
-							<td class=\"output\" style=\"text-align:right\">";
+							<td class=\"number\">";
 								if ($red_2005_val[$key] and $red_2005_text[$key]) {
-									echo "$red_2005_val[$key]<br><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2005_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
 									if ($red_2005_val[$key]) {
 										echo "$red_2005_val[$key]";
@@ -267,15 +272,15 @@
 											if ($red_2005_text[$key] == $cluster[$key]) {
 												echo "Cluster value";
 											} else {
-												echo "<a href=\"details.php?id=$key\" target=\"_blank\">details</a>";
+												echo "<a href=\"details?id=$key\">details</a>";
 											}
 										}
 									}
 								}
 							echo "</td>
-							<td class=\"output\" style=\"text-align:right\">";
+							<td class=\"number\">";
 								if ($red_2010_val[$key] and $red_2010_text[$key]) {
-									echo "$red_2010_val[$key]<br><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2010_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
 									if ($red_2010_val[$key]) {
 										echo "$red_2010_val[$key]";
@@ -284,15 +289,15 @@
 											if ($red_2010_text[$key] == $cluster[$key]) {
 												echo "Cluster value";
 											} else {
-												echo "<a href=\"details.php?id=$key\" target=\"_blank\">details</a>";
+												echo "<a href=\"details?id=$key\">details</a>";
 											}
 										}
 									}
 								}
 							echo "</td>
-							<td class=\"output\" style=\"text-align:right\">";
+							<td class=\"number\">";
 								if ($red_2020_val[$key] and $red_2020_text[$key]) {
-									echo "$red_2020_val[$key]<br><a href=\"details.php?id=$key\" target=\"_blank\">more</a>";
+									echo "$red_2020_val[$key]<br/><a href=\"details?id=$key\">more</a>";
 								} else {
 									if ($red_2020_val[$key]) {
 										echo "$red_2020_val[$key]";
@@ -301,13 +306,13 @@
 											if ($red_2020_text[$key] == $cluster[$key]) {
 												echo "Cluster value";
 											} else {
-												echo "<a href=\"details.php?id=$key\" target=\"_blank\">details</a>";
+												echo "<a href=\"details?id=$key\">details</a>";
 											}
 										}
 									}
 								}
 							echo "</td>
-							<td class=\"output\">
+							<td class=\"number\">
 							  $costs_per_tonne[$key]
 							</td>
 						</tr>";
@@ -326,40 +331,40 @@
 					
 					if (count($cluster)) {					
 						for ($i = 0; $i < 0; $i++) {
-							if ($green == "#eeFFdd") {
-								$green = "whith";
+							if ($green == "zebraodd") {
+								$green = "zebraeven";
 							} else {
-								$green = "#eeFFdd";
+								$green = "zebraodd";
 							}
-							echo "<tr style=\"background-color:$green\">
-								<td class=\"output\">
+							echo "<tr class=\"$green\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
-								<td class=\"output\">
+								<td>
 								  &nbsp;
 								</td>
 								<td>
@@ -374,7 +379,7 @@
 							$clusters = @mysql_query($sql);
 							$clusters_num = @mysql_num_rows($clusters);
 							if (!$clusters) {
-								echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+								sql_error('pam', $sql);
 							} else {
 								if ($pos_mes) {echo("<p>clusters</p><p>$sql</p>");}
 							}
@@ -392,45 +397,45 @@
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_member_state', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>member_state</p><p>$sql</p>");}
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$member_state = $member_state . $data_fetch['member_state'] . "<br>";
+											$member_state = $member_state . $data_fetch['member_state'] . "<br/>";
 										}
-										$member_state = substr($member_state, 0, -4);
+										$member_state = substr($member_state, 0, -5);
 									}
 		
 									$sql = "SELECT sector FROM val_sector JOIN pam_sector ON val_sector.id_sector = pam_sector.id_sector WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY sector ORDER BY sector";
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_sector', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>sector</p><p>$sql</p>");}
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$sector = $sector . $data_fetch['sector'] . "<br>";
+											$sector = $sector . $data_fetch['sector'] . "<br/>";
 										}
-										$sector = substr($sector, 0, -4);
+										$sector = substr($sector, 0, -5);
 									}
 		
 									$sql = "SELECT type FROM val_type JOIN pam_type ON val_type.id_type = pam_type.id_type WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY type ORDER BY type";
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_type', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>type</p><p>$sql</p>");}
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$type = $type . $data_fetch['type'] . "<br>";
+											$type = $type . $data_fetch['type'] . "<br/>";
 										}
-										$type = substr($type, 0, -4);
+										$type = substr($type, 0, -5);
 									}
 		
 									$sql = "SELECT ghg_output FROM val_ghg JOIN pam_ghg ON val_ghg.id_ghg = pam_ghg.id_ghg WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY ghg ORDER BY ghg";
@@ -438,77 +443,77 @@
 
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('ghg_outut', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>ghg</p><p>$sql</p>");}
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$ghg_output = $ghg_output . $data_fetch['ghg_output'] . "<br>";
+											$ghg_output = $ghg_output . $data_fetch['ghg_output'] . "<br/>";
 										}
-										$ghg_output = substr($ghg_output, 0, -4);
+										$ghg_output = substr($ghg_output, 0, -5);
 									}
 		
 									$sql = "SELECT status FROM val_status JOIN pam_status ON val_status.id_status = pam_status.id_status WHERE id IN (SELECT id FROM pam WHERE cluster = '$pam_identifier') GROUP BY status ORDER BY status";
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('val_status', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>status</p><p>$sql</p>");}
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$status = $status . $data_fetch['status'] . "<br>";
+											$status = $status . $data_fetch['status'] . "<br/>";
 										}
-										$status = substr($status, 0, -4);
+										$status = substr($status, 0, -5);
 									}
 		
 									$sql = "SELECT pam_identifier as name_pam FROM pam WHERE cluster = '$pam_identifier' and pam_identifier != '$pam_identifier' GROUP BY pam_identifier ORDER BY pam_identifier";
 									$data = @mysql_query($sql);
 									$data_num = @mysql_num_rows($data);
 									if (!$data) {
-										echo("<p>Es gab einen Fehler beim Zugriff auf die Datenbank.</p><p>$sql</p>");
+										sql_error('pam', $sql);
 									} else {
 										if ($pos_mes) {echo("<p>pam_identifier</p><p>$sql</p>");}
 									}
 									if ($data_num) {
 										while ($data_fetch = mysql_fetch_array($data)) {
-											$name_pam = $name_pam . $data_fetch['name_pam'] . "<br>";
+											$name_pam = $name_pam . $data_fetch['name_pam'] . "<br/>";
 										}
-										$name_pam = substr($name_pam, 0, -4);
+										$name_pam = substr($name_pam, 0, -5);
 									}
 									
-									if ($green == "#eeFFdd") {
-										$green = "whith";
+									if ($green == "zebraodd") {
+										$green = "zebraeven";
 									} else {
-										$green = "#eeFFdd";
+										$green = "zebraodd";
 									}
-									echo "<tr style=\"background-color:$green\">
-										<td class=\"output\">
+									echo "<tr class=\"$green\">
+										<td>
 										  $member_state
 										</td>
-										<td class=\"output\">
+										<td>
 										  $sector
 										</td>
-										<td class=\"output\">
+										<td>
 										  &nbsp;
 										</td>
-										<td class=\"output\">
-										  Combined emission reduction of<br>$name_pam
+										<td>
+										  Combined emission reduction of<br/>$name_pam
 										</td>
-										<td class=\"output\">
+										<td>
 										  $type
 										</td>
-										<td class=\"output\">
+										<td>
 										  $ghg_output
 										</td>
-										<td class=\"output\">
+										<td>
 										  $status
 										</td>
-										<td class=\"output\" style=\"text-align:right\">";
+										<td class=\"number\">";
 											if ($red_2005_val and $red_2005_text) {
-												echo "$red_2005_val<br>$red_2005_text";
+												echo "$red_2005_val<br/>$red_2005_text";
 											} else {
 												if ($red_2005_val) {
 													echo "$red_2005_val";
@@ -521,9 +526,9 @@
 												}
 											}
 										echo "</td>
-										<td class=\"output\" style=\"text-align:right\">";
+										<td class=\"number\">";
 											if ($red_2010_val and $red_2010_text) {
-												echo "$red_2010_val<br>$red_2010_text";
+												echo "$red_2010_val<br/>$red_2010_text";
 											} else {
 												if ($red_2010_val) {
 													echo "$red_2010_val";
@@ -536,9 +541,9 @@
 												}
 											}
 										echo "</td>
-										<td class=\"output\" style=\"text-align:right\">";
+										<td class=\"number\">";
 											if ($red_2020_val and $red_2020_text) {
-												echo "$red_2020_val<br>$red_2020_text";
+												echo "$red_2020_val<br/>$red_2020_text";
 											} else {
 												if ($red_2020_val) {
 													echo "$red_2020_val";
@@ -560,11 +565,10 @@
 						}
 					}
 				} else {
-					if ($warning_len) {echo "<p><font class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</font></p>";}
-					echo "<p><font class=\"red\">Your search didn't deliver any results.</font></p>";
+					if ($warning_len) {echo "<p><span class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</span></p>";}
+					echo "<p><span class=\"red\">Your search didn't deliver any results.</span></p>";
 				}
 			?>
 		  </tbody>
 		</table>
-	</body>
-</html>
+<?php standard_html_footer() ?>

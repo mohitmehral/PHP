@@ -10,7 +10,7 @@
 	$val_related_ccpm = @mysql_query($sql);
 	$val_related_ccpm_num = @mysql_num_rows($val_related_ccpm);
 	if (!$val_related_ccpm) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"val_related_ccpm\".</p><p>$sql</p>");
+		sql_error('val_related_ccpm', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... val_related_ccpm");}
 	}

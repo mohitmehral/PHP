@@ -8,7 +8,7 @@
 	$pam_reduces_non_ghg = @mysql_query($sql);
 	$pam_reduces_non_ghg_num = @mysql_num_rows($pam_reduces_non_ghg);
 	if (!$pam_reduces_non_ghg) {
-		echo("<p>Es gab einen Fehler beim Zugriff auf die Tabelle \"pam_reduces_non_ghg\".</p><p>$sql</p>");
+		sql_error('pam_reduces_non_ghg', $sql);
 	} else {
 		if ($pos_mes) {echo(" ... pam_reduces_non_ghg");}
 	}
