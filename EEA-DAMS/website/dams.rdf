@@ -50,12 +50,12 @@ if (PEAR::isError($db)) {
 
 // Proceed with a query...
 
-$res =& $db->query('SELECT * FROM DAMS order by NOEEA');
+$res =& $db->query('SELECT * FROM DAMS order by NOEEA limit 1000');
 $file = 'Dam';
 header('Content-type: application/rdf+xml');
 //	header('Content-Disposition: attachment; filename="'.$file.'.rdf"');
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-echo "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns=\"$baseurl/dams-schema.rdf#\">\n";
+echo "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns=\"$baseurl" . "dams-schema.rdf#\">\n";
 
 // Always check that result is not an error
 if (PEAR::isError($res)) {
