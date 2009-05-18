@@ -55,7 +55,7 @@ $file = 'Dam';
 header('Content-type: application/rdf+xml');
 //	header('Content-Disposition: attachment; filename="'.$file.'.rdf"');
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
-echo "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns=\"$baseurl" . "dams-schema.rdf#\">\n";
+echo "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns=\"$baseurl" . "dams-schema.rdf#\">\n";
 
 // Always check that result is not an error
 if (PEAR::isError($res)) {
@@ -75,6 +75,9 @@ while ($res->fetchInto($row, DB_FETCHMODE_ASSOC)) {
 		$col++;
 	}
 	$i++;
+        echo "<rdfs:label>". htmlspecialchars($row['name'],ENT_NOQUOTES,'UTF-8') .
+                 " at " . htmlspecialchars($row['ic_city'],ENT_NOQUOTES,'UTF-8') .
+                 " in " . htmlspecialchars($row['country'],ENT_NOQUOTES,'UTF-8') . "</rdfs:label>";
 	echo "</$file>\n";
 }
 echo "</rdf:RDF>\n";
