@@ -53,11 +53,16 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 ?>
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-	<rdfs:Class rdf:ID="Dam" rdfs:label="Dam"/>
-        <!--
-	<rdf:Description rdf:ID="name">
-		<rdfs:subPropertyOf rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+	<rdfs:Class rdf:ID="Dam" rdfs:label="Dam" >
+                <rdfs:subClassOf rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing"/>
+        </rdfs:Class>
+	<rdf:Description rdf:about="#x_val">
+		<rdfs:subPropertyOf rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#long"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="#y_val">
+		<rdfs:subPropertyOf rdf:resource="http://www.w3.org/2003/01/geo/wgs84_pos#lat"/>
+	</rdf:Description>
+        <!--
         -->
 <?php
 
