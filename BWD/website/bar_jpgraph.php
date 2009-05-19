@@ -7,6 +7,8 @@ BWD water quality data/map viewer: FILE TO CREATE IMAGE WITH BAR GRAPH
 21.3.2008; first version
 
 */
+
+
 if (!isset($_GET['GeoRegion'])) $_GET['GeoRegion'] = '';
 if (!isset($_GET['type'])) $_GET['type'] = '';
 if (!isset($_GET['Country'])) $_GET['Country'] = '';
@@ -31,27 +33,28 @@ header('Content-Type: text/html; charset=utf-8');
 // 4=not compliant = RED, 
 // 5=compliant to mandatory values = GREEN
 // 0,3,6 = not sampled / insufficiently sampled = ORANGE
-$compliance_values = array(0,1,2,3,4,5,6);
-$leta = array(2000,2001,2002,2003,2004,2005,2006,2007);
+$compliance_values = array('CG','B','NC','CI','NS','NF');
+$years = array(2000,2001,2002,2003,2004,2005,2006,2007,2008);
 
 foreach($compliance_values as $key=>$val) {
   $sql = "
     SELECT
-      (COUNT(IF(y2000 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2000',
-      (COUNT(IF(y2001 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2001',
-      (COUNT(IF(y2002 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2002',
-      (COUNT(IF(y2003 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2003',
-      (COUNT(IF(y2004 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2004',
-      (COUNT(IF(y2005 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2005',
-      (COUNT(IF(y2006 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2006',
-      (COUNT(IF(y2007 = ".$val.", 1, NULL))/COUNT(*))*100 AS '2007',
-      COUNT(*) AS No_of_stations,
+      (COUNT(IF(y2000 = '".$val."', 1, NULL))/COUNT(IF(y2000 IS NOT NULL, 1, NULL)) )*100 AS '2000',
+      (COUNT(IF(y2001 = '".$val."', 1, NULL))/COUNT(IF(y2001 IS NOT NULL, 1, NULL)) )*100 AS '2001',
+      (COUNT(IF(y2002 = '".$val."', 1, NULL))/COUNT(IF(y2002 IS NOT NULL, 1, NULL)) )*100 AS '2002',
+      (COUNT(IF(y2003 = '".$val."', 1, NULL))/COUNT(IF(y2003 IS NOT NULL, 1, NULL)) )*100 AS '2003',
+      (COUNT(IF(y2004 = '".$val."', 1, NULL))/COUNT(IF(y2004 IS NOT NULL, 1, NULL)) )*100 AS '2004',
+      (COUNT(IF(y2005 = '".$val."', 1, NULL))/COUNT(IF(y2005 IS NOT NULL, 1, NULL)) )*100 AS '2005',
+      (COUNT(IF(y2006 = '".$val."', 1, NULL))/COUNT(IF(y2006 IS NOT NULL, 1, NULL)) )*100 AS '2006',
+      (COUNT(IF(y2007 = '".$val."', 1, NULL))/COUNT(IF(y2007 IS NOT NULL, 1, NULL)) )*100 AS '2007',
+      (COUNT(IF(y2008 = '".$val."', 1, NULL))/COUNT(IF(y2008 IS NOT NULL, 1, NULL)) )*100 AS '2008',
+      COUNT(*) AS No_of_stations,													# only needed to display in title total or max. number of stations for all years
+      COUNT(IF(y2008 IS NOT NULL, 1, NULL)) AS No_of_stations_2008,		# only needed to display in title: number of stations 2008
       Prelev,
       SeaWater
-    FROM bwd_stations ";
+    FROM bwd_stations 
+	 WHERE 1 ";
   
-  if($_GET['GeoRegion'] != '')		$sql .= " INNER JOIN numind_geographic n USING (numind) ";
-  $sql .= " WHERE 1 ";
   if($_GET['GeoRegion'] != '')		$sql .= " AND geographic = '".$_GET['GeoRegion']."'";
 
   // CONDITION
@@ -69,7 +72,7 @@ foreach($compliance_values as $key=>$val) {
   $result = mysql_query($sql) or die($sql."<br>".mysql_error());
   $myrow = mysql_fetch_array($result);
   
-  foreach($leta as $key1=>$val1) {
+  foreach($years as $key1=>$val1) {
     // to shift 0 values a little above the bottom; disabled
     //$data[$val][] = ($myrow[$val1] < 1)?0.2:$myrow[$val1];
     $data[$val][] = $myrow[$val1];
@@ -77,11 +80,13 @@ foreach($compliance_values as $key=>$val) {
 } // foreach
 
 
-// 20.5.2008; adds together "ORANGE" values: 0+3+6 (unknown + not sampled + insufficiently sampled)
-foreach($data[0] as $key=>$val) 	{
-	$data[0][$key] += $data[3][$key];
-	$data[0][$key] += $data[6][$key];
+// 20.5.2008; adds together "ORANGE" values: 3+6 (not sampled + insufficiently sampled)
+/*
+foreach($data['ns'] as $key=>$val) 	{
+	$data['ns'][$key] += $data['nf'][$key];
+	//$data['ns'][$key] += $data[''][$key];
 }
+*/
 
 /*
 echo "<pre>";
@@ -118,18 +123,19 @@ if($_GET['BathingPlace'] != "")  {
 // DEFAULT GRAPH FOR PROVINCE
 else {
     // default title
-    $title = $_GET['Country'];
-	if($_GET['GeoRegion'] != "") $title .= " (".substr($_GET['GeoRegion'],29).")";
-    if($_GET['Region'] != "") $title .= ", ".$_GET['Region'];
+    //$title = $_GET['Country'];
+	 //if($_GET['GeoRegion'] != "") $title .= " (".substr($_GET['GeoRegion'],29).")";
+    // 11.05.2009; mkovacic; name in bar graph starts with region
+	 if($_GET['Region'] != "") $title = $_GET['Region'];
     if($_GET['Province'] != "") $title .= ", ".$_GET['Province'];
     $title .= ": ".$myrow['No_of_stations']." ";
-    if($_GET['type'] == 'coast')  $title .= "coastal ";
-    if($_GET['type'] == 'fresh')  $title .= "freshwater ";
-    $title .= "b.p.";
+    if($_GET['type'] == 'coast')  $title .= "coastal BW";
+    if($_GET['type'] == 'fresh')  $title .= "freshwater BW";
+	 $title .= " (".$myrow['No_of_stations_2008']." in 2008)";
 
     // default graph dimensions
     $graph_width = 600; 
-    $graph_height = 400; 
+    $graph_height = 450; 
     $margin_left = 50; 
     $margin_top = 30; 
     $ycolor = 'black';
@@ -157,7 +163,7 @@ if($_GET['BathingPlace'] != "") $graph->SetMarginColor('white');
 $graph->title->Set(replaceUTFChars($title));
 
 // AXIS TITLES AND FONTS
-$graph->xaxis->SetTickLabels($leta);
+$graph->xaxis->SetTickLabels($years);
 
 if($_GET['BathingPlace'] == "") $graph->xaxis->title->Set('Year');
 $graph->xaxis->title->SetColor('black');
@@ -181,33 +187,38 @@ $graph->legend->SetShadow('darkgray@0.5');
 $graph->legend->SetFillColor('lightgray@0.3');
 
 // 1st (from top) BAR - 1=compliance with guide values = BLUE
-$b4plot = new BarPlot($data[1]);
+$b4plot = new BarPlot($data['CG']);
 $b4plot->SetFillColor('lightblue');
-$b4plot->SetLegend($procent.complianceText(1));
+$b4plot->SetLegend($procent.complianceText('CG'));
 
 // 2nd BAR - 5=compliance with mandatory values = GREEN
-$b3plot = new BarPlot($data[5]);
+$b3plot = new BarPlot($data['CI']);
 $b3plot->SetFillColor('lightgreen');
-$b3plot->SetLegend($procent.complianceText(5));
+$b3plot->SetLegend($procent.complianceText('CI'));
 
 // 3rd BAR - 4=not compliant with mandatory values = RED
-$b2plot = new BarPlot($data[4]);
+$b2plot = new BarPlot($data['NC']);
 $b2plot->SetFillColor('#FF7F7F');
-$b2plot->SetLegend($procent.complianceText(4));
+$b2plot->SetLegend($procent.complianceText('NC'));
 
-// 4th BAR - 2=prohibited throughout the season = GRAY
-$b1plot = new BarPlot($data[2]);
+// 4th BAR - 2=closed or banned /* before "prohibited throughout the season" */ = GRAY
+$b1plot = new BarPlot($data['B']);
 $b1plot->SetFillColor('lightgray');
-$b1plot->SetLegend($procent.complianceText(2));
+$b1plot->SetLegend($procent.complianceText('B'));
 
-// 5th BAR - 0,3,6=unknown / not sampled / insufficiently sampled = ORANGE
-$b0plot = new BarPlot($data[0]);
-$b0plot->SetFillColor(complianceColor(0));
-$b0plot->SetLegend($procent.complianceText(0)." / ".complianceText(3));
+// 5th BAR - not sampled = ORANGE
+$b0plot = new BarPlot($data['NS']);
+$b0plot->SetFillColor(complianceColor('NS'));
+$b0plot->SetLegend($procent.complianceText('NS'));
+
+// 6th BAR - insufficiently sampled = ORANGE
+$b5plot = new BarPlot($data['NF']);
+$b5plot->SetFillColor(complianceColor('NF'));
+$b5plot->SetLegend($procent.complianceText('NF'));
 
 
 // CREATE THE GROUPED BAR PLOT
-$gbplot = new AccBarPlot(array($b0plot,$b1plot,$b2plot,$b3plot,$b4plot));
+$gbplot = new AccBarPlot(array($b0plot,$b5plot,$b1plot,$b2plot,$b3plot,$b4plot));
 $gbplot->SetWidth($width_bar);
 $graph->Add($gbplot);
 

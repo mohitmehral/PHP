@@ -16,8 +16,8 @@ function changeChars($input_string, $changeTo) {
 
 // f. to change UTF8 chars (Č,Š,Ž,Ü,...) to (C,S,Z,U,...) - only for jpgraph, because default font is not UTF8
 function replaceUTFChars($input_string) {
-  $changeFrom  = array("Č","Š","Ž","Ü","Ä","Ö","ß","É","Õ","Ñ","Ű","Ø","\\'","Ş","Æ","Å","Ő","Ç","Ú","ľ","Ý","Á"); 
-  $changeTo       = array("C","S","Z","UE","AE","OE","SS","E","O","N","U","OE","'","S","AE","AA","O","C","U","L","Y","A"); 
+  $changeFrom  = array("Č","Š","Ž","Ü","Ä","Ö","ß","É","Õ","Ñ","Ű","Ø","\\'","Ş","Æ","Å","Ő","Ç","Ú","ľ","Ý","Á","Ř","Í","Ě","Ň","Ó","Ā","Ū","Ē","Ļ"); 
+  $changeTo       = array("C","S","Z","UE","AE","OE","SS","E","O","N","U","OE","'","S","AE","AA","O","C","U","L","Y","A","R","I","E","N","O","A","U","E","L"); 
   Return str_replace($changeFrom, $changeTo, $input_string);
 }
 
@@ -30,7 +30,7 @@ function convertUTFtoHTML($input_string) {
 
 // f. to output compliance colors:
 // 1=compliant to guide values = BLUE, 
-// 2=prohibited throughout the season = GRAY, 
+// 2=Closed or banned /* before was "prohibited throughout the season" */ = GRAY, 
 // 3=insufficiently sampled = ORANGE, 
 // 4=not compliant = RED, 
 // 5=compliant to mandatory values = GREEN, 
@@ -38,14 +38,14 @@ function convertUTFtoHTML($input_string) {
 // 0 = ORANGE
 function complianceColor($value) {
   switch($value) {
-      case 0: Return "#FFCB67"; break;
-      case 1: Return "#B9E8F7"; break;
-      case 2: Return "#CFCFCF"; break;
-      case 3: Return "#FFCB67"; break;
-      case 4: Return "#FF7F7F"; break;
-      case 5: Return "#98FF97"; break;
-      case 6: Return "#FFCB67"; break;
-      default: Return "white"; break;
+      case 'NS':	Return "#FFEB67"; break;
+      case 'CG':	Return "#B9E8F7"; break;
+      case 'B':	Return "#CFCFCF"; break;
+      case 'NF':	Return "#FFAB67"; break;
+      case 'NC':	Return "#FF7F7F"; break;
+      case 'CI':	Return "#98FF97"; break;
+		//case 'other':	Return "#FFCB67"; break;
+      default:		Return "#F7F7F7"; break;
   }
 }
 
@@ -57,6 +57,7 @@ function complianceColor($value) {
 // 5=ci = GREEN, 
 // 6=ns = ORANGE, 
 // 0=(ns) ORANGE
+/*
 function complianceCharacter($value) {
   switch($value) {
       case 0: Return "ns"; break;
@@ -69,19 +70,33 @@ function complianceCharacter($value) {
       default: Return "ns"; break;
   }
 }
+*/
 
 // f. to output text for compliance value
 function complianceText($value) {
   switch($value) {
-      case 0: Return "Not sampled"; break;
-      case 1: Return "Excellent (Compliant to guide values)"; break;
-      case 2: Return "Closed (Prohibited throughout the season)"; break;
-      case 3: Return "Insufficiently sampled"; break;
-      case 4: Return "Poor (Not compliant with mandatory values)"; break;
-      case 5: Return "Good (Compliant to mandatory values)"; break;
-      case 6: Return "Not compliant"; break;
-      default: Return "Not sampled"; break;
+      case 'NS':	Return "Not sampled"; break;
+      case 'CG':	Return "Excellent (Compliant to guide values)"; break;
+      case 'B':	Return "Banned or closed throughout the season"; break;		
+      case 'NF':	Return "Insufficiently sampled"; break;
+      case 'NC':	Return "Poor (Not compliant with mandatory values)"; break;
+      case 'CI':	 Return "Good (Compliant to mandatory values)"; break;
+		//case 'other':	Return "Not sampled / Insufficiently sampled"; break;
+      default: Return ""; break;	
   }
 }
+
+function TypeAsText($key) {
+    switch($key) {
+	case 'C': return "SEA"; break;
+	case 'T': return "SEA"; break;
+	case 'RV': return "RIVER"; break;
+	case 'LK': return "LAKE"; break;
+	case 'estuary': return "ESTUARY"; break;
+	case 'EM': return "RESERVOIR"; break;
+	default:  return "N/A"; break;
+    }
+}
+
 
 ?>

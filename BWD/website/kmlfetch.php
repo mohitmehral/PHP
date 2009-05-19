@@ -19,15 +19,6 @@ if (isset($_GET['BBOX'])) {
 }
 list($maxw,$maxs,$maxe,$maxn) = split(",",$bbox);
 
-function TypeAsText($key) {
-    switch($key) {
-	case 1: return "SEA"; break;
-	case 2: return "RIVER"; break;
-	case 3: return "LAKE"; break;
-	case 4: return "ESTUARY"; break;
-	default:  return "N/A"; break;
-    }
-}
 
 /*
  * Check if the proposed coordinate is too close too an already plotted point

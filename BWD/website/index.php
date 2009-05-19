@@ -81,9 +81,9 @@ echo "
 <div id='help_div' onclick='document.getElementById(\"help_div\").style.display=\"none\";' >
   <div style='position: relative; '>
 	<h1>Bathing water quality data/map viewer - quick help</h1>
-	<!-- TODO splošni opis -->
+	<!-- TODO general description -->
 
-	<!-- opis stolpcev -->
+	<!-- colmun description -->
 	<p>
 	<span class='stolpec'>Country</span> - All EU countries are listed, drag the mouse over country to display country name in native language.
 	</p>
@@ -108,7 +108,7 @@ echo "
 	<img src='images/kml.gif' width='16' height='16' border='0' alt='KML'/> - Download and/or open a <b>kml file</b> with bathing water placemarks. If <u>region</u>, <u>province</u> or <u>bathing water</u> is selected, file contains only bathing waters in selected region, province or bathing water. <b>Kml files</b> are best viewed with <a target='_NEW_WINDOW' href='http://earth.google.com/download-earth.html'>Google Earth</a>.
 	<br/>
 
-	<!-- grafi	 -->
+	<!-- graphs	 -->
 	<img src='images/SlanaVodaGraf.jpg' border='0' alt='coastal graph'/> - Graph for <b>coastal</b> bathing waters, there are 2 graph types:
 	</p>
         <ul>
@@ -157,7 +157,7 @@ echo '</div>';
 echo "<table id='banner'>";
 echo "<tr>";
 echo "<th style='text-align:left; width:50%'>";
-echo "<a href='/kmllink.php' type='application/vnd.google-earth.kml+xml'>Google Earth Network link</a>";
+echo "<a href='kmllink.php' type='application/vnd.google-earth.kml+xml'>Google Earth Network link</a>";
 echo "</th>";
 echo "<th style='text-align:right; width:50%'>";
 echo "<a onclick=\"document.getElementById('help_div').style.display='block'; \">Help on using viewer</a>";
@@ -203,7 +203,7 @@ echo "  <td>";
 echo "<select style='width: 176px;' name='EU27_georegion' id='EU27_georegion' onchange='document.location=\"index.php?cc=EU27&amp;GeoRegion=\" + this.value'>\n";
 $sql_georegion = "
 		SELECT geographic, COUNT(*) AS no_of_stations
-		FROM numind_geographic
+		FROM bwd_stations
 		GROUP BY geographic	
 ";
 $result_georegion = mysql_query($sql_georegion);
@@ -228,9 +228,9 @@ echo "</td>\n";
 echo "  <td>&nbsp;</td>\n";
 
 echo "  <td>";
-echo "<span style='color:gray'>&nbsp;";
+echo "<span style='color:gray'>";
 if ($_GET['GeoRegion'] != '')	echo $eu27_stations[$_GET['GeoRegion']];
-else							echo array_sum($eu27_stations);
+else									echo array_sum($eu27_stations);
 echo " bathing waters";
 echo "</span>";
 echo "</td>\n";
@@ -265,7 +265,7 @@ $sql = '
   LEFT JOIN countrycodes_iso c ON s.cc = c.ISO2 ';
 
 if ($_GET['GeoRegion'] != '')	
-	$sql .= "INNER JOIN numind_geographic n USING (numind) WHERE geographic = '".$_GET['GeoRegion']."' ";
+	$sql .= "WHERE geographic = '".$_GET['GeoRegion']."' ";
 
 $sql .= 'GROUP BY s.cc ORDER BY c.Country';
 
@@ -316,7 +316,7 @@ while ($myrow = mysql_fetch_array($result)) {
           SELECT Region, COUNT(IF(SeaWater = 'O',1,NULL)) AS 'coast_stations', COUNT(IF(SeaWater = 'N',1,NULL)) AS 'freshwater_stations'
           FROM bwd_stations ";
 	if ($_GET['GeoRegion'] != '')	
-		  $sql_region .= "INNER JOIN numind_geographic n USING (numind) WHERE geographic = '".$_GET['GeoRegion']."' AND ";
+		  $sql_region .= "WHERE geographic = '".$_GET['GeoRegion']."' AND ";
 	else 
 		$sql_region .= "WHERE ";
 	$sql_region .= "
@@ -357,7 +357,7 @@ while ($myrow = mysql_fetch_array($result)) {
 		$sql_province = "
 			SELECT Province, COUNT(IF(SeaWater = 'O',1,NULL)) AS 'coast_stations', COUNT(IF(SeaWater = 'N',1,NULL)) AS 'freshwater_stations'
 			FROM bwd_stations ";
-		if ($_GET['GeoRegion'] != '')	$sql_province .= "INNER JOIN numind_geographic n USING (numind) WHERE geographic = '".$_GET['GeoRegion']."' AND ";
+		if ($_GET['GeoRegion'] != '')	$sql_province .= "WHERE geographic = '".$_GET['GeoRegion']."' AND ";
 		else
 			$sql_province .= "WHERE ";
 		$sql_province .= "
@@ -392,11 +392,14 @@ while ($myrow = mysql_fetch_array($result)) {
 			$file_province_map = "provinces/".strtolower($myrow['cc'])."_p_".strtolower(changeChars(replaceUTFChars($_GET['Region']),"_")).".png";
 		}
 
+// debug output
+// echo $file_province_map;
+
 		if ($_GET['Region'] != '' && file_exists($file_province_map )) {
 			echo "<a id='".$myrow['cc']."_province_link' ";
 			if ($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')  echo "style='visibility: visible; cursor:pointer; cursor: hand;'";
 			else                                                      echo "style='visibility: hidden; cursor:pointer; cursor: hand;'";
-			echo "title='".$myrow['Country']." province map'  onclick=\"ShowContent('map_div','map_font','map_img','".$file_province_map ."','".$myrow['Country']." - ".$_GET['Region']." - province map','725px','875px','150px','".$top_shift."px'); \"><img src='images/Regije.gif' border='0' alt='".$myrow['Country']." - province map'/></a>";
+			echo "title='".$myrow['Country']." province map'  onclick=\"ShowContent('map_div','map_font','map_img','".$file_province_map ."','".$myrow['Country']." - ".$_GET['Region']." - province map','725px','925px','150px','".$top_shift."px'); \"><img src='images/Regije.gif' border='0' alt='".$myrow['Country']." - province map'/></a>";
 		}
 	}
 	else
@@ -406,10 +409,13 @@ while ($myrow = mysql_fetch_array($result)) {
     
     // BATHING PLACES
 	
-	if ($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')
+	if ($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '' && $_GET['Province'] != '')
+		$sum_bw = $province_coast_stations[$counter]+$province_freshwater_stations[$counter];
+	elseif ($myrow['cc'] == $_GET['cc'] && $_GET['Region'] != '')
 		$sum_bw = $region_coast_stations[$counter]+$region_freshwater_stations[$counter];
 	else
 		$sum_bw = $country_coast_stations[$counter]+$country_freshwater_stations[$counter]; 
+	
 	// set graph position - shift from top 
 	if ($counter < 14)		$top_shift = 190+($counter*($td_height+5));
 	else					$top_shift = ($counter*($td_height+5))-115;
@@ -436,7 +442,7 @@ while ($myrow = mysql_fetch_array($result)) {
 			$sql_bplace = "
 			  SELECT numind, Prelev 
 			  FROM bwd_stations ";
-			  if ($_GET['GeoRegion'] != '')	$sql_bplace .= "INNER JOIN numind_geographic n USING (numind) WHERE geographic = '".$_GET['GeoRegion']."' AND ";
+			  if ($_GET['GeoRegion'] != '')	$sql_bplace .= "WHERE geographic = '".$_GET['GeoRegion']."' AND ";
 			  else 							$sql_bplace .= "WHERE ";
 			  $sql_bplace .= "
 				cc = '".$_GET['cc']."' 
@@ -458,7 +464,8 @@ while ($myrow = mysql_fetch_array($result)) {
 
     // VISUALISATION BUTTONS
     echo "  <td align='right'>";
-      // GENERATES KML LINK
+
+	// GENERATES KML LINK
 	$link_za_kml = "kml_export.php?cc=".$myrow['cc'];
 	if ($_GET['GeoRegion'] != "")
 		$link_za_kml .= "&amp;GeoRegion=".$_GET['GeoRegion'];
@@ -508,12 +515,13 @@ while ($myrow = mysql_fetch_array($result)) {
         if ($myrow['freshwater_stations'] == 0)  $fresh_disabled = 1; 
 	}
 
+
 	$baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
-	// Live Maps
+	// LIVE MAPS
 	if ($sum_bw < 200) {
 		echo "<a title='Live Maps - ".$string_title_kml."' href='http://maps.live.com?mapurl=".$baseurl."$link_za_kml'><img src='images/livemaps.png' border='0' alt='Live Maps - ".$string_title_kml."'/></a>";
 	}
-	// Google Maps
+	// GOOGLE MAPS
 	if ($sum_bw < 200) {
 		// Google wants doubly encoded spaces (which is probably correct behaviour)
         $encoded_link = str_replace(" ","%2520", str_replace("&amp;","%26",$link_za_kml));
@@ -543,7 +551,7 @@ while ($myrow = mysql_fetch_array($result)) {
 		echo "<img alt='".$title_graf."' title='".$title_graf."' src='images/SlanaVodaGrafX.jpg' border='0'/>";
 	} else {
 		$title_graf = "Quality of coastal bathing waters in this Country/Region/Province"; // - ".$myrow['Country'];
-		echo "<a title='".$title_graf."' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_font','graph_img','".convertUTFtoHTML($link_za_graf)."&amp;type=coast','','640px','450px','180px','".$top_shift."px'); \"><img src='images/SlanaVodaGraf.jpg' border='0' alt='".$title_graf."'/></a>";
+		echo "<a title='".$title_graf."' style='cursor:pointer; cursor: hand;' onclick=\"ShowContent('graph_div','graph_font','graph_img','".convertUTFtoHTML($link_za_graf)."&amp;type=coast','','640px','500px','180px','".$top_shift."px'); \"><img src='images/SlanaVodaGraf.jpg' border='0' alt='".$title_graf."'/></a>";
 	}
 	echo "&nbsp;";
         
@@ -553,7 +561,7 @@ while ($myrow = mysql_fetch_array($result)) {
 		echo "<img alt='".$title_graf."' title='".$title_graf."' src='images/SladkaVodaGrafX.jpg' border='0'/>";
 	} else {
 		$title_graf = "Quality of freshwater bathing waters in this Country/Region/Province"; // - ".$myrow['Country'];
-		echo "<a title='".$title_graf."' style='cursor:pointer; cursor: hand;'  onclick=\"ShowContent('graph_div','graph_font','graph_img','".convertUTFtoHTML($link_za_graf)."&amp;type=fresh','','640px','450px','180px','".$top_shift."px'); \"><img src='images/SladkaVodaGraf.jpg' border='0' alt='".$title_graf."'/></a>";
+		echo "<a title='".$title_graf."' style='cursor:pointer; cursor: hand;'  onclick=\"ShowContent('graph_div','graph_font','graph_img','".convertUTFtoHTML($link_za_graf)."&amp;type=fresh','','640px','500px','180px','".$top_shift."px'); \"><img src='images/SladkaVodaGraf.jpg' border='0' alt='".$title_graf."'/></a>";
 	}
  
     echo "</td>\n";

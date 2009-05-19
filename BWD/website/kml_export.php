@@ -11,21 +11,12 @@ BWD water quality data/map viewer: EXPORT TO KML FILE
 
 include('config.php');
 include('functions.php');
+
 if (!isset($_GET['GeoRegion'])) $_GET['GeoRegion'] = '';
 if (!isset($_GET['cc'])) $_GET['cc'] = '';
 if (!isset($_GET['Region'])) $_GET['Region'] = '';
 if (!isset($_GET['Province'])) $_GET['Province'] = '';
 if (!isset($_GET['BathingPlace'])) $_GET['BathingPlace'] = '';
-
-function TypeAsText($key) {
-    switch($key) {
-	case 1: return "SEA"; break;
-	case 2: return "RIVER"; break;
-	case 3: return "LAKE"; break;
-	case 4: return "ESTUARY"; break;
-	default:  return "N/A"; break;
-    }
-}
 
 if($_GET['cc'] != '')   {
 
@@ -38,8 +29,8 @@ mysql_query("SET NAMES 'utf8'");
 // array with fields to show in kml
 $array_fields = array(
   'numind' => 'Id',
-  'latitude' => 'Latitude',
-  'longitude'=> 'Longitude',
+  'Latitude' => 'Latitude',
+  'Longitude'=> 'Longitude',
   'Country' => 'Country',
   'Region' => 'Region',
   'Province' => 'Province',
@@ -53,20 +44,20 @@ $array_fields = array(
   'y2004' => 'Year 2004',
   'y2005' => 'Year 2005',
   'y2006' => 'Year 2006',
-  'y2007' => 'Year 2007');
+  'y2007' => 'Year 2007',
+  'y2008' => 'Year 2008');
 
-$lastknownyear = 'y2007';
+$lastknownyear = 'y2008';
 
 $sql = "
   SELECT 
 	UPPER(c.Country) AS Country,
-	s.numind, s.latitude, s.longitude, s.WaterType AS Type, s.Region, s.Province, s.Commune, s.Prelev, 
+	s.numind, s.Latitude, s.Longitude, s.WaterType AS Type, s.Region, s.Province, s.Commune, s.Prelev, 
 	#s.y1990, s.y1991, s.y1992, s.y1993, s.y1994, s.y1995, s.y1996, s.y1997, s.y1998, s.y1999, 
-	s.y2000, s.y2001, s.y2002, s.y2003, s.y2004, s.y2005, s.y2006, s.y2007 
+	s.y2000, s.y2001, s.y2002, s.y2003, s.y2004, s.y2005, s.y2006, s.y2007, s.y2008
   FROM bwd_stations s
   LEFT JOIN countrycodes_iso c ON s.cc = c.ISO2 ";
 
-if($_GET['GeoRegion'] != '')		$sql .= " INNER JOIN numind_geographic n USING (numind)";
 // Filter out empty coordinates. In Europe latitude can not legally be zero, but longitude can
 $sql .= " WHERE latitude != 0";
 if($_GET['cc'] != 'EU27')			$sql .= " AND cc = '".$_GET['cc']."' ";
@@ -77,7 +68,6 @@ if($_GET['Region'] != '')			$sql .= " AND Region LIKE '".changeChars($_GET['Regi
 if($_GET['Province'] != '')			$sql .= " AND Province LIKE '".changeChars($_GET['Province'],"%")."'";
 if($_GET['BathingPlace'] != '')		$sql .= " AND numind = '".$_GET['BathingPlace']."'";
 $sql .= " ORDER BY Prelev";
-
 
 
 $result = mysql_query($sql) or die($sql."<br>".mysql_error());
@@ -94,9 +84,9 @@ if($_GET['BathingPlace'] != '')   $string_filename .= "-".$_GET['BathingPlace'];
 
 header('Content-type: application/vnd.google-earth.kml+xml');
 header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars($string_filename),"_")."_bplaces.kml");
-
   
-  $baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
+$baseurl = "http://".$_SERVER['SERVER_NAME']."/".substr($_SERVER['REQUEST_URI'],1 , strrpos($_SERVER['REQUEST_URI'],"/"));
+
 // BEGIN **************
   // Creates an array of strings to hold the lines of the KML file.
   echo "<?xml version='1.0' encoding='UTF-8'?>\n";
@@ -155,7 +145,7 @@ header("Content-disposition: attachment; filename=".changeChars(replaceUTFChars(
     echo "</table>]]>\n";
     echo "</description>\n";
     echo "<Point>\n";
-    echo "<coordinates>".$row['longitude'].",".$row['latitude']."</coordinates>\n";
+    echo "<coordinates>".$row['Longitude'].",".$row['Latitude']."</coordinates>\n";
     echo "</Point>\n";
     echo "</Placemark>\n";
 
