@@ -12,6 +12,15 @@ div.devnote {
     margin: 3px;
 }
 
+.error {
+    border: 1px solid red;
+    background-color: #FFAAAA;
+    color: #800000;
+    margin: auto;
+    padding: 25px;
+    max-width: 600px;
+}
+
 p {
 	font-family:Arial;
 	font-size:small;

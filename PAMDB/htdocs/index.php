@@ -1,8 +1,14 @@
 <?php
-$pos_mes = FALSE;
-include('conx/db_conx_open.php');
 require_once 'support.php';
-standard_html_header("")
+standard_html_header("");
+
+require_once 'config.inc.php';
+require_once 'Helper.php';
+require_once 'DB.php';
+require_once 'View.php';
+
+try {
+    DB::vInit(DB_USER, DB_PASSWD, DB_HOST, DB_DATABASE);
 ?>
 <h1 class="documentFirstHeading">
 European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe
@@ -67,19 +73,9 @@ or for which cost estimates are provided.
 						</select><br/>
 						Ctrl+click for<br/>multiple selection
 					</td>
-					<td class="filter">
-						<label class="question">Sector</label><br/>
-						<input type="checkbox" name="id_sector[]" value="select_all"/><label class="specialval">Select all</label><br/>
-						<?php
-							include('select/select_val_sector.php');
-							if ($val_sector_num) {
-								while ($val_sector_fetch = mysql_fetch_array($val_sector)) {
-									include('fetch/fetch_val_sector.php');
-									echo "<input type=\"checkbox\" id=\"id_sector$id_sector\" name=\"id_sector[]\" value=\"$id_sector\"/><label for=\"id_sector$id_sector\">$sector</label><br/>";
-								}
-							}
-						?>
-					</td>
+                    <?php
+                    View::vRenderCheckboxList('Sector', 'id_sector', 'id_sector', 'sector', 'rgGetSectors');
+                    ?>
 					<td class="filter">
 						<label class="question">Policy Type</label><br/>
 						<input type="checkbox" name="id_type[]" id="id_type_all" value="select_all"/><label for="id_type_all" class="specialval">Select all</label><br/>
@@ -168,4 +164,30 @@ or for which cost estimates are provided.
 				</tr>
 			</table>
 		</form>
-<?php standard_html_footer() ?>
+<?php
+} catch (Exception $e) {
+    Helper::vSendCrashReport($e);
+?>
+    <div class="error">
+        <h1>An error has occured</h1>
+        <p>
+            We are very sorry, but it seems that something has gone wrong.
+            Technical information about the problem has been sent to the
+            site's maintainer.
+        </p>
+        <p>
+            Additionally, we would greatly appreciate if you could send a
+            short summary of what you were attempting to do to eea-pam@econemon.com.
+        </p>
+        <p>
+            On doing so, please refer to the following error message:
+        </p>
+        <p>
+            <strong><em><?=$e->getMessage()?></em></strong>
+        </p>
+    </div>
+<?php
+}
+
+standard_html_footer();
+?>
