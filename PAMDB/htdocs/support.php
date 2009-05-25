@@ -83,7 +83,7 @@ function standard_html_header($page)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-<?php include('template/getRequiredHead.txt'); ?>
+<?php include_template('template/getRequiredHead.txt'); ?>
 		<title>
 			<?echo $page ?> - Policies and Measures in Europe - ECCP
 		</title>
@@ -91,7 +91,7 @@ function standard_html_header($page)
 	</head>
 	<body>
 		<div id="visual-portal-wrapper">
-<?php include('template/getHeader.txt'); ?>
+<?php include_template('template/getHeader.txt'); ?>
                 <!-- The wrapper div. It contains the three columns. -->
                         <div id="portal-columns" class="visualColumnHideTwo">
                         <!-- start of the main and left columns -->
@@ -142,7 +142,7 @@ function standard_html_footer()
         <div class="visualClear"><!-- --></div>
       </div>
       <!-- end column wrapper -->
-      <?php include('template/getFooter.txt'); ?>
+      <?php include_template('template/getFooter.txt'); ?>
     </div>
   </body>
 </html>
@@ -153,6 +153,13 @@ function standard_html_footer()
 function sql_error($table, $sql)
 {
     echo("<div class=\"error-msg\"><p>Error in querying table: \"$table\".</p><p>$sql</p></div>");
+}
+
+function include_template($path)
+{
+    if (false == @include($path)) {
+        echo('<div class="devnote">Could not find template \''.htmlentities($path).'\'</div>');
+    }
 }
 
 ?>
