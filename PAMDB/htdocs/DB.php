@@ -37,10 +37,13 @@ class DB
         $this->_sDb = $sDb;
     }
 
-    public static function vInit($sUser, $sPass, $sHost = '', $sDb = '')
+    public static function vInit()
     {
         if (is_null(self::$_INSTANCE)) {
-            $db = new DB($sUser, $sPass, $sHost, $sDb);
+            if (false == @include_once('config.inc.php')) {
+                throw new Exception("Configuration file is missing");
+            }
+            $db = new DB(DB_USER, DB_PASSWD, DB_HOST, DB_DATABASE);
             $db->_vConnect();
             self::$_INSTANCE = $db;
         }
@@ -48,16 +51,38 @@ class DB
 
     public static function rgSelectRows($sql)
     {
-        self::_vAssertConnection();
+        $dbr = self::_dbrExecute($sql);
         $rg = array();
+        for ($c = 0, $cMax = mysql_num_rows($dbr); $c < $cMax; $c++) {
+            $rg[$c] = mysql_fetch_array($dbr, MYSQL_ASSOC);
+        }
+        @mysql_free_result($dbr);
+        return $rg;
+    }
+
+    public static function mpSelectRow($sql)
+    {
+        $dbr = self::_dbrExecute($sql);
+        $c = mysql_num_rows($dbr);
+        if (1 < $c) {
+            throw new Exception("The query should never return more than one row");
+        } else if ($c == 0) {
+            return null;
+        } else {
+            $mp = mysql_fetch_array($dbr, MYSQL_ASSOC);
+            @mysql_free_result($dbr);
+            return $mp;
+        }
+    }
+
+    private static function _dbrExecute($sql)
+    {
+        self::_vAssertConnection();
         $dbr = @mysql_query($sql, self::$_INSTANCE->_flCon);
         if (false == $dbr) {
             throw new Exception("A database error has occurred, could not retrieve data.");
         }
-        for ($c = 0, $cMax = mysql_num_rows($dbr); $c < $cMax; $c++) {
-            $rg[$c] = mysql_fetch_array($dbr, MYSQL_ASSOC);
-        }
-        return $rg;
+        return $dbr;
     }
 
     private function _vConnect()

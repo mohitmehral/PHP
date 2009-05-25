@@ -1,8 +1,14 @@
 <?php
-$pos_mes = FALSE;
-include('conx/db_conx_open.php');
 require_once 'support.php';
-standard_html_header("Search Results")
+standard_html_header("Search Results");
+
+require_once 'config.inc.php';
+require_once 'DB.php';
+require_once 'Model.php';
+require_once 'View.php';
+
+try {
+    DB::vInit();
 ?>
 <?php
 // getting Identifier from database with the user defined filter
@@ -109,6 +115,8 @@ standard_html_header("Search Results")
 		$sql = $sql . $where_select;
 	}
 	
+    View::vRenderInfoBox($sql);
+
 	$identifier = @mysql_query($sql);
 	$identifier_num = @mysql_num_rows($identifier);
 	if (!$identifier) {
@@ -130,17 +138,7 @@ standard_html_header("Search Results")
 		reset($ary_id);
 		
 		foreach ($ary_id as $id) {
-			$sql = "SELECT id, pam_identifier, cluster, name_pam, red_2005_val, red_2005_text, red_2010_val, red_2010_text, red_2020_val, red_2020_text, costs_per_tonne FROM pam WHERE id = '$id'";
-			
-			$data = @mysql_query($sql);
-			$data_num = @mysql_num_rows($data);
-			if (!$data) {
-				sql_error('pam', $sql);
-			} else {
-				if ($pos_mes) {echo("<p>data</p><p>$sql</p>");}
-			}
-			
-			$data_fetch = mysql_fetch_array($data);
+			$data_fetch = Model::mpGetPamById($id);
 			
 			$name_pam[$id] = $data_fetch['name_pam'];
 			$pam_identifier[$id] = $data_fetch['pam_identifier'];
@@ -571,4 +569,10 @@ standard_html_header("Search Results")
 			?>
 		  </tbody>
 		</table>
-<?php standard_html_footer() ?>
+<?php
+} catch (Exception $e) {
+    Helper::vSendCrashReport($e);
+    View::vRenderErrorMsg($e);
+}
+standard_html_footer();
+?>

@@ -8,7 +8,7 @@ require_once 'DB.php';
 require_once 'View.php';
 
 try {
-    DB::vInit(DB_USER, DB_PASSWD, DB_HOST, DB_DATABASE);
+    DB::vInit();
 ?>
 <h1 class="documentFirstHeading">
 European Climate Change Programme (ECCP) - Database on Policies and Measures in Europe
@@ -167,26 +167,7 @@ or for which cost estimates are provided.
 <?php
 } catch (Exception $e) {
     Helper::vSendCrashReport($e);
-?>
-    <div class="error">
-        <h1>An error has occured</h1>
-        <p>
-            We are very sorry, but it seems that something has gone wrong.
-            Technical information about the problem has been sent to the
-            site's maintainer.
-        </p>
-        <p>
-            Additionally, we would greatly appreciate if you could send a
-            short summary of what you were attempting to do to eea-pam@econemon.com.
-        </p>
-        <p>
-            On doing so, please refer to the following error message:
-        </p>
-        <p>
-            <strong><em><?=$e->getMessage()?></em></strong>
-        </p>
-    </div>
-<?php
+    View::vRenderErrorMsg($e);
 }
 
 standard_html_footer();
