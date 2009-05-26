@@ -7,6 +7,10 @@ require_once 'DB.php';
 require_once 'Model.php';
 require_once 'View.php';
 
+require_once 'StarQuery.php';
+require_once 'WhereClause.php';
+require_once 'Dimension.php';
+
 try {
     DB::vInit();
 ?>
@@ -15,7 +19,33 @@ try {
 	
 	unset($where_select);
 	$sql = "SELECT id FROM pam WHERE name_pam is not NULL ";
+
+    $q = new StarQuery('pam', 'id');
+    $whrT = new WhereClause();
+    $whrT->vNotNull('name_pam');
+    $q->vAddWhere($whrT);
 	
+    if (!empty($_GET['id_member_state'])) {
+        if (!is_array($_GET['id_member_state'])) {
+            $rgFilter = array($_GET['id_member_state']);
+        } else {
+            $rgFilter = array_values($_GET['id_member_state']);
+        }
+        if (!in_array('select_all', $rgFilter)) {
+            if (in_array('1', $rgFilter)) {
+                //$rgFilter = Model::rgGetEu15StateIds();
+            } else if (in_array('2', $rgFilter)) {
+                //$rgFilter = Model::rgGetEu10StateIds();
+            }
+            $dim = new Dimension('pam_member_state', 'id');
+            $dim->vSetFilter('id_member_state', $rgFilter);
+            $q->vAddDimension($dim);
+        }
+    }
+	
+    $sqlT = $q->sqlRender(array('id'));
+    View::vRenderInfoBox($sqlT);
+
 	$id_member_state = $_GET['id_member_state'];
 	if ($id_member_state) {
 		if (is_array($id_member_state)) {

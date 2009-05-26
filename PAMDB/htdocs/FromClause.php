@@ -43,8 +43,10 @@ class FromClause
         $sql = ' FROM '.$this->_sqlRenderTableSpec($this->_sPrimaryTbl);
         foreach ($this->_rgJoins as $rgJoin) {
             list($sqlT, $rgLft, $sOp, $rgRgt) = $rgJoin;
-            $sql .= ' '.sprintf($sqlT, $this->_sqlRenderTableSpec($rgLft[0]), $this->_sqlRenderColCompare($rgLft, $sOp, $rgRgt));
+            $sql .= ' '.sprintf($sqlT, $this->_sqlRenderTableSpec($rgRgt[0]), $this->_sqlRenderColCompare($rgLft, $sOp, $rgRgt));
         }
+
+        return $sql;
     }
 
     private function _sqlRenderTableSpec($s)
@@ -101,7 +103,7 @@ class FromClause
 
     private function _sGetAlias($s)
     {
-        return $this->_mpTableAlias[(string)$s];
+        return $this->_mpTableAliases[(string)$s];
     }
 
     private function _vAddJoin($sTmpl, $rgLftCol, $sOp, $rgRgtCol)

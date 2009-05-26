@@ -40,11 +40,11 @@ class Sql
         return self::sqlQuoteId($rg[0]).'.'.self::sqlQuoteId($rg[1]);
     }
 
-    public static function sqlFieldList($rg = null)
+    public static function sqlFieldList($rg = null, $sQualifier = null)
     {
         if (is_array($rg) && ($cMax = count($rg)) > 0) {
             for ($c = 0; $c < $cMax; $c++) {
-                $rg[$c] = Sql::sqlQuoteId($rg[$c]);
+                $rg[$c] = (empty($sQualifier) ? '' : self::sqlQuoteId($sQualifier).'.').Sql::sqlQuoteId($rg[$c]);
             }
             return join(', ', $rg);
         } else {

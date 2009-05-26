@@ -21,6 +21,7 @@ require_once 'SqlExpression.php';
 class WhereClause extends SqlExpression
 {
     const _EQUAL = '=';
+    const _NOT = '!';
     const _AND = '&';
     const _OR = '|';
 
@@ -39,17 +40,28 @@ class WhereClause extends SqlExpression
         $this->_rgOps = array($varFieldSpec, $varFieldValue);
     }
 
+    public function vNotNull($varFieldSpec)
+    {
+        $this->_vAssertOperator(null);
+        $this->_coOp = self::_NOT;
+        $this->_rgOps = array($varFieldSpec, null);
+    }
+
     public function vAnd(SqlExpression $whr)
     {
         $this->_vAssertOperator(self::_AND);
+        $this->_coOp = self::_AND;
         $this->_rgOps[] = $whr;
     }
 
-    public function sqlRender()
+    public function sqlRender($fStandalone = true)
     {
         switch ($this->_coOp) {
             case self::_EQUAL:
                 $sql = $this->_sqlRenderEqual();
+                break;
+            case self::_NOT:
+                $sql = $this->_sqlRenderEqual(true);
                 break;
             case self::_AND:
                 $sql = $this->_sqlRenderRecursive('AND');
@@ -60,11 +72,15 @@ class WhereClause extends SqlExpression
             default:
                 return '';
         }
-
-        return ' WHERE '.$sql;
+        
+        if ($fStandalone) {
+            return ' WHERE '.$sql;
+        } else {
+            return $sql;
+        }
     }
 
-    private function _sqlRenderEqual()
+    private function _sqlRenderEqual($fInvert = false)
     {
         if (count($this->_rgOps) != 2) {
             throw new Exception("Invalid number of operands");
@@ -79,15 +95,15 @@ class WhereClause extends SqlExpression
         }
 
         if (is_null($this->_rgOps[1])) {
-            $sql .= ' IS NULL';
+            $sql .= ' IS '.($fInvert ? 'NOT ' : '').'NULL';
         } else if (is_array($this->_rgOps[1])) {
             $rg = array();
             foreach ($this->_rgOps[1] as $sOp) {
                 $rg[] = Sql::sqlQuoteValue($sOp);
             }
-            $sql .= ' IN('.join(', ', $rg).')';
+            $sql .= ($fInvert ? 'NOT ' : '').' IN('.join(', ', $rg).')';
         } else {
-            $sql .= ' = ';
+            $sql .= ' '.($fInvert ? '!=' : '=').' ';
             $sql .= Sql::sqlQuoteValue($this->_rgOps[1]);
         }
 
@@ -100,7 +116,7 @@ class WhereClause extends SqlExpression
 
         foreach ($this->_rgOps as $whr) {
             if (is_a($whr, __CLASS__)) {
-                $rg[] = $whr->sqlRender();
+                $rg[] = $whr->sqlRender(false);
             } else {
                 throw new Exception("Encountered invalid operand");
             }
@@ -109,9 +125,9 @@ class WhereClause extends SqlExpression
         return '('.join(') '.$sGlue.' (', $rg).')';
     }
 
-    private function _vAssertOperator($co)
+    private function _vAssertOperator($co, $fOrEmpty = true)
     {
-        if ($co !== $this->_coOp) {
+        if ($co !== $this->_coOp && ($fOrEmpty == false || !is_null($this->_coOp))) {
             throw new Exception("Assertion failed: unexpected operator set");
         }
     }

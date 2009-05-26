@@ -60,7 +60,7 @@ class Select
         }
     }
 
-    private static function _sqlOrderClause($rg)
+    protected static function _sqlOrderClause($rg)
     {
         if (is_array($mp) && count($mp) > 0) {
             return ' ORDER BY '.Sql::sqlFieldList($rg);

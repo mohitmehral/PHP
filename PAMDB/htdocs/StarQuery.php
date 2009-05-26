@@ -44,7 +44,7 @@ class StarQuery extends Select
 
         foreach ($this->_rgDimensions as $ix=>$dim) {
             $sDimAlias = 'd'.($ix + 1);
-            $frm->vLeftJoinOnEqual(array($dim->sGetTable(), $sDimAlias), $this->_sJoinColumn, $dim->sGetJoinColumn());
+            $frm->vLeftJoinOnEqual(array($dim->sGetTable(), $sDimAlias), $this->_sJoinField, $dim->sGetJoinColumn());
             $whrT = new WhereClause();
             $whrT->vEquals(array($sDimAlias, $dim->sGetSearchField()), $dim->varGetSearchValue());
             $whr->vAnd($whrT);
@@ -55,7 +55,7 @@ class StarQuery extends Select
         }
 
         $sql = 'SELECT '
-                 .parent::_sqlFieldList($rgFieldList)
+                 .Sql::sqlFieldList($rgFieldList, 'f')
                  .$frm->sqlRender()
                  .$whr->sqlRender()
                  .parent::_sqlOrderClause($rgOrderFields);
