@@ -14,6 +14,7 @@
 
 require_once 'Select.php';
 require_once 'Dimension.php';
+require_once 'SqlExpression.php';
 require_once 'WhereClause.php';
 require_once 'FromClause.php';
 
@@ -44,10 +45,8 @@ class StarQuery extends Select
 
         foreach ($this->_rgDimensions as $ix=>$dim) {
             $sDimAlias = 'd'.($ix + 1);
+            $whr->vAnd($this->_whrFromDim($sDimAlias, $dim));
             $frm->vLeftJoinOnEqual(array($dim->sGetTable(), $sDimAlias), $this->_sJoinField, $dim->sGetJoinColumn());
-            $whrT = new WhereClause();
-            $whrT->vEquals(array($sDimAlias, $dim->sGetSearchField()), $dim->varGetSearchValue());
-            $whr->vAnd($whrT);
         }
 
         foreach ($this->_rgAdditionalWhere as $whrT) {
@@ -68,15 +67,51 @@ class StarQuery extends Select
         $this->_rgDimensions[] = $dim;
     }
 
-    public function vAddWhere(WhereClause $whr)
+    public function vAddWhere(SqlExpression $whr)
     {
         $this->_rgAdditionalWhere[] = $whr;
+    }
+
+    private function _whrFromDim($sTblRef, Dimension $dim)
+    {
+        $this->_vAssertRestriction($dim);
+
+        // TODO: The semantics of constructing WHERE clauses could still be improved
+        $whr = new WhereClause();
+        $whrNulls = new WhereClause();
+        if ($dim->fIsNullAllowed()) {
+            $whrNulls->vEquals(array($sTblRef, $dim->sGetJoinColumn()), null);
+        } else {
+            $whrNulls->vNotNull(array($sTblRef, $dim->sGetJoinColumn()));
+        }
+        if ($dim->fIsFiltered()) {
+            $whrSearch = new WhereClause();
+            $whrSearch->vEquals(array($sTblRef, $dim->sGetSearchField()), $dim->varGetSearchValue());
+            if ($dim->fIsNullAllowed()) {
+                $whr->vOr($whrSearch);
+                $whr->vOr($whrNulls);
+            } else {
+                $whr->vAnd($whrSearch);
+                $whr->vAnd($whrNulls);
+            }
+        } else {
+            $whr = $whrNulls;
+        }
+
+        return $whr;
     }
 
     private function _vAssertInit()
     {
         if (empty($this->_sFactTable) || empty($this->_sJoinField)) {
             throw new Exception("StarQuery was not properly initialized");
+        }
+    }
+
+    private function _vAssertRestriction($dim)
+    {
+        if ($dim->fIsNullAllowed() && !$dim->fIsFiltered()) {
+            throw new Exception("Unexpectedly encountered a non-restricting dimension.");
         }
     }
 }

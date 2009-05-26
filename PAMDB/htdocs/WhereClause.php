@@ -49,8 +49,18 @@ class WhereClause extends SqlExpression
 
     public function vAnd(SqlExpression $whr)
     {
-        $this->_vAssertOperator(self::_AND);
-        $this->_coOp = self::_AND;
+        $this->_vAddOperand($whr, self::_AND);
+    }
+
+    public function vOr(SqlExpression $whr)
+    {
+        $this->_vAddOperand($whr, self::_OR);
+    }
+
+    private function _vAddOperand(SqlExpression $whr, $coOp)
+    {
+        $this->_vAssertOperator($coOp);
+        $this->_coOp = $coOp;
         $this->_rgOps[] = $whr;
     }
 
@@ -115,7 +125,7 @@ class WhereClause extends SqlExpression
         $rg = array();
 
         foreach ($this->_rgOps as $whr) {
-            if (is_a($whr, __CLASS__)) {
+            if (is_a($whr, 'SqlExpression')) {
                 $rg[] = $whr->sqlRender(false);
             } else {
                 throw new Exception("Encountered invalid operand");

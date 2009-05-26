@@ -34,6 +34,7 @@ class FulltextMatch extends SqlExpression
             case self::MOD_BOOL:
             case self::MOD_NATLANG:
                 $this->_coMode = $coMode;
+                break;
             default:
                 throw new Exception("Unsupported mode for fulltext search");
         }

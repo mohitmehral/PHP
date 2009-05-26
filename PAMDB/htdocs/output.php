@@ -6,10 +6,12 @@ require_once 'config.inc.php';
 require_once 'DB.php';
 require_once 'Model.php';
 require_once 'View.php';
+require_once 'Controller.php';
 
 require_once 'StarQuery.php';
 require_once 'WhereClause.php';
 require_once 'Dimension.php';
+require_once 'FulltextMatch.php';
 
 try {
     DB::vInit();
@@ -25,12 +27,7 @@ try {
     $whrT->vNotNull('name_pam');
     $q->vAddWhere($whrT);
 	
-    if (!empty($_GET['id_member_state'])) {
-        if (!is_array($_GET['id_member_state'])) {
-            $rgFilter = array($_GET['id_member_state']);
-        } else {
-            $rgFilter = array_values($_GET['id_member_state']);
-        }
+    if (null != ($rgFilter = Controller::rgFilterFromRequest('id_member_state'))) {
         if (!in_array('select_all', $rgFilter)) {
             if (in_array('1', $rgFilter)) {
                 //$rgFilter = Model::rgGetEu15StateIds();
@@ -42,151 +39,61 @@ try {
             $q->vAddDimension($dim);
         }
     }
-	
-    $sqlT = $q->sqlRender(array('id'));
-    View::vRenderInfoBox($sqlT);
 
-	$id_member_state = $_GET['id_member_state'];
-	if ($id_member_state) {
-		if (is_array($id_member_state)) {
-			if (!in_array("select_all", $id_member_state)) {
-				if (in_array("1", $id_member_state) or in_array("2", $id_member_state)) {
-					$where_select = $where_select . "AND id IN (SELECT id FROM pam_member_state LEFT JOIN val_member_state ON val_member_state.id_member_state = pam_member_state.id_member_state WHERE ";
-					foreach ($id_member_state as $value) {
-						if ($value == "1") {
-							$where_select = $where_select . "eu_15 = '1' OR ";
-						} else {
-							if ($value == "2") {
-								$where_select = $where_select . "eu_10 = '1' OR ";
-							} else {
-								$where_select = $where_select . "pam_member_state.id_member_state = '$value' OR ";
-							}
-						}
-					}
-					$where_select = substr($where_select, 0, -4) . ") ";
-				} else {
-					$where_select = $where_select . "AND id IN (SELECT id FROM pam_member_state WHERE ";
-					foreach ($id_member_state as $value) {
-						$where_select = $where_select . "id_member_state = '$value' OR ";
-					}
-					$where_select = substr($where_select, 0, -4) . ") ";
-				}
-			}
-		} else {
-			if ($id_member_state != "select_all") {
-				if ($id_member_state == "1" or $id_member_state == "2") {
-					$where_select = $where_select . "AND id IN (SELECT id FROM pam_member_state LEFT JOIN val_member_state ON val_member_state.id_member_state = pam_member_state.id_member_state WHERE ";
-					if ($id_member_state == "1") {
-						$where_select = $where_select . "eu_15 = '1') ";
-					} else {
-						$where_select = $where_select . "eu_10 = '1') ";
-					}
-				} else {
-					$where_select = $where_select . "AND id IN (SELECT id FROM pam_member_state WHERE ";
-					$where_select = $where_select . "id_member_state = '$id_member_state') ";
-				}
-			}
-		}
-	}
-	
 	$valves = array("sector","ghg","type","status","category","keywords","related_ccpm","related_ccpm","with_or_with_additional_measure");
 	
 	foreach($valves as $valve) {
 		$val_id = "id_" . $valve;
-		$$val_id = $_GET[$val_id];
 		$val_pam = "pam_" . $valve;
-		if ($$val_id) {
-			if (is_array($$val_id)) {
-				if (in_array("no_value", $$val_id)) {
-					$where_select = $where_select . "AND (id NOT IN (SELECT id FROM $val_pam) OR ";
-					if (!in_array("select_all", $$val_id)) {
-						$where_select_1 = "id IN (SELECT id FROM $val_pam WHERE ";
-						foreach ($$val_id as $value) {
-							if ($value != "no_value") {
-								$where_select_1 = $where_select_1 . "$val_id = '$value' OR ";
-							}
-						}
-						if ($where_select_1 != "id IN (SELECT id FROM $val_pam WHERE ") {
-							$where_select_1 = substr($where_select_1, 0, -4) . ")) ";
-							$where_select = $where_select . $where_select_1;
-						} else {
-							$where_select = substr($where_select, 0, -4) . ") ";
-						}
-					} else {
-						$where_select = substr($where_select, 0, -4) . ") ";
-					}
-				} else {
-					if (!in_array("select_all", $$val_id)) {
-						$where_select = $where_select . "AND id IN (SELECT id FROM $val_pam WHERE ";
-						foreach ($$val_id as $value) {
-							$where_select = $where_select . "$val_id = '$value' OR ";
-						}
-						$where_select = substr($where_select, 0, -4) . ") ";
-					}
-				}
-			} else {
-				if ($$val_id != "select_all") {
-					if ($$val_id == "no_value") {
-						$where_select = $where_select . "AND id NOT IN (SELECT id FROM $val_pam) ";
-					}
-					$where_select = $where_select . "AND id IN (SELECT id FROM $val_pam WHERE ";
-					$where_select = $where_select . "$val_id = '$$val_id') ";
-				}
-			}
-		}
-	}
-	
-	$any_word = $_GET['any_word'];
-	if ($any_word) {
-		$where_select = $where_select . "AND MATCH (name_pam, objective_of_measure, description_pam, explanation_basis_of_mitigation_estimates, factors_resulting_in_emission_reduction, documention_source, indicator_monitor_implementation, general_comment, reference, description_impact_on_non_ghg, costs_description, costs_documention_source) AGAINST ('*" . $any_word . "*' IN BOOLEAN MODE) ";
-	}
+        
+        if (null != ($rgFilter = Controller::rgFilterFromRequest($val_id))) {
+            if (in_array('no_value', $rgFilter) && in_array('select_all', $rgFilter)) {
+                // allowing all dimension values plus NULL is equivalent
+                // to ignoring the dimension table completely.
+                continue;
+            }
+            $dim = new Dimension($val_pam, 'id');
+            if (in_array('no_value', $rgFilter)) {
+                $dim->vAllowNull();
+            }
+            if (!in_array('select_all', $rgFilter)) {
+                $dim->vSetFilter($val_id, $rgFilter);
+            }
+            $q->vAddDimension($dim);
+        }
+    }
 
-	if ($where_select) {
-		$sql = $sql . $where_select;
-	}
-	
+    if (!empty($_GET['any_word'])) {
+        $whrMatch = new FulltextMatch($_GET['any_word'], Model::rgGetPamTextFields());
+        $q->vAddWhere($whrMatch);
+    }
+
+    $sql = $q->sqlRender(array('id'));
     View::vRenderInfoBox($sql);
-
-	$identifier = @mysql_query($sql);
-	$identifier_num = @mysql_num_rows($identifier);
-	if (!$identifier) {
-		sql_error('pam', $sql);
-	} else {
-		if ($pos_mes) {echo("<p>identifier</p><p>$sql</p>");}
-	}
-	
-	unset($ary_id);
-	
-	while ($identifier_fetch = mysql_fetch_array($identifier)) {
-		$ary_id[] = $identifier_fetch['id'];
-	}
-
-// getting the fields defined in value/table.php for each Identifier which came out of the user defined filter
-	
-	if ($identifier_num) {
-		unset($name_pam, $red_2005_val, $red_2005_text, $red_2010_val, $red_2010_text, $red_2020_val, $red_2020_text, $costs_per_tonne);
-		reset($ary_id);
-		
-		foreach ($ary_id as $id) {
-			$data_fetch = Model::mpGetPamById($id);
-			
-			$name_pam[$id] = $data_fetch['name_pam'];
-			$pam_identifier[$id] = $data_fetch['pam_identifier'];
-			$cluster[$id] = $data_fetch['cluster'];
+    
+    $identifier_num = 0;
+    foreach (DB::rgSelectRows($sql) as $mpRow) {
+        $identifier_num++;
+        $id = $mpRow['id'];
+        $data_fetch = Model::mpGetPamById($id);
+        
+        $name_pam[$id] = $data_fetch['name_pam'];
+        $pam_identifier[$id] = $data_fetch['pam_identifier'];
+        $cluster[$id] = $data_fetch['cluster'];
 //			$red_2005_val[$id] = $data_fetch['red_2005_val'];
-			$red_2005_val[$id] = number_format($data_fetch['red_2005_val'], 0, '.', ',');
-			$red_2005_text[$id] = $data_fetch['red_2005_text'];
+        $red_2005_val[$id] = number_format($data_fetch['red_2005_val'], 0, '.', ',');
+        $red_2005_text[$id] = $data_fetch['red_2005_text'];
 //			$red_2010_val[$id] = $data_fetch['red_2010_val'];
-			$red_2010_val[$id] = number_format($data_fetch['red_2010_val'], 0, '.', ',');
-			$red_2010_text[$id] = $data_fetch['red_2010_text'];
+        $red_2010_val[$id] = number_format($data_fetch['red_2010_val'], 0, '.', ',');
+        $red_2010_text[$id] = $data_fetch['red_2010_text'];
 //			$red_2020_val[$id] = $data_fetch['red_2020_val'];
-			$red_2020_val[$id] = number_format($data_fetch['red_2020_val'], 0, '.', ',');
-			$red_2020_text[$id] = $data_fetch['red_2020_text'];
-			$costs_per_tonne[$id] = $data_fetch['costs_per_tonne'];
-		}
-		
-		$valves = array("member_state","sector","ghg","type","status","category","keywords","related_ccpm","with_or_with_additional_measure");
-	
+        $red_2020_val[$id] = number_format($data_fetch['red_2020_val'], 0, '.', ',');
+        $red_2020_text[$id] = $data_fetch['red_2020_text'];
+        $costs_per_tonne[$id] = $data_fetch['costs_per_tonne'];
+    }
+    
+    $valves = array("member_state","sector","ghg","type","status","category","keywords","related_ccpm","with_or_with_additional_measure");
+
 //		foreach($valves as $valve) {
 //			$val_id = "id_" . $valve;
 //			if ($valve == "ghg" or $valve == "with_or_with_additional_measure") {
@@ -218,7 +125,6 @@ try {
 //				}
 //			}
 //		}
-	}
 ?>
 		<h1>
 			Search Results

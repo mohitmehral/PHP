@@ -22,6 +22,10 @@ class Dimension
 
     private $_varSearchVal = null;
 
+    private $_fNullsAllowed = false;
+
+    private $_fFiltered = false;
+
     public function __construct($sTable, $sCol)
     {
         $this->_sTable = $sTable;
@@ -32,6 +36,7 @@ class Dimension
     {
         $this->_sSearchCol = $sCol;
         $this->_varSearchVal = $varValue;
+        $this->_fFiltered = true;
     }
 
     public function sGetTable()
@@ -52,6 +57,26 @@ class Dimension
     public function varGetSearchValue()
     {
         return $this->_varSearchVal;
+    }
+
+    public function fIsNullAllowed()
+    {
+        return $this->_fNullsAllowed;
+    }
+
+    public function fIsFiltered()
+    {
+        return $this->_fFiltered;
+    }
+
+    public function vAllowNull()
+    {
+        $this->_fNullsAllowed = true;
+    }
+
+    public function vDisallowNull()
+    {
+        $this->_fNullsAllowed = false;
     }
 }
 

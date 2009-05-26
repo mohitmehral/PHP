@@ -47,4 +47,22 @@ class Model
 
         return $mpPam;
     }
+
+    public static function rgGetPamTextFields()
+    {
+        return array(
+                     'name_pam',
+                     'objective_of_measure',
+                     'description_pam',
+                     'explanation_basis_of_mitigation_estimates',
+                     'factors_resulting_in_emission_reduction',
+                     'documention_source',
+                     'indicator_monitor_implementation',
+                     'general_comment',
+                     'reference',
+                     'description_impact_on_non_ghg',
+                     'costs_description',
+                     'costs_documention_source'
+                    );
+    }
 }

@@ -62,7 +62,7 @@ class Select
 
     protected static function _sqlOrderClause($rg)
     {
-        if (is_array($mp) && count($mp) > 0) {
+        if (is_array($rg) && count($rg) > 0) {
             return ' ORDER BY '.Sql::sqlFieldList($rg);
         } else {
             return '';
