@@ -12,6 +12,8 @@
  * The syntax will be MySQL specific.
  */
 
+require_once 'Sql.php';
+
 class Select
 {
     /**
@@ -34,24 +36,12 @@ class Select
         $sql = 'SELECT %s FROM %s%s%s';
 
         $sql = sprintf($sql,
-                       self::_sqlFieldList($rgFields),
-                       self::_sqlQuoteId($sTable),
+                       Sql::sqlFieldList($rgFields),
+                       Sql::sqlQuoteId($sTable),
                        self::_sqlWhereClause($mpWhere),
                        self::_sqlOrderClause($rgOrder));
 
         return $sql;
-    }
-
-    private static function _sqlFieldList($rg = null)
-    {
-        if (is_array($rg) && ($cMax = count($rg)) > 0) {
-            for ($c = 0; $c < $cMax; $c++) {
-                $rg[$c] = self::_sqlQuoteId($rg[$c]);
-            }
-            return join(', ', $rg);
-        } else {
-            return '*';
-        }
     }
 
     private static function _sqlWhereClause($mp = null)
@@ -62,7 +52,7 @@ class Select
                 // We will treat numbers the same as strings and quote them here.
                 // This would not work with some DB servers (e. g. SQL Server 2005),
                 // but should work OK with MySQL.
-                $rg[] = self::_sqlQuoteId($sField).' = \''.mysql_real_escape_string($sVal).'\'';
+                $rg[] = Sql::sqlQuoteId($sField).' = '.Sql::sqlQuoteValue($sVal);
             }
             return ' WHERE '.join(' AND ', $rg);
         } else {
@@ -73,15 +63,10 @@ class Select
     private static function _sqlOrderClause($rg)
     {
         if (is_array($mp) && count($mp) > 0) {
-            return ' ORDER BY '.self::_sqlFieldList($rg);
+            return ' ORDER BY '.Sql::sqlFieldList($rg);
         } else {
             return '';
         }
-    }
-
-    private static function _sqlQuoteId($s)
-    {
-        return '`'.addcslashes($s, '`').'`';
     }
 }
 
