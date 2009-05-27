@@ -60,6 +60,24 @@ class DB
         return $rg;
     }
 
+    public static function rgSelectCol($sql, $sCol = null)
+    {
+        $dbr = self::_dbrExecute($sql);
+        $rg = array();
+        for ($c = 0, $cMax = mysql_num_rows($dbr); $c < $cMax; $c++) {
+            $mp = mysql_fetch_array($dbr, MYSQL_ASSOC);
+            if (empty($sCol)) {
+                $rg[$c] = reset($mp);
+            } else if (array_key_exists($sCol, $mp)) {
+                $rg[$c] = $mp[$sCol];
+            } else {
+                throw new Exception("The specified column is not present in the result");
+            }
+        }
+        @mysql_free_result($dbr);
+        return $rg;
+    }
+
     public static function mpSelectRow($sql)
     {
         $dbr = self::_dbrExecute($sql);

@@ -75,82 +75,16 @@ or for which cost estimates are provided.
 					</td>
                     <?php
                     View::vRenderCheckboxList('Sector', 'id_sector', 'id_sector', 'sector', 'rgGetSectors');
+                    View::vRenderCheckboxList('Policy Type', 'id_type', 'id_type', 'type', 'rgGetTypes');
                     ?>
-					<td class="filter">
-						<label class="question">Policy Type</label><br/>
-						<input type="checkbox" name="id_type[]" id="id_type_all" value="select_all"/><label for="id_type_all" class="specialval">Select all</label><br/>
-						<?php
-							include('select/select_val_type.php');
-							if ($val_type_num) {
-								while ($val_type_fetch = mysql_fetch_array($val_type)) {
-									include('fetch/fetch_val_type.php');
-									echo "<input type=\"checkbox\" id=\"id_type$id_type\" name=\"id_type[]\" value=\"$id_type\"/><label for=\"id_type$id_type\">$type</label><br/>";
-								}
-							}
-						?>
-					</td>
 				</tr>
 				<tr>
-					<td class="filter">
-						<label class="question">GHG affected</label><br/>
-						<input type="checkbox" name="id_ghg[]" value="select_all"/><label class="specialval">Select all</label><br/>
-						<?php
-							include('select/select_val_ghg.php');
-							if ($val_ghg_num) {
-								while ($val_ghg_fetch = mysql_fetch_array($val_ghg)) {
-									include('fetch/fetch_val_ghg.php');
-									echo "<input type=\"checkbox\" id=\"id_ghg$id_ghg\" name=\"id_ghg[]\" value=\"$id_ghg\"/><label for=\"id_ghg$id_ghg\">$ghg_output</label><br/>";
-								}
-							}
-						?>
-					</td>
-					<td class="filter">
-						<label class="question">Status</label><br/>
-						<input type="checkbox" name="id_status[]" value="select_all"/><label class="specialval">Select all</label><br/>
-						<input type="checkbox" name="id_status[]" value="no_value"/><label class="specialval">no value</label><br/>
-						<?php
-							include('select/select_val_status.php');
-							if ($val_status_num) {
-								while ($val_status_fetch = mysql_fetch_array($val_status)) {
-									include('fetch/fetch_val_status.php');
-									echo "<input type=\"checkbox\" id=\"id_status$id_status\" name=\"id_status[]\" value=\"$id_status\"/><label for=\"id_status$id_status\">$status</label><br/>";
-								}
-							}
-						?>
-					</td>
-					<td class="filter">
-						<label class="question">Scenario</label><br/>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="select_all"/><label class="specialval">Select all</label><br/>
-						<input type="checkbox" name="id_with_or_with_additional_measure[]" value="no_value"/><label class="specialval">no value</label><br/>
-						<?php
-							include('select/select_val_with_or_with_additional_measure.php');
-							if ($val_with_or_with_additional_measure_num) {
-								while ($val_with_or_with_additional_measure_fetch = mysql_fetch_array($val_with_or_with_additional_measure)) {
-									include('fetch/fetch_val_with_or_with_additional_measure.php');
-									echo "<input type=\"checkbox\" id=\"id_scenario$id_with_or_with_additional_measure\" name=\"id_with_or_with_additional_measure[]\" value=\"$id_with_or_with_additional_measure\"/><label for=\"id_scenario$id_with_or_with_additional_measure\">$with_or_with_additional_measure</label><br/>";
-								}
-							}
-						?>
-<!--						<label class="question">Key words</label><br/>
-						<select size="6" name="id_keywords[]" multiple>
-							<option value="select_all">
-								All
-							</option>-->
-							<?php
-//								$where_select = "where val_keywords.id_sector = '$id_sector'";
-//								include('select/select_val_keywords.php');
-//								if ($val_keywords_num) {
-//									while ($val_keywords_fetch = mysql_fetch_array($val_keywords)) {
-//										include('fetch/fetch_val_keywords.php');
-//										echo "<option value=\"$id_keywords\">" .
-//											$keywords . "</option>";
-//									}
-//								}	
-//								unset($where_select);
-							?>
-<!--						</select><br/>
-						Ctrl+click for<br/>multiple selection-->
-					</td>
+                    <?php
+                    View::vRenderCheckboxList('GHG affected', 'id_ghg', 'id_ghg', 'ghg_output', 'rgGetGhgs');
+                    View::vRenderCheckboxList('Status', 'id_status', 'id_status', 'status', 'rgGetStatusList', true);
+                    // NOTICE: The following call produces a different "id" attribute on the input tag than the original code
+                    View::vRenderCheckboxList('Scenario', 'id_with_or_with_additional_measure', 'id_with_or_with_additional_measure', 'with_or_with_additional_measure', 'rgGetScenarios', true);
+                    ?>
 				</tr>
 				<tr>
 					<td colspan="2" class="filter">

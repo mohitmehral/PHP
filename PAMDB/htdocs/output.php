@@ -30,9 +30,9 @@ try {
     if (null != ($rgFilter = Controller::rgFilterFromRequest('id_member_state'))) {
         if (!in_array('select_all', $rgFilter)) {
             if (in_array('1', $rgFilter)) {
-                //$rgFilter = Model::rgGetEu15StateIds();
+                $rgFilter = Model::rgGetEu15StateIds();
             } else if (in_array('2', $rgFilter)) {
-                //$rgFilter = Model::rgGetEu10StateIds();
+                $rgFilter = Model::rgGetEu10StateIds();
             }
             $dim = new Dimension('pam_member_state', 'id');
             $dim->vSetFilter('id_member_state', $rgFilter);
@@ -93,38 +93,6 @@ try {
     }
     
     $valves = array("member_state","sector","ghg","type","status","category","keywords","related_ccpm","with_or_with_additional_measure");
-
-//		foreach($valves as $valve) {
-//			$val_id = "id_" . $valve;
-//			if ($valve == "ghg" or $valve == "with_or_with_additional_measure") {
-//				$val_output = $valve . "_output";
-//			} else {
-//				$val_output = $valve;
-//			}
-//			$val_pam = "pam_" . $valve;
-//			$val_val = "val_" . $valve;
-//		
-//			unset($$valve);
-//			reset($ary_id);
-//		
-//			foreach ($ary_id as $id) {
-//				$sql = "SELECT $val_output FROM $val_val JOIN $val_pam ON " . $val_val . "." . $val_id . " = " . $val_pam . "." . $val_id . " WHERE id = '$id' ORDER BY $val_output";
-//				$data = @mysql_query($sql);
-//				$data_num = @mysql_num_rows($data);
-//				if (!$data) {
-//					sql_error($val_val, $sql);
-//				} else {
-//					if ($pos_mes) {echo("<p>$val_output</p><p>$sql</p>");}
-//				}
-//				
-//				if ($data_num) {
-//					while ($data_fetch = mysql_fetch_array($data)) {
-//						${$val_output}[$id] = ${$val_output}[$id] . $data_fetch[$val_output] . "<br/>";
-//					}
-//					${$val_output}[$id] = substr(${$val_output}[$id], 0, -5);
-//				}
-//			}
-//		}
 ?>
 		<h1>
 			Search Results
@@ -183,9 +151,6 @@ try {
 							<td>
 							  <a href=\"details?id=$key\">$name_pam[$key]</a>
 							</td>";
-//							<td>
-//							  $category[$key]
-//							</td>
 							echo "<td>
 							  $type[$key]
 							</td>

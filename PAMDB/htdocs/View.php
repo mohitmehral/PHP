@@ -32,7 +32,7 @@ class View
             foreach (@call_user_func(array('Model', $fnGetter)) as $mp) {
             ?>
             <input type="checkbox" 
-                   id="<?=$htmlVarName?>$id_ghg"
+                   id="<?=$htmlVarName?><?=$mp[$sIdField]?>"
                    name="<?=$htmlVarName?>[]"
                    value="<?=$mp[$sIdField]?>" />
             <label for="<?=$htmlVarName?><?=$mp[$sIdField]?>"><?=$mp[$sValueField]?></label><br/>

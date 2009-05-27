@@ -30,5 +30,14 @@ class Controller
             return null;
         }
     }
+
+    public static function ixPamFromRequest()
+    {
+        if (empty($_GET['id'])) {
+            return 0;
+        } else {
+            return (int)sprintf('%d', $_GET['id']);
+        }
+    }
 }
 ?>
