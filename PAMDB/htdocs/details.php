@@ -1,7 +1,5 @@
 <?php
 require_once 'support.php';
-if ($name_pam) standard_html_header($name_pam);
-else standard_html_header("Detailed Results");
 
 require_once 'DB.php';
 require_once 'Helper.php';
@@ -14,6 +12,9 @@ try {
     $ixPam = Controller::ixPamFromRequest();
     $mpPam = Model::mpGetPamDetailsById($ixPam);
     extract($mpPam);
+
+    if ($name_pam) standard_html_header($name_pam);
+    else standard_html_header("Detailed Results");
 ?>
 		<h1>
 			Detailed Results<?php if ($name_pam) {echo " for ". $name_pam;}?>
