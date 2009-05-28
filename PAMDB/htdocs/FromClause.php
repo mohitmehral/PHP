@@ -31,9 +31,14 @@ class FromClause
         $this->_sPrimaryTbl = $this->_sRegisterTable($varPrimaryTableSpec);
     }
 
-    public function vLeftJoinOnEqual($varRightTableSpec, $sLeftCol, $sRightCol)
+    public function vLeftJoinOnEqual($varRightTableSpec, $sLeftCol, $sRightCol, $varLeftTableSpec = null)
     {
-        $rgLft = array($this->_sPrimaryTbl, $sLeftCol);
+        if (empty($varLeftTableSpec)) {
+            $sLeftTbl = $this->_sPrimaryTbl;
+        } else {
+            $sLeftTbl = $this->_sRegisterTable($varLeftTableSpec);
+        }
+        $rgLft = array($sLeftTbl, $sLeftCol);
         $rgRgt = array($this->_sRegisterTable($varRightTableSpec), $sRightCol);
         $this->_vAddJoin(self::_LJOIN, $rgLft, self::_EQUAL, $rgRgt);
     }
@@ -62,18 +67,23 @@ class FromClause
         }
     }
 
-    private function _sTableRef($s)
+    public function sTableRef($var)
     {
-        if ($this->_fHasAlias($s)) {
-            return $this->_sGetAlias($s);
+        $s = $sT = '';
+        if ($this->_fReadSpec($var, $s, $sT)) {
+            if ($this->_fHasAlias($s)) {
+                return $this->_sGetAlias($s);
+            } else {
+                return $s;
+            }
         } else {
-            return $s;
+            throw new Exception("Invalid table specification");
         }
     }
 
     private function _sqlRenderQualifiedCol($rg)
     {
-        $rg[0] = $this->_sTableRef($rg[0]);
+        $rg[0] = $this->sTableRef($rg[0]);
         return Sql::sqlQualifiedCol($rg);
     }
 
@@ -84,16 +94,32 @@ class FromClause
 
     private function _sRegisterTable($varTbl)
     {
-        if (is_array($varTbl) && count($varTbl) == 2) {
-            $sKey = (string)reset($varTbl);
-            $sVal = (string)next($varTbl);
-            $this->_mpTableAliases[$sKey] = $sVal;
+        $sKey = $sVal = '';
+        if ($this->_fReadSpec($varTbl, $sKey, $sVal)) {
+            if (!is_null($sVal)) {
+                $this->_mpTableAliases[$sKey] = $sVal;
+            }
             return $sKey;
-        } else if (is_scalar($varTbl)) {
-            return (string)$varTbl;
         } else {
             throw new Exception("Invalid table specification");
         }
+    }
+
+    private function _fReadSpec($varTbl, &$sName, &$sRef)
+    {
+        $sName = null;
+        $sRef = null;
+
+        if (is_array($varTbl) && count($varTbl) == 2) {
+            $sName = (string)reset($varTbl);
+            $sRef = (string)next($varTbl);
+            return true;
+        } else if (is_scalar($varTbl)) {
+            $sName = (string)$varTbl;
+            return true;
+        }
+
+        return false;
     }
 
     private function _fHasAlias($s)

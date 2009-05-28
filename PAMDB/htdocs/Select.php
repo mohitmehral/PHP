@@ -13,9 +13,93 @@
  */
 
 require_once 'Sql.php';
+require_once 'FromClause.php';
+require_once 'WhereClause.php';
+require_once 'MapNtoM.php';
 
 class Select
 {
+    const _LREF = 'a';
+    const _MREF = 'm';
+    const _RREF = 'b';
+
+    private $_sTable = null;
+
+    private $_mpFields = null;
+
+    private $_frm = null;
+
+    private $_whr = null;
+
+    private $_rgOrder = array();
+
+    private $_cMaps = 0;
+
+    public function __construct($sTable, $rgFields = null)
+    {
+        $this->_frm = new FromClause(array($sTable, self::_LREF));
+        $this->_whr = new WhereClause();
+        $this->_sTable = $sTable;
+        $this->_mpFields[$this->_sTable] = $rgFields;
+    }
+
+    public function vAddMappedJoin($sCol, MapNtoM $map, $rgTargetSpec, $rgTargetFields = null, $fAllowNulls = true)
+    {
+        $this->_cMaps++;
+        list($sTargetTbl, $sTargetJoinCol) = $rgTargetSpec;
+
+        $rgMapSpec = array($map->sGetTable(), self::_MREF.$this->_cMaps);
+        $rgTargetSpec = array($sTargetTbl, self::_RREF.$this->_cMaps);
+
+        $this->_vLeftJoin($rgMapSpec, $sCol, $map->sGetLftCol(), null, $fAllowNulls);
+        $this->_vLeftJoin($rgTargetSpec, $map->sGetRgtCol(), $sTargetJoinCol, $rgMapSpec, $fAllowNulls);
+        
+        if ($map->fMapFieldsSelected()) {
+            $this->_mpFields[$map->sGetTable()] = $map->rgGetFields();
+        }
+        $this->_mpFields[$sTargetTbl] = $rgTargetFields;
+    }
+
+    public function vSetFilter($mpFilter)
+    {
+        foreach ($mpFilter as $sCol=>$varVal) {
+            $whr = new WhereClause();
+            $whr->vEquals(array($this->_frm->sTableRef($this->_sTable), $sCol), $varVal);
+            $this->_whr->vAnd($whr);
+        }
+    }
+
+    public function vOrderBy($varCol, $fReset = false)
+    {
+        if ($fReset) {
+            $this->_rgOrder = array();
+        }
+        if (is_array($varCol)) {
+            $varCol[0] = $this->_frm->sTableRef($varCol[0]);
+        }
+        $this->_rgOrder[] = $varCol;
+    }
+
+    public function sqlRender()
+    {
+        $sql = 'SELECT %s%s%s%s';
+        
+        $rgFieldLists = array();
+
+        foreach ($this->_mpFields as $sTable=>$rgFields) {
+            $sRef = $this->_frm->sTableRef($sTable);
+            $rgFieldLists[] = Sql::sqlFieldList($rgFields, $sRef);
+        }
+
+        $sql = sprintf($sql,
+                       join(', ', $rgFieldLists),
+                       $this->_frm->sqlRender(),
+                       $this->_whr->sqlRender(),
+                       self::_sqlOrderClause($this->_rgOrder));
+
+        return $sql;
+    }
+
     /**
      * Create a SELECT query, optionally specifying fields,
      * key-value pairs for a WHERE clause and field names to
@@ -42,6 +126,19 @@ class Select
                        self::_sqlOrderClause($rgOrder));
 
         return $sql;
+    }
+
+    private function _vLeftJoin($varLftTblSpec, $sLftCol, $sRgtCol, $varRgtTblSpec = null, $fAllowNulls = true)
+    {
+        $this->_frm->vLeftJoinOnEqual($varLftTblSpec, $sLftCol, $sRgtCol, $varRgtTblSpec);
+        if (empty($varRgtTblSpec)) {
+            $varRgtTblSpec = $this->_sTable;
+        }
+        if (!$fAllowNulls) {
+            $whr = new WhereClause();
+            $whr->vNotNull(array($this->_frm->sTableRef($varRgtTblSpec), $sRgtCol));
+            $this->_whr->vAnd($whr);
+        }
     }
 
     private static function _sqlWhereClause($mp = null)

@@ -1,26 +1,19 @@
 <?php
-$pos_mes = FALSE;
-include('conx/db_conx_open.php');
 require_once 'support.php';
-	
-	$id = $_GET['id'];
-	$where_select = "where id = '$id' ";
-	include('select/select_pam.php');
-	$pam_fetch = mysql_fetch_array($pam);
-	include('fetch/fetch_pam.php');
-//	include('select/select_pam_category.php');
-	include('select/select_pam_ghg.php');
-	include('select/select_pam_implementing_entity.php');
-//	include('select/select_pam_keywords.php');
-	include('select/select_pam_member_state.php');
-	include('select/select_pam_reduces_non_ghg.php');
-	include('select/select_pam_related_ccpm.php');
-	include('select/select_pam_sector.php');
-	include('select/select_pam_status.php');
-	include('select/select_pam_type.php');
-	include('select/select_pam_with_or_with_additional_measure.php');
 if ($name_pam) standard_html_header($name_pam);
 else standard_html_header("Detailed Results");
+
+require_once 'DB.php';
+require_once 'Helper.php';
+require_once 'Model.php';
+require_once 'View.php';
+require_once 'Controller.php';
+
+try {
+    DB::vInit();
+    $ixPam = Controller::ixPamFromRequest();
+    $mpPam = Model::mpGetPamDetailsById($ixPam);
+    extract($mpPam);
 ?>
 		<h1>
 			Detailed Results<?php if ($name_pam) {echo " for ". $name_pam;}?>
@@ -31,24 +24,8 @@ else standard_html_header("Detailed Results");
 			<tr><th scope="row" class="scope-row">Name of policy or measure (or group)</th><td class="details"><?php if ($name_pam) {echo $name_pam;} else {echo "&nbsp;";}?></td></tr>
 			<tr><th scope="row" class="scope-row">Internal PaM identifier</th><td class="details"><?php if ($pam_identifier) {echo $pam_identifier;} else {echo "&nbsp;";}?></td></tr>
 			<tr><th scope="row" class="scope-row">PaM-No</th><td class="details"><?php if ($pam_no) {echo $pam_no;} else {echo "&nbsp;";}?></td></tr>
-			<tr><th scope="row" class="scope-row">Member State</th><td class="details"><?php
-																			if ($pam_member_state) {
-																				while ($pam_member_state_fetch = mysql_fetch_array($pam_member_state)) {
-																					echo $pam_member_state_fetch["member_state"] . "<br/>";
-																				}
-																			} else {
-																				echo "&nbsp;";
-																			}
-																		?></td></tr>
-			<tr><th scope="row" class="scope-row">With or with additional measure</th><td class="details"><?php
-																								if ($pam_with_or_with_additional_measure) {
-																									while ($pam_with_or_with_additional_measure_fetch = mysql_fetch_array($pam_with_or_with_additional_measure)) {
-																										echo $pam_with_or_with_additional_measure_fetch["with_or_with_additional_measure"] . "<br/>";
-																									}
-																								} else {
-																									echo "&nbsp;";
-																								}
-																							?></td></tr>
+			<tr><th scope="row" class="scope-row">Member State</th><td class="details"><?=$member_state?></td></tr>
+			<tr><th scope="row" class="scope-row">With or with additional measure</th><td class="details"><?=$with_or_with_additional_measure?></td></tr>
 			<tr><th scope="row" class="scope-row">Objective of measure(s)</th><td class="details"><?php if ($objective_of_measure) {echo $objective_of_measure;} else {echo "&nbsp;";}?></td></tr>
 			<tr><th scope="row" class="scope-row">Description of policy or measure</th><td class="details"><?php if ($description_pam) {echo $description_pam;} else {echo "&nbsp;";}?></td></tr>
 			<tr><th scope="row" class="scope-row">Sector(s) targeted</th><td class="details"><?php
@@ -354,4 +331,11 @@ else standard_html_header("Detailed Results");
 			<tr><th th scope="row" class="scope-row subsection">Description of cost estimates</th><td class="details"><?php if ($costs_description) {echo $costs_description;} else {echo "&nbsp;";}?></td></tr>
 			<tr><th th scope="row" class="scope-row subsection">Documentation/ Source of cost estimation</th><td class="details"><?php if ($costs_documention_source) {echo $costs_documention_source;} else {echo "&nbsp;";}?></td></tr>			
 		</table>
-<?php standard_html_footer() ?>
+<?php
+} catch (Exception $e) {
+    Helper::vSendCrashReport($e);
+    View::vRenderErrorMsg($e);
+}
+
+standard_html_footer();
+?>

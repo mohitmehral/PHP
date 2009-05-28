@@ -44,11 +44,17 @@ class Sql
     {
         if (is_array($rg) && ($cMax = count($rg)) > 0) {
             for ($c = 0; $c < $cMax; $c++) {
-                $rg[$c] = (empty($sQualifier) ? '' : self::sqlQuoteId($sQualifier).'.').Sql::sqlQuoteId($rg[$c]);
+                if (is_array($rg[$c])) {
+                    $rg[$c] = self::sqlQualifiedCol($rg[$c]);
+                } else if (empty($sQualifier)) {
+                    $rg[$c] = self::sqlQuoteId($rg[$c]);
+                } else {
+                    $rg[$c] = self::sqlQualifiedCol(array($sQualifier, $rg[$c]));
+                }
             }
             return join(', ', $rg);
         } else {
-            return '*';
+            return (empty($sQualifier) ? '' : self::sqlQuoteId($sQualifier).'.').'*';
         }
     }
 }

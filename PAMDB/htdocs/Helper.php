@@ -36,4 +36,26 @@ class Helper
 
         return $sMsg;
     }
+
+    public static function mpUniqCols($rg)
+    {
+        if (!is_array($rg) || count($rg) < 1) {
+            return array();
+        } else {
+            $rgKeys = array_keys(reset($rg));
+            $mp = array();
+            foreach ($rg as $mpT) {
+                foreach ($rgKeys as $sKey) {
+                    $mp[$sKey][] = $mpT[$sKey];
+                }
+            }
+            foreach ($rgKeys as $sKey) {
+                $mp[$sKey] = array_unique($mp[$sKey]);
+                if (count($mp[$sKey]) == 1) {
+                    $mp[$sKey] = $mp[$sKey][0];
+                }
+            }
+            return $mp;
+        }
+    }
 }

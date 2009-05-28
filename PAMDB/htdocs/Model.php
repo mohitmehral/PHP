@@ -11,8 +11,21 @@
  * Helper class to provide the dynamic data used on the pages.
  */
 
+require_once 'Helper.php';
+#require_once 'View.php';
+
 require_once 'DB.php';
 require_once 'Select.php';
+
+require_once 'Ghg.php';
+require_once 'Implementor.php';
+require_once 'MemberState.php';
+require_once 'SideEffect.php';
+require_once 'Ccpm.php';
+require_once 'Sector.php';
+require_once 'Status.php';
+require_once 'Type.php';
+require_once 'Scenario.php';
 
 class Model
 {
@@ -76,7 +89,44 @@ class Model
 
         return $mpPam;
     }
-    
+
+    public static function mpGetPamDetailsById($ix)
+    {
+        $q = new Select('pam', self::rgGetPamDetailFields());
+
+        $q->vSetFilter(array('id'=>$ix));
+
+        self::_vStandardJoin($q, 'Ghg');
+        self::_vStandardJoin($q, 'Implementor');
+        self::_vStandardJoin($q, 'MemberState');
+        self::_vStandardJoin($q, 'SideEffect');
+        self::_vStandardJoin($q, 'Ccpm');
+        self::_vStandardJoin($q, 'Sector');
+        self::_vStandardJoin($q, 'Status');
+        self::_vStandardJoin($q, 'Type');
+        self::_vStandardJoin($q, 'Scenario');
+        
+        $q->vOrderBy(array(BaseModel::sTblName(Ccpm::_ID), 'id_sector'));
+        $q->vOrderBy(array(BaseModel::sTblName(Ccpm::_ID), 'related_ccpm'));
+        
+        $sql = $q->sqlRender();
+        #View::vRenderInfoBox($sql);
+        $rgRows = DB::rgSelectRows($sql);
+
+        return Helper::mpUniqCols($rgRows);
+    }
+
+    private static function _vStandardJoin(&$q, $sClass, $rgTargetFields = null)
+    {
+        if (!class_exists($sClass) || !is_subclass_of($sClass, 'BaseModel')) {
+            throw new Exception("Undefined entity class referenced");
+        }
+        $q->vAddMappedJoin('id',
+                           call_user_func(array($sClass, 'map')),
+                           call_user_func(array($sClass, 'rgIdColSpec')),
+                           $rgTargetFields);
+    }
+
     /**
      * This functions returns the list of fields originally used in the list view.
      * Just retrieving all fields should work equally well and yields simpler code.
@@ -111,7 +161,7 @@ class Model
     public static function rgGetPamDetailFields()
     {
         return array(
-                     'select id',
+                     'id',
                      'pam_identifier',
                      'cluster',
                      'pam_no',
