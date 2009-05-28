@@ -22,19 +22,19 @@ try {
 		<table class="datatable" style="width:95%">
 		<col style="width: 25%"/>
 		<col style="width: 75%"/>
-			<tr><th scope="row" class="scope-row">Name of policy or measure (or group)</th><td class="details"><?php if ($name_pam) {echo $name_pam;} else {echo "&nbsp;";}?></td></tr>
-			<tr><th scope="row" class="scope-row">Internal PaM identifier</th><td class="details"><?php if ($pam_identifier) {echo $pam_identifier;} else {echo "&nbsp;";}?></td></tr>
-			<tr><th scope="row" class="scope-row">PaM-No</th><td class="details"><?php if ($pam_no) {echo $pam_no;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Name of policy or measure (or group)</th><td class="details"><?=$name_pam?></td></tr>
+			<tr><th scope="row" class="scope-row">Internal PaM identifier</th><td class="details"><?=$pam_identifier?></td></tr>
+			<tr><th scope="row" class="scope-row">PaM-No</th><td class="details"><?=$pam_no?></td></tr>
 			<tr><th scope="row" class="scope-row">Member State</th><td class="details"><?=$member_state?></td></tr>
 			<tr><th scope="row" class="scope-row">With or with additional measure</th><td class="details"><?=$with_or_with_additional_measure?></td></tr>
-			<tr><th scope="row" class="scope-row">Objective of measure(s)</th><td class="details"><?php if ($objective_of_measure) {echo $objective_of_measure;} else {echo "&nbsp;";}?></td></tr>
-			<tr><th scope="row" class="scope-row">Description of policy or measure</th><td class="details"><?php if ($description_pam) {echo $description_pam;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Objective of measure(s)</th><td class="details"><?=$objective_of_measure?></td></tr>
+			<tr><th scope="row" class="scope-row">Description of policy or measure</th><td class="details"><?=$description_pam?></td></tr>
 			<tr><th scope="row" class="scope-row">Sector(s) targeted</th><td class="details"><?=$sector?></td></tr>
 			<tr><th scope="row" class="scope-row">GHG affected</th><td class="details"><?=$ghg_output?></td></tr>
 			<tr><th scope="row" class="scope-row">Type of instruments</th><td class="details"><?=$type?></td></tr>
 			<tr><th scope="row" class="scope-row">Status of policy, measure or group</th><td class="details"><?=$status?></td></tr>
-			<tr><th scope="row" class="scope-row">Start year of implementation</th><td class="details"><?php if ($start) {echo $start;} else {echo "&nbsp;";}?></td></tr>
-			<tr><th scope="row" class="scope-row">End year of implementation</th><td class="details"><?php if ($ende) {echo $ende;} else {echo "&nbsp;";}?></td></tr>
+			<tr><th scope="row" class="scope-row">Start year of implementation</th><td class="details"><?=$start?></td></tr>
+			<tr><th scope="row" class="scope-row">End year of implementation</th><td class="details"><?=$ende?></td></tr>
 			<tr><th scope="row" class="scope-row">Implementing entity or entities</th><td class="details"><?=$implementing_entity?>(<?=$specification?>)</td></tr>
 		</table>
 		<h2>Estimate of GHG emission reduction effect or sequestration effect in Gg CO<sub>2</sub> eq per year</h2>
@@ -56,11 +56,10 @@ try {
 			<tr><th scope="row" class="scope-row subsection">Factors resulting in emission reduction </th><td class="details"><?=$factors_resulting_in_emission_reduction?></td></tr>
 			<tr><th scope="row" class="scope-row subsection">Does the estimate include reductions related to common and coordinated policies and measures?</th><td class="details"><?=$include_common_reduction?></td></tr>
 			<tr><th scope="row" class="scope-row subsection">Documentation/ Source of estimation if available</th><td class="details"><?=$documention_source?></td></tr>
-			<tr><td colspan="2" class="section_head">&nbsp;</td></tr>
-			<tr><th scope="row" class="scope-row">Indicators used to monitor progress of implementation  </th><td class="details"><?=$indicator_monitor_implementation?></td></tr>
-			<tr><th scope="row" class="scope-row">Common and coordinated policy and measure (CCPM)</th><td class="details"><?=$related_ccpm?></td></tr>
-			<tr><th scope="row" class="scope-row">General Comment</th><td class="details"><?=$general_comment?></td></tr>
-			<tr><th scope="row" class="scope-row">Reference</th><td class="details"><?=$reference?></td></tr>
+			<tr><th scope="row" class="scope-row subsection">Indicators used to monitor progress of implementation  </th><td class="details"><?=$indicator_monitor_implementation?></td></tr>
+			<tr><th scope="row" class="scope-row subsection">Common and coordinated policy and measure (CCPM)</th><td class="details"><?=$related_ccpm?></td></tr>
+			<tr><th scope="row" class="scope-row subsection">General Comment</th><td class="details"><?=$general_comment?></td></tr>
+			<tr><th scope="row" class="scope-row subsection">Reference</th><td class="details"><?=$reference?></td></tr>
 		</table>
 		<h2>Description of mitigation impact of measure on Non-Greenhouse Gases (e.g. Sox, NOx, NMVOC, Particulates)</h2>
 		<table class="datatable" style="width:95%">

@@ -194,7 +194,7 @@ td.section_head {
   padding-left: 0px;
   color:green;
 }
-td.section {
+td.section, td.subsection {
   border:none;
   border-bottom:thin solid #ffffff;
   vertical-align:top;
@@ -202,19 +202,13 @@ td.section {
   font-family:Arial;
   font-weight: bold;
   font-size:small;
-  padding-left: 20px;
   background-color:#eeffdd;
 }
+td.section {
+  padding-left: 20px;
+}
 td.subsection {
-  border:none;
-  border-bottom:thin solid #ffffff;
-  vertical-align:top;
-  text-align:right;
-  font-family:Arial;
-  font-weight: bold;
-  font-size:small;
   padding-left: 40px;
-  background-color:#eeffdd;
 }
 td.normal {
   border:none;
