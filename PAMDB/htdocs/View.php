@@ -13,16 +13,53 @@
 
 require_once 'Helper.php';
 require_once 'HtmlPicture.php';
+require_once 'DetailSection.php';
 
 class View
 {
+    public static function vRenderDetailView($mpData)
+    {
+        self::_vReformatEstimates($mpData);
+        self::_vReformatImplementors($mpData);
+
+        $sHeadline = 'Detailed Results';
+        if (!empty($mpData['name_pam'])) {
+            $sHeadline .= ' for '.$mpData['name_pam'];
+        }
+        HtmlPicture::PicDetailHeadline(Helper::htmlSanitize($sHeadline));
+
+        $rgSections = array(
+                            DetailSection::secMain(),
+                            DetailSection::secEstimates(),
+                            DetailSection::secDocumentation(),
+                            DetailSection::secSideEffects(),
+                            DetailSection::secCosts()
+                           );
+
+        foreach ($rgSections as $sec) {
+            $sSubHead = $sec->sGetTitle();
+            if (!empty($sSubHead)) {
+                $htmlHead = HtmlPicture::htmlCapture('PicDetailSectionHeader', array(Helper::htmlSanitize($sSubHead)));
+            } else {
+                $htmlHead = '';
+            }
+            HtmlPicture::vStartBuffer();
+            foreach ($sec->rgGetTranslatableFields() as $sField) {
+                $sLabel = $sec->sGetLabel($sField);
+                HtmlPicture::PicDetailRow(Helper::htmlSanitize($sLabel), self::_htmlFormatDetailVal($mpData[$sField]));
+            }
+            $htmlRows = HtmlPicture::htmlFlushBuffer();
+            HtmlPicture::PicDetailSection($htmlHead, $htmlRows);
+        }
+    }
+
     public static function vRenderCheckboxList($rgData, $sTitle, $sValueField,
                                                $fEmptyOption = false, $sIdField = null)
     {
         if (empty($sIdField)) {
             $sIdField = 'id_'.$sValueField;
         }
-        $htmlName = htmlentities($sIdField).'[]';
+        $htmlName = Helper::htmlSanitize($sIdField).'[]';
         try {
             HtmlPicture::vStartBuffer();
             HtmlPicture::PicFilterWidgetItem($htmlName, 'select_all', 'Select all');
@@ -32,26 +69,73 @@ class View
             $htmlWidget = HtmlPicture::htmlFlushBuffer();
             HtmlPicture::vStartBuffer();
             foreach ($rgData as $mp) {
-                $htmlId = htmlentities($sIdField.$mp[$sIdField]);
-                $htmlValue = htmlentities($mp[$sIdField]);
-                $htmlLabel = htmlentities($mp[$sValueField]);
+                $htmlId = Helper::htmlSanitize($sIdField.$mp[$sIdField]);
+                $htmlValue = Helper::htmlSanitize($mp[$sIdField]);
+                $htmlLabel = Helper::htmlSanitize($mp[$sValueField]);
                 HtmlPicture::PicFilterListItem($htmlId, $htmlName, $htmlValue, $htmlLabel);
             }
             $htmlList = HtmlPicture::htmlFlushBuffer();
-            HtmlPicture::PicFilterConfig(htmlentities($sTitle), $htmlWidget, $htmlList);
+            HtmlPicture::PicFilterConfig(Helper::htmlSanitize($sTitle), $htmlWidget, $htmlList);
         } catch (Exception $e) {
             Helper::vSendCrashReport($e);
-            HtmlPicture::PicErrorBox(htmlentities($e->getMessage()));
+            HtmlPicture::PicErrorBox(Helper::htmlSanitize($e->getMessage()));
         }
     }
 
     public static function vRenderErrorMsg(Exception $e)
     {
-        HtmlPicture::PicErrorBox(htmlentities($e->getMessage()));
+        HtmlPicture::PicErrorBox(Helper::htmlSanitize($e->getMessage()));
     }
 
     public static function vRenderInfoBox($s)
     {
-        HtmlPicture::PicInfoBox(htmlentities($s));
+        HtmlPicture::PicInfoBox(Helper::htmlSanitize($s));
+    }
+
+    private static function _vReformatEstimates(&$mpData)
+    {
+        foreach (array('2005', '2010', '2015', '2020') as $y) {
+            $sValField = 'red_'.$y.'_val';
+            $sTextField = 'red_'.$y.'_text';
+            $sVal = trim($mpData[$sValField]);
+            $sText = trim($mpData[$sTextField]);
+            if (empty($sText) && empty($sVal)) {
+                $mpData[$sTextField] = 'no estimate provided';
+            } else if (empty($sVal)) {
+                $mpData[$sTextField] = $sText;
+            } else {
+                $mpData[$sTextField] = $sVal;
+                if (!empty($sText)) {
+                    $mpData[$sTextField] .= '<br>'.$sText;
+                }
+            }
+            $mpData[$sValField] = $mpData[$sTextField];
+        }
+    }
+
+    private static function _vReformatImplementors(&$mpData)
+    {
+        $sKey = 'implementing_entity';
+        if (!empty($mpData[$sKey])) {
+            if (is_array($mpData[$sKey])) {
+                foreach ($mpData[$sKey] as $ix=>$s) {
+                    $mpData[$sKey][$ix] .= ' ('.$mpData['specification'][$ix].')';
+                }
+            } else {
+                $mpData[$sKey] .= ' ('.$mpData['specification'].')';
+            }
+        }
+    }
+
+    private static function _htmlFormatDetailVal($var)
+    {
+        if (is_array($var)) {
+            foreach ($var as $ix=>$s) {
+                $var[$ix] = Helper::htmlSanitize($s);
+            }
+            return join('<br>', $var);
+        } else {
+            return Helper::htmlSanitize($var);
+        }
     }
 }

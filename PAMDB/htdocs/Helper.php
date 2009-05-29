@@ -16,6 +16,8 @@ class Helper
     const MAIL_MAINTAINER = 'eea-pam@econemon.com';
     const SMTP_SERVER = "econemon.com";
 
+    private static $_mpProtect = array('sub'=>'vvv', 'sup'=>'qqq');
+
     public static function vSendCrashReport(Exception $e)
     {
         ini_set("SMTP", self::SMTP_SERVER);
@@ -35,6 +37,15 @@ class Helper
         }
 
         return $sMsg;
+    }
+
+    public static function htmlSanitize($s)
+    {
+        $s = self::_sProtectTags($s);
+        $html = self::_htmlEscape($s);
+        $html = self::_htmlUnprotectTags($html);
+
+        return $html;
     }
 
     public static function mpUniqCols($rg)
@@ -57,5 +68,45 @@ class Helper
             }
             return $mp;
         }
+    }
+    
+    private static function _htmlEscape($s)
+    {
+        $s = str_replace('&', '&amp;', $s);
+        $s = str_replace('<', '&lt;', $s);
+        $s = str_replace('>', '&gt;', $s);
+        $s = str_replace('"', '&quot;', $s);
+
+        return $s;
+    }
+
+    private static function _sProtectTags($s)
+    {
+        foreach (self::$_mpProtect as $sTag=>$sReplace) {
+            $s = str_replace('<'.$sTag.'>', self::_sOpenTok($sReplace), $s);
+            $s = str_replace('</'.$sTag.'>', self::_sCloseTok($sReplace), $s);
+        }
+
+        return $s;
+    }
+
+    private static function _htmlUnprotectTags($html)
+    {
+        foreach (self::$_mpProtect as $sTag=>$sReplace) {
+            $html = str_replace(self::_sOpenTok($sReplace), '<'.$sTag.'>', $html);
+            $html = str_replace(self::_sCloseTok($sReplace), '</'.$sTag.'>', $html);
+        }
+
+        return $html;
+    }
+
+    private static function _sOpenTok($s)
+    {
+        return ucfirst(strtolower($s));
+    }
+
+    private static function _sCloseTok($s)
+    {
+        return strtolower(substr($s, 0, -1)).strtoupper(substr($s, -1));
     }
 }

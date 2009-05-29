@@ -29,6 +29,10 @@ require_once 'Scenario.php';
 
 class Model
 {
+    const PAM_UNCLUSTERED = 0;
+    const PAM_IS_CLUSTER = 1;
+    const PAM_BELONGS_TO_CLUSTER = 2;
+
     public static function rgGetMemberStates()
     {
         $sql = Select::sqlSimpleQuery('val_member_state', array('id_member_state', 'member_state'));
@@ -118,8 +122,65 @@ class Model
         $sql = $q->sqlRender();
         #View::vRenderInfoBox($sql);
         $rgRows = DB::rgSelectRows($sql);
+        $mpPam = Helper::mpUniqCols($rgRows);
+        
+        $mpPam['coCluster'] = self::_coGetClusterStatus($mpPam);
+        
+        switch ($mpPam['coCluster']) {
+            case self::PAM_UNCLUSTERED:
+                break;
+            case self::PAM_IS_CLUSTER:
+                $mpPam['rgCluster'] = self::_rgGetPamsInCluster($mpPam);
+                break;
+            case self::PAM_BELONGS_TO_CLUSTER:
+                $mpPam['rgCluster'] = self::_rgGetPamsInCluster($mpPam);
+                self::_vInsertClusterEstimates($mpPam);
+                break;
+        }
 
-        return Helper::mpUniqCols($rgRows);
+        return $mpPam;
+    }
+
+    public static function mpGetCluster($sId)
+    {
+        $sql = Select::sqlSimpleQuery('pam', null, array('pam_identifier'=>$sId));
+        return DB::mpSelectRow($sql);
+    }
+
+    private static function _coGetClusterStatus($mpPam)
+    {
+        if (empty($mpPam['cluster'])) {
+            return self::PAM_UNCLUSTERED;
+        } else if ('CL-' == substr($mpPam['pam_identifier'], 0, 3)) {
+            return self::PAM_IS_CLUSTER;
+        } else {
+            return self::PAM_BELONGS_TO_CLUSTER;
+        }
+    }
+
+    private static function _rgGetPamsInCluster($mpPam)
+    {
+        $sId = $mpPam['cluster'];
+        $sql = Select::sqlSimpleQuery('pam', array('id', 'pam_identifier'), array('cluster'=>$sId));
+        $rg = DB::rgSelectRows($sql);
+        for ($c = 0; $c < count($rg); $c++) {
+            if ($rg[$c]['pam_identifier'] == $sId) {
+                unset($rg[$c]);
+            }
+        }
+
+        return array_values($rg);
+    }
+
+    private static function _vInsertClusterEstimates(&$mpPam)
+    {
+        $mpCluster = self::mpGetCluster($mpPam['cluster']);
+        foreach (array('2005', '2010', '2015', '2020') as $y) {
+            foreach (array('val', 'text') as $sSuffix) {
+                $sField = 'red_'.$y.'_'.$sSuffix;
+                $mpPam[$sField] = $mpCluster[$sField];
+            }
+        }
     }
 
     private static function _vStandardJoin(&$q, $sClass, $rgTargetFields = null)

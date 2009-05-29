@@ -49,6 +49,39 @@ class HtmlPicture
     <?php
     }
 
+    public static function PicDetailSection($htmlHeader, $htmlRows)
+    {
+    ?>
+    <?=$htmlHeader?>
+    <table class="datatable" style="width:95%">
+    <col style="width: 25%"/>
+    <col style="width: 75%"/>
+    <?=$htmlRows?>
+    </table>
+    <?php
+    }
+
+    public static function PicDetailHeadline($htmlTitle)
+    {
+    ?>
+    <h1><?=$htmlTitle?></h1>
+    <?php
+    }
+
+    public static function PicDetailSectionHeader($htmlTitle)
+    {
+    ?>
+    <h2><?=$htmlTitle?></h2>
+    <?php
+    }
+
+    public static function PicDetailRow($htmlHeader, $htmlData)
+    {
+    ?>
+	<tr><th scope="row" class="scope-row"><?=$htmlHeader?></th><td class="details"><?=$htmlData?></td></tr>
+    <?php
+    }
+
     public static function PicErrorBox($htmlErrMsg)
     {
     ?>
