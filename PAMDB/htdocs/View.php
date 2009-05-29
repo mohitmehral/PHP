@@ -12,71 +12,46 @@
  */
 
 require_once 'Helper.php';
-require_once 'Model.php';
+require_once 'HtmlPicture.php';
 
 class View
 {
-    public static function vRenderCheckboxList($htmlTitle, $htmlVarName, $sIdField, $sValueField, $fnGetter, $fEmptyOption = false)
+    public static function vRenderCheckboxList($rgData, $sTitle, $sValueField,
+                                               $fEmptyOption = false, $sIdField = null)
     {
-    ?>
-    <td class="filter">
-        <label class="question"><?=$htmlTitle?></label><br/>
-        <input type="checkbox" name="<?=$htmlVarName?>[]" value="select_all"/><label class="specialval">Select all</label><br/>
-        <?php
-        if ($fEmptyOption) {
-        ?>
-        <input type="checkbox" name="<?=$htmlVarName?>[]" value="no_value"/><label class="specialval">no value</label><br/>
-        <?php
+        if (empty($sIdField)) {
+            $sIdField = 'id_'.$sValueField;
         }
+        $htmlName = htmlentities($sIdField).'[]';
         try {
-            foreach (@call_user_func(array('Model', $fnGetter)) as $mp) {
-            ?>
-            <input type="checkbox" 
-                   id="<?=$htmlVarName?><?=$mp[$sIdField]?>"
-                   name="<?=$htmlVarName?>[]"
-                   value="<?=$mp[$sIdField]?>" />
-            <label for="<?=$htmlVarName?><?=$mp[$sIdField]?>"><?=$mp[$sValueField]?></label><br/>
-            <?php
+            HtmlPicture::vStartBuffer();
+            HtmlPicture::PicFilterWidgetItem($htmlName, 'select_all', 'Select all');
+            if ($fEmptyOption) {
+                HtmlPicture::PicFilterWidgetItem($htmlName, 'no_value', 'Include empty values');
             }
+            $htmlWidget = HtmlPicture::htmlFlushBuffer();
+            HtmlPicture::vStartBuffer();
+            foreach ($rgData as $mp) {
+                $htmlId = htmlentities($sIdField.$mp[$sIdField]);
+                $htmlValue = htmlentities($mp[$sIdField]);
+                $htmlLabel = htmlentities($mp[$sValueField]);
+                HtmlPicture::PicFilterListItem($htmlId, $htmlName, $htmlValue, $htmlLabel);
+            }
+            $htmlList = HtmlPicture::htmlFlushBuffer();
+            HtmlPicture::PicFilterConfig(htmlentities($sTitle), $htmlWidget, $htmlList);
         } catch (Exception $e) {
-        Helper::vSendCrashReport($e);
-        ?>
-        <div class="error"><?=$e->getMessage()?></div>
-        <?php
+            Helper::vSendCrashReport($e);
+            HtmlPicture::PicErrorBox(htmlentities($e->getMessage()));
         }
-        ?>
-    </td>
-    <?php
     }
 
     public static function vRenderErrorMsg(Exception $e)
     {
-    ?>
-    <div class="error">
-        <h1>An error has occured</h1>
-        <p>
-            We are very sorry, but it seems that something has gone wrong.
-            Technical information about the problem has been sent to the
-            site's maintainer.
-        </p>
-        <p>
-            Additionally, we would greatly appreciate if you could send a
-            short summary of what you were attempting to do to eea-pam@econemon.com.
-        </p>
-        <p>
-            On doing so, please refer to the following error message:
-        </p>
-        <p>
-            <strong><em><?=$e->getMessage()?></em></strong>
-        </p>
-    </div>
-    <?php
+        HtmlPicture::PicErrorBox(htmlentities($e->getMessage()));
     }
 
     public static function vRenderInfoBox($s)
     {
-    ?>
-        <div class="info"><?=htmlentities($s)?></div>
-    <?php
+        HtmlPicture::PicInfoBox(htmlentities($s));
     }
 }

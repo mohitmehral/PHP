@@ -2,10 +2,10 @@
 require_once 'support.php';
 standard_html_header("");
 
-require_once 'config.inc.php';
 require_once 'Helper.php';
 require_once 'DB.php';
 require_once 'View.php';
+require_once 'Model.php';
 
 try {
     DB::vInit();
@@ -56,34 +56,18 @@ or for which cost estimates are provided.
 					</td>
 				</tr>
 				<tr>
-					<td class="filter">
-						<label class="question">Member State</label><br/>
-						<select size="10" name="id_member_state[]" multiple="multiple">
-							<option value="select_all">All</option>
-							<?php
-								include('select/select_val_member_state.php');
-								if ($val_member_state_num) {
-									while ($val_member_state_fetch = mysql_fetch_array($val_member_state)) {
-										include('fetch/fetch_val_member_state.php');
-										echo "<option value=\"$id_member_state\">" .
-											$member_state . "</option>";
-									}
-								}
-							?>
-						</select><br/>
-						Ctrl+click for<br/>multiple selection
-					</td>
                     <?php
-                    View::vRenderCheckboxList('Sector', 'id_sector', 'id_sector', 'sector', 'rgGetSectors');
-                    View::vRenderCheckboxList('Policy Type', 'id_type', 'id_type', 'type', 'rgGetTypes');
+                    View::vRenderCheckboxList(Model::rgGetMemberStates(), 'Member State', 'member_state');
+                    View::vRenderCheckboxList(Model::rgGetSectors(), 'Sector', 'sector');
+                    View::vRenderCheckboxList(Model::rgGetTypes(), 'Policy Type', 'type', true);
                     ?>
 				</tr>
 				<tr>
                     <?php
-                    View::vRenderCheckboxList('GHG affected', 'id_ghg', 'id_ghg', 'ghg_output', 'rgGetGhgs');
-                    View::vRenderCheckboxList('Status', 'id_status', 'id_status', 'status', 'rgGetStatusList', true);
+                    View::vRenderCheckboxList(Model::rgGetGhgs(), 'GHG affected', 'ghg_output', true, 'id_ghg');
+                    View::vRenderCheckboxList(Model::rgGetStatusList(), 'Status', 'status', true);
                     // NOTICE: The following call produces a different "id" attribute on the input tag than the original code
-                    View::vRenderCheckboxList('Scenario', 'id_with_or_with_additional_measure', 'id_with_or_with_additional_measure', 'with_or_with_additional_measure', 'rgGetScenarios', true);
+                    View::vRenderCheckboxList(Model::rgGetScenarios(), 'Scenario', 'with_or_with_additional_measure', true);
                     ?>
 				</tr>
 				<tr>

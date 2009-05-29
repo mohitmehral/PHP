@@ -29,6 +29,12 @@ require_once 'Scenario.php';
 
 class Model
 {
+    public static function rgGetMemberStates()
+    {
+        $sql = Select::sqlSimpleQuery('val_member_state', array('id_member_state', 'member_state'));
+        return DB::rgSelectRows($sql);
+    }
+
     public static function rgGetSectors()
     {
         $sql = Select::sqlSimpleQuery('val_sector', array('id_sector', 'sector'));
