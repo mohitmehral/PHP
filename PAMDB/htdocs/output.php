@@ -40,7 +40,7 @@ try {
         }
     }
 
-	$valves = array("sector","ghg","type","status","category","keywords","related_ccpm","related_ccpm","with_or_with_additional_measure");
+	$valves = array("sector","ghg","type","status","related_ccpm","with_or_with_additional_measure");
 	
 	foreach($valves as $valve) {
 		$val_id = "id_" . $valve;
@@ -70,152 +70,25 @@ try {
 
     $sql = $q->sqlRender(array('id'));
     View::vRenderInfoBox($sql);
-    
-    $identifier_num = 0;
-    foreach (DB::rgSelectRows($sql) as $mpRow) {
-        $identifier_num++;
-        $id = $mpRow['id'];
-        $data_fetch = Model::mpGetPamById($id);
-        
-        $name_pam[$id] = $data_fetch['name_pam'];
-        $pam_identifier[$id] = $data_fetch['pam_identifier'];
-        $cluster[$id] = $data_fetch['cluster'];
-//			$red_2005_val[$id] = $data_fetch['red_2005_val'];
-        $red_2005_val[$id] = number_format($data_fetch['red_2005_val'], 0, '.', ',');
-        $red_2005_text[$id] = $data_fetch['red_2005_text'];
-//			$red_2010_val[$id] = $data_fetch['red_2010_val'];
-        $red_2010_val[$id] = number_format($data_fetch['red_2010_val'], 0, '.', ',');
-        $red_2010_text[$id] = $data_fetch['red_2010_text'];
-//			$red_2020_val[$id] = $data_fetch['red_2020_val'];
-        $red_2020_val[$id] = number_format($data_fetch['red_2020_val'], 0, '.', ',');
-        $red_2020_text[$id] = $data_fetch['red_2020_text'];
-        $costs_per_tonne[$id] = $data_fetch['costs_per_tonne'];
+    $rgPams = DB::rgSelectRows($sql);
+    for ($c = 0, $cMax = count($rgPams); $c < $cMax; $c++) {
+        // TODO: This issues two extra SQL queries per row
+        //       which is quite inefficient, but "everything is
+        //       fast for small n", so we don't bother for now.
+        //
+        //       The proper way to do it would be to get the
+        //       additional info by joining in more tables to
+        //       the star query, but that means to line up the
+        //       Select and StarQuery classes better beforehand.
+        $rgPams[$c] = Model::mpGetPamSummaryById($rgPams[$c]['id']);
     }
-    
-    $valves = array("member_state","sector","ghg","type","status","category","keywords","related_ccpm","with_or_with_additional_measure");
-?>
-		<h1>
-			Search Results
-		</h1>
-		<table class="sortable">
-			<?php
-				if ($identifier_num) { ?>
-		  <thead>
-			<tr>
-			  <th scope="col" rowspan="2"><a href="output?sort=member_state<?php build_sortqs()?>">Member<br/>State</a></th>
-			  <th scope="col" rowspan="2"><a href="output?sort=sector<?php build_sortqs()?>">Sector</a></th>
-			  <th scope="col" rowspan="2">Projection<br />Scenario</th>
-			  <th scope="col" rowspan="2">Name</th>
-			  <th scope="col" rowspan="2">Type</th>
-			  <th scope="col" rowspan="2">GHG</th>
-			  <th scope="col" rowspan="2">Status</th>
-			  <th scope="col" colspan="3"><nobr>Absolute Reduction</nobr><br/><nobr>[kt CO<sub>2</sub> eq. p.a.]</nobr></th>
-			  <th scope="col" rowspan="2"><a href="output?sort=costs_per_tonne<?php build_sortqs()?>">Costs<br/>[EUR/t]</a></th>
-			</tr>
-			<tr>
-			  <th scope="col">2005</th>
-			  <th scope="col"><a href="output?sort=red_2010_val<?php build_sortqs()?>">2010</a></th>
-			  <th scope="col">2020</th>
-			</tr>
-		  </thead>
-			<?php } ?>
-		  <tbody>
-			<?php
-				if ($identifier_num) {
-					if ($warning_len) {echo "<p><span class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</span></p>";}
-					$sort = $_GET['sort'];
-					if ($sort) {
-						$valve_name = $sort;
-					} else {
-						$valve_name = "pam_identifier";	
-					}
-					asort($$valve_name);
-					reset($$valve_name);
-					
-					foreach ($$valve_name as $key => $value) {
-						if ($green == "zebraodd") {
-							$green = "zebraeven";
-						} else {
-							$green = "zebraodd";
-						}
-						echo "<tr class=\"$green\">
-							<td>
-							  $member_state[$key]
-							</td>
-							<td>
-							  $sector[$key]
-							</td>
-							<td>
-							  $with_or_with_additional_measure_output[$key]
-							</td>
-							<td>
-							  <a href=\"details?id=$key\">$name_pam[$key]</a>
-							</td>";
-							echo "<td>
-							  $type[$key]
-							</td>
-							<td>
-							  $ghg_output[$key]
-							</td>
-							<td>
-							  $status[$key]
-							</td>
-							<td class=\"number\">";
-								if ($red_2005_val[$key] and $red_2005_text[$key]) {
-									echo "$red_2005_val[$key]<br/><a href=\"details?id=$key\">more</a>";
-								} else {
-									if ($red_2005_val[$key]) {
-										echo "$red_2005_val[$key]";
-									} else {
-										if ($red_2005_text[$key]) {
-											if ($red_2005_text[$key] == $cluster[$key]) {
-												echo "Cluster value";
-											} else {
-												echo "<a href=\"details?id=$key\">details</a>";
-											}
-										}
-									}
-								}
-							echo "</td>
-							<td class=\"number\">";
-								if ($red_2010_val[$key] and $red_2010_text[$key]) {
-									echo "$red_2010_val[$key]<br/><a href=\"details?id=$key\">more</a>";
-								} else {
-									if ($red_2010_val[$key]) {
-										echo "$red_2010_val[$key]";
-									} else {
-										if ($red_2010_text[$key]) {
-											if ($red_2010_text[$key] == $cluster[$key]) {
-												echo "Cluster value";
-											} else {
-												echo "<a href=\"details?id=$key\">details</a>";
-											}
-										}
-									}
-								}
-							echo "</td>
-							<td class=\"number\">";
-								if ($red_2020_val[$key] and $red_2020_text[$key]) {
-									echo "$red_2020_val[$key]<br/><a href=\"details?id=$key\">more</a>";
-								} else {
-									if ($red_2020_val[$key]) {
-										echo "$red_2020_val[$key]";
-									} else {
-										if ($red_2020_text[$key]) {
-											if ($red_2020_text[$key] == $cluster[$key]) {
-												echo "Cluster value";
-											} else {
-												echo "<a href=\"details?id=$key\">details</a>";
-											}
-										}
-									}
-								}
-							echo "</td>
-							<td class=\"number\">
-							  $costs_per_tonne[$key]
-							</td>
-						</tr>";
-					}						
+
+    if (null != ($fnComp = Controller::fnGetSortFunc())) {
+        usort($rgPams, $fnComp);
+    }
+
+    View::vRenderSearchResults($rgPams);
+    exit(0);
 					$cluster = array_unique($cluster);
 					if (in_array('', $cluster)) {
 						unset($$val_id[array_search('', $cluster)]);
@@ -463,13 +336,7 @@ try {
 							}
 						}
 					}
-				} else {
-					if ($warning_len) {echo "<p><span class=\"red\">One of your words in the 'Any Word' field was too short. The minimum length is 4 characters. It is ignored in the shown results.</span></p>";}
-					echo "<p><span class=\"red\">Your search didn't deliver any results.</span></p>";
-				}
 			?>
-		  </tbody>
-		</table>
 <?php
 } catch (Exception $e) {
     Helper::vSendCrashReport($e);

@@ -13,8 +13,6 @@
  * output.
  */
 
-require_once 'Dimension.php';
-
 class Controller
 {
     public static function rgFilterFromRequest($sName)
@@ -37,6 +35,25 @@ class Controller
             return 0;
         } else {
             return (int)sprintf('%d', $_GET['id']);
+        }
+    }
+
+    public static function fnGetSortFunc()
+    {
+        if (empty($_GET['sort'])) {
+            return null;
+        } else {
+            $php = 'foreach (array(1, 2) as $ix) {
+                        $var = ${\'mp\'.$ix}[\'%s\'];
+                        if (is_array($var)) {
+                           sort($var, SORT_STRING);
+                           ${\'s\'.$ix} = reset($var);
+                        } else {
+                           ${\'s\'.$ix} = (string)$var;
+                        }
+                    }
+                    return strcmp($s1, $s2);';
+            return create_function('$mp1, $mp2', sprintf($php, addcslashes($_GET['sort'], '\'')));
         }
     }
 }

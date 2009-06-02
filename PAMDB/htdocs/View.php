@@ -17,6 +17,25 @@ require_once 'DetailSection.php';
 
 class View
 {
+    public static function vRenderSearchResults($rgData)
+    {
+        HtmlPicture::PicPageHeadline('Search Results');
+        if (count($rgData) > 0) {
+            HtmlPicture::vStartBuffer();
+            foreach ($rgData as $ix=>$mpData) {
+                self::_vReformatEstimates($mpData);
+                foreach ($mpData as $s=>$var) {
+                    $mpData[$s] = self::_htmlFormatDetailVal($var);
+                }
+                HtmlPicture::PicResultsRow($mpData, $ix);
+            }
+            $htmlRows = HtmlPicture::htmlFlushBuffer();
+            HtmlPicture::PicResultsTable($htmlRows);
+        } else {
+            HtmlPicture::PicNoResultsMsg();
+        }
+    }
+
     public static function vRenderDetailView($mpData)
     {
         self::_vReformatEstimates($mpData);
@@ -26,7 +45,7 @@ class View
         if (!empty($mpData['name_pam'])) {
             $sHeadline .= ' for '.$mpData['name_pam'];
         }
-        HtmlPicture::PicDetailHeadline(Helper::htmlSanitize($sHeadline));
+        HtmlPicture::PicPageHeadline(Helper::htmlSanitize($sHeadline));
 
         $rgSections = array(
                             DetailSection::secMain(),
@@ -97,6 +116,13 @@ class View
         foreach (array('2005', '2010', '2015', '2020') as $y) {
             $sValField = 'red_'.$y.'_val';
             $sTextField = 'red_'.$y.'_text';
+            if (!array_key_exists($sValField, $mpData)) {
+                continue;
+            }
+            if ($mpData['fClustered']) {
+                $mpData[$sTextField] = $mpData[$sValField] = 'see cluster '.Helper::htmlSanitize($mpData['cluster']);
+                return;
+            }
             $sVal = trim($mpData[$sValField]);
             $sText = trim($mpData[$sTextField]);
             if (empty($sText) && empty($sVal)) {
@@ -104,7 +130,7 @@ class View
             } else if (empty($sVal)) {
                 $mpData[$sTextField] = $sText;
             } else {
-                $mpData[$sTextField] = $sVal;
+                $mpData[$sTextField] = number_format((double)$sVal, 0, '.', ',');
                 if (!empty($sText)) {
                     $mpData[$sTextField] .= '<br>'.$sText;
                 }

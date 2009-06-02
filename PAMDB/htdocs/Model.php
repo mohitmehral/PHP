@@ -100,31 +100,34 @@ class Model
         return $mpPam;
     }
 
+    public static function mpGetPamSummaryById($ix)
+    {
+        $mpPam = self::_mpGetPamInfoById($ix, self::rgGetPamListFields(), array('Ghg',
+                                                                                'MemberState',
+                                                                                'Ccpm',
+                                                                                'Sector',
+                                                                                'Status',
+                                                                                'Type',
+                                                                                'Scenario'));
+        
+        if ($mpPam['coCluster'] == self::PAM_BELONGS_TO_CLUSTER) {
+            self::_vInsertClusterEstimates($mpPam);
+        }
+        
+        return $mpPam;
+    }
+
     public static function mpGetPamDetailsById($ix)
     {
-        $q = new Select('pam', self::rgGetPamDetailFields());
-
-        $q->vSetFilter(array('id'=>$ix));
-
-        self::_vStandardJoin($q, 'Ghg');
-        self::_vStandardJoin($q, 'Implementor');
-        self::_vStandardJoin($q, 'MemberState');
-        self::_vStandardJoin($q, 'SideEffect');
-        self::_vStandardJoin($q, 'Ccpm');
-        self::_vStandardJoin($q, 'Sector');
-        self::_vStandardJoin($q, 'Status');
-        self::_vStandardJoin($q, 'Type');
-        self::_vStandardJoin($q, 'Scenario');
-        
-        $q->vOrderBy(array(BaseModel::sTblName(Ccpm::_ID), 'id_sector'));
-        $q->vOrderBy(array(BaseModel::sTblName(Ccpm::_ID), 'related_ccpm'));
-        
-        $sql = $q->sqlRender();
-        #View::vRenderInfoBox($sql);
-        $rgRows = DB::rgSelectRows($sql);
-        $mpPam = Helper::mpUniqCols($rgRows);
-        
-        $mpPam['coCluster'] = self::_coGetClusterStatus($mpPam);
+        $mpPam = self::_mpGetPamInfoById($ix, self::rgGetPamDetailFields(), array('Ghg',
+                                                                                  'Implementor',
+                                                                                  'MemberState',
+                                                                                  'SideEffect',
+                                                                                  'Ccpm',
+                                                                                  'Sector',
+                                                                                  'Status',
+                                                                                  'Type',
+                                                                                  'Scenario'));
         
         switch ($mpPam['coCluster']) {
             case self::PAM_UNCLUSTERED:
@@ -137,6 +140,30 @@ class Model
                 self::_vInsertClusterEstimates($mpPam);
                 break;
         }
+        
+        return $mpPam;
+    }
+
+    private static function _mpGetPamInfoById($ix, $rgPamFields, $rgDimensions)
+    {
+        $q = new Select('pam', $rgPamFields);
+
+        $q->vSetFilter(array('id'=>$ix));
+        
+        foreach ($rgDimensions as $sDim) {
+            self::_vStandardJoin($q, $sDim);
+        }
+        
+        $q->vOrderBy(array(BaseModel::sTblName(Ccpm::_ID), 'id_sector'));
+        $q->vOrderBy(array(BaseModel::sTblName(Ccpm::_ID), 'related_ccpm'));
+        
+        $sql = $q->sqlRender();
+        #View::vRenderInfoBox($sql);
+        $rgRows = DB::rgSelectRows($sql);
+        $mpPam = Helper::mpUniqCols($rgRows);
+        
+        $mpPam['coCluster'] = self::_coGetClusterStatus($mpPam);
+        $mpPam['fClustered'] = $mpPam['coCluster'] == self::PAM_BELONGS_TO_CLUSTER;
 
         return $mpPam;
     }
